@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Realive</title>
+
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- ICON 連結 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-logout"></li>
+                    <li class="nav-item" id="nav-user"></li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html" id="nav-login">
+                            <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container vedioArea">
+        <video id="Video" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="1080"
+            height="720" poster="poster.jpg"
+            data-setup='{"techOrder": ["flash", "html5", "other supported tech"], "nativeControlsForTouch": true, "controlBar": { "muteToggle": false, "volumeControl": false, "timeDivider": false, "durationDisplay": false, "progressControl": false } }'>
+            <source src="rtmp://192.168.0.10:1935/live/code" type="rtmp/flv" />
+        </video>
+        <video id="player" class="video-js vjs-default-skin" height="360" width="640" controls preload="none">
+            <source src="rtmp://192.168.0.10:1935/live/code" type="rtmp/flv" />
+        </video>
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" width="1280" height="720"
+            poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+
+            <source src="rtmp://192.168.0.10:1935/live/code" type="rtmp/flv">
+        </video>
+        <script>
+            var player = videojs('#player');
+            player.play();
+        </script>
+
+    </div>
+</body>
+
+</html>
+
+<script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
