@@ -15,10 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from livePage.views import livePage_view
-from livePage.views import login
-from livePage.views import logout
-from livePage.views import register
+from livePage.views import livePage_view, login, logout, register
 
 urlpatterns = [
     path('admin/', admin.site.urls),

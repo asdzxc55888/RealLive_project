@@ -56,9 +56,18 @@
             </div>
         </div>
     </nav>
-    <div class="container vedioArea">
-        <iframe width="854" height="480" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-        </iframe>
+    <div class="container-fluid vedioArea">
+        <div class="row">
+            <div class="col-md-7">
+                <iframe width="854" height="480" src="https://www.youtube.com/embed/ddjIHxdepmA">
+                </iframe>
+            </div>
+            <div class="col-md-5">
+                <textarea readonly class="form-control" rows="16" id="comment"></textarea>
+                <input id="chat-message-input" type="text" size="25" /><br />
+                <input id="chat-message-submit" type="button" value="發送" />
+            </div>
+        </div>
     </div>
 
     <!-- 登入頁面 -->
@@ -71,21 +80,21 @@
             </div>
 
             <div class="container">
-                <label for="uname"><b>Username</b></label>
+                <label for="uname"><b>使用者名稱</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
 
-                <label for="psw"><b>Password</b></label>
+                <label for="psw"><b>密碼</b></label>
                 <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
 
-                <button type="submit" id="BtnloginSubmit" value="login">Login</button>
+                <button type="submit" id="BtnloginSubmit" value="login">登入</button>
                 <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                    <input type="checkbox" checked="checked" name="remember"> 記住我
                 </label>
             </div>
 
             <div class="container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('loginForm').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">取消</button>
                 <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
             </div>
         </form>
@@ -96,3 +105,4 @@
 
 <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
 <script src="{% static 'js/login.js' %}"></script>
+<script src="{% static 'js/chatChannel.js' %}"></script>

@@ -10,6 +10,7 @@ from django.template import RequestContext
 def livePage_view(request):
     return render(request, 'live.html')
 
+########################### 登入註冊 #########################################
 def login(request):
 
     if request.user.is_authenticated: 
@@ -39,3 +40,4 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html',locals())
+########################### !登入註冊 ######################################
