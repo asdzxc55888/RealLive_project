@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from livePage.views import livePage_view, login, logout, register
 from indexPage.views import indexPage_view, streamerSetting_view
+from statisticsPage.views import statisticsPage_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('accounts/register/',register),
     path('live/', livePage_view),
     path('', indexPage_view),
-    path('setting/', streamerSetting_view)
+    path('setting/', streamerSetting_view),
+    path('statistics/', statisticsPage_view)
 ]
