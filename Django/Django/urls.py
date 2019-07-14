@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from livePage.views import livePage_view, login, logout, register
-from indexPage.views import indexPage_view
+from indexPage.views import indexPage_view, streamerSetting_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('accounts/logout/',logout),
     path('accounts/register/',register),
     path('live/', livePage_view),
-    path('', indexPage_view)
+    path('', indexPage_view),
+    path('setting/', streamerSetting_view)
 ]
