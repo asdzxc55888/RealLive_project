@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from livePage.views import livePage_view, login, logout, register
+from indexPage.views import indexPage_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/',login),
     path('accounts/logout/',logout),
     path('accounts/register/',register),
-    path('', livePage_view),
+    path('live/', livePage_view),
+    path('', indexPage_view)
 ]

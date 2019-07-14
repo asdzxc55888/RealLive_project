@@ -16,16 +16,17 @@ def login(request):
     if request.user.is_authenticated: 
         return HttpResponseRedirect('/')
 
-    username = request.POST.get('uname', '')
+    username = request.POST.get('uname', '') #取得參數
     password = request.POST.get('psw', '')
 
-    user = auth.authenticate(username=username, password=password)
+    user = auth.authenticate(username=username, password=password) #取得參數
+
     if user is not None and user.is_active:
         auth.login(request, user)
         return HttpResponseRedirect('/')
     else:
         messages.warning(request, 'Your password has been changed successfully!', extra_tags='alert')
-        return render(request, 'live.html')
+        return HttpResponseRedirect('/')
 
 def logout(request):
     auth.logout(request)

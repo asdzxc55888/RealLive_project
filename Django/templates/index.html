@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Realive</title>
+
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- ICON 連結 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--Kendo Css-->
+    <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="">
+                <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-logout"></li>
+                    <li class="nav-item" id="nav-user"></li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" id="BtnUser"
+                            onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
+                            <i class="fas fa-user"></i>你好{{request.user}}</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" id="Btnlogout" href="/accounts/logout/">
+                            <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" id="btn-login" style="width:auto;" onclick=clickLoginBtn>
+                            <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid vedioArea">
+        <div id="streamer_grid">
+        </div>
+    </div>
+
+    <!-- 登入頁面 -->
+    <div id="loginForm" style="display:none" class="container">
+
+        <form action="accounts/login/" method="POST">{% csrf_token %}
+
+            <div>
+                <label class="row" for="uname"><b>使用者名稱</b></label>
+                <input class="row" type="text" placeholder="Enter Username" name="uname" id="uname" required>
+
+                <label class="row" for="psw"><b>密碼</b></label>
+                <input class="row" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                <div class="row">
+                    <button class="col btn-login-comfirm" type="submit" id="BtnloginSubmit" value="login">登入</button>
+                </div>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> 記住我
+                </label>
+            </div>
+            <div style="background-color:#f1f1f1">
+                <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+{% load staticfiles %}
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/kendo.all.min.js' %}"></script>
+<script src="{% static 'js/uikit.min.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/loginForm.js' %}"></script>

@@ -15,15 +15,15 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <!-- ICON 連結 -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--Kendo Css-->
+    <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
 </head>
 
 <body>
@@ -41,14 +41,13 @@
                             onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
                             <i class="fas fa-user"></i>你好{{request.user}}</a>
                     </li>
-                    <li class="nav-item" id="nav-login">
-                        <a class="nav-link" id="Btnlogin" href="/accounts/logout/">
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" id="Btnlogout" href="/accounts/logout/">
                             <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
                     </li>
                     {% else %}
                     <li class="nav-item" id="nav-login">
-                        <a class="nav-link" id="Btnlogin"
-                            onclick="document.getElementById('loginForm').style.display='block'" style="width:auto;">
+                        <a class="nav-link" id="btn-login" style="width:auto;" onclick=clickLoginBtn>
                             <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
                     </li>
                     {% endif %}
@@ -65,36 +64,31 @@
             <div class="col-md-5">
                 <textarea readonly class="form-control" rows="16" id="comment"></textarea>
                 <input id="chat-message-input" type="text" size="25" /><br />
-                <input id="chat-message-submit" type="button" value="發送" />
+                <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
+                <input class="btn btn-primary" id="chat-message-submit" type="button" value="開啟情緒分享" />
             </div>
         </div>
     </div>
 
     <!-- 登入頁面 -->
-    <div id="loginForm" class="modal">
+    <div id="loginForm" style="display:none" class="container">
 
-        <form class="modal-content animate" action="accounts/login/" method="POST">{% csrf_token %}
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('loginForm').style.display='none'" class="close"
-                    title="關閉視窗">&times;</span>
-            </div>
+        <form action="accounts/login/" method="POST">{% csrf_token %}
 
-            <div class="container">
-                <label for="uname"><b>使用者名稱</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" id="uname" required>
+            <div>
+                <label class="row" for="uname"><b>使用者名稱</b></label>
+                <input class="row" type="text" placeholder="Enter Username" name="uname" id="uname" required>
 
-                <label for="psw"><b>密碼</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-
-                <button type="submit" id="BtnloginSubmit" value="login">登入</button>
+                <label class="row" for="psw"><b>密碼</b></label>
+                <input class="row" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                <div class="row">
+                    <button class="col btn-login-comfirm" type="submit" id="BtnloginSubmit" value="login">登入</button>
+                </div>
                 <label>
                     <input type="checkbox" checked="checked" name="remember"> 記住我
                 </label>
             </div>
-
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('loginForm').style.display='none'"
-                    class="cancelbtn">取消</button>
+            <div style="background-color:#f1f1f1">
                 <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
             </div>
         </form>
@@ -103,6 +97,8 @@
 
 </html>
 
-<script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
-<script src="{% static 'js/login.js' %}"></script>
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/kendo.all.min.js' %}"></script>
+<script src="{% static 'js/uikit.min.js' %}"></script>
+<script src="{% static 'js/loginForm.js' %}"></script>
 <script src="{% static 'js/chatChannel.js' %}"></script>
