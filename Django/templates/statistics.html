@@ -24,6 +24,8 @@
     <!--Kendo Css-->
     <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/statistics.css' %}">
 </head>
 
 <body>
@@ -55,19 +57,25 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid vedioArea">
+
+    <!--main-->
+    <div class="main" class="container-fluid vedioArea">
         <div class="row">
-            <div class="col-md-10">
-                <iframe width="854" height="480" src="https://www.youtube.com/embed/ddjIHxdepmA">
+            <div class="col-md-1"></div>
+            <div class="col-md-7 nopadding">
+                <iframe id="player" width="100%" height="576">
                 </iframe>
             </div>
+            <div class="col-md-3 nopadding playerlist_container">
+                <button class="connect_button">連接Youtube影片</button>
+                <ul class="playlist">
+                </ul>
+            </div>
+            <div class="col-md-1"></div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <button>連接Youtube影片</button>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-3">
+            <div class="col-md-1"></div>
+            <div class="col-md-1">
                 <label>情緒反應:</label>
                 <form>
                     <select name="emotion">
@@ -81,8 +89,7 @@
                     </select>
                 </form>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <label>時間單位:</label>
                 <form>
                     <select name="timeline">
@@ -94,9 +101,11 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-1"></div>
             <div class="col-md-10">
                 <canvas id="myChart"></canvas>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 
@@ -128,9 +137,9 @@
 </html>
 
 <script src="{% static 'js/Chart.min.js' %}"></script>
-<script src="{% static 'js/statistics.js' %}"></script>
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
 <script src="{% static 'js/kendo.all.min.js' %}"></script>
 <script src="{% static 'js/uikit.min.js' %}"></script>
 <script src="{% static 'js/loginForm.js' %}"></script>
 <script src="{% static 'js/chatChannel.js' %}"></script>
+<script src="{% static 'js/statistics.js' %}"></script>
