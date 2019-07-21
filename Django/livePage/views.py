@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.template import RequestContext
 
 # Create your views here.
-def livePage_view(request):
+def livePage_view(request, username):
     return render(request, 'live.html')
 
 ########################### 登入註冊 #########################################

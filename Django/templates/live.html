@@ -71,28 +71,7 @@
     </div>
 
     <!-- 登入頁面 -->
-    <div id="loginForm" style="display:none" class="container">
-
-        <form action="accounts/login/" method="POST">{% csrf_token %}
-
-            <div>
-                <label class="row" for="uname"><b>使用者名稱</b></label>
-                <input class="row" type="text" placeholder="Enter Username" name="uname" id="uname" required>
-
-                <label class="row" for="psw"><b>密碼</b></label>
-                <input class="row" type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                <div class="row">
-                    <button class="col btn-login-comfirm" type="submit" id="BtnloginSubmit" value="login">登入</button>
-                </div>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> 記住我
-                </label>
-            </div>
-            <div style="background-color:#f1f1f1">
-                <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
-            </div>
-        </form>
-    </div>
+    <div id="loginPage"></div>  <!---->
 </body>
 
 </html>

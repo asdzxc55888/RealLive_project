@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
 </head>
+{% block content %}
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
@@ -31,27 +32,52 @@
         </div>
     </nav>
     <div class="container mainArea">
-
-        <label for="basic-url">填入youtube嵌入網址</label>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+        <form>
+            <label for="basic-url">填入youtube嵌入網址</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+                </div>
+                <input type="text" class="form-control" id="youtubeUrl" aria-describedby="basic-addon3"
+                    value={{ youtubeUrl }}>
             </div>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-        </div>
-
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">實況簡介</span>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">暱稱</span>
+                </div>
+                <input type="text" class="form-control" id="nickName" aria-describedby="basic-addon3"
+                    value={{ nickName }}>
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
-        </div>
-        <button class="btn btn-primary">修改</button>
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">實況簡介</span>
+                </div>
+                <textarea class="form-control" aria-label="With textarea">{{ introduction }}</textarea>
+            </div>
+            <button class="btn btn-primary" id="updataBtn">修改</button>
+        </form>
     </div>
 </body>
+{% endblock %}
 
 </html>
 
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
 <script src="{% static 'js/kendo.all.min.js' %}"></script>
 <script src="{% static 'js/uikit.min.js' %}"></script>
+<script>
+    $("#updataBtn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/updata",
+            data: $("form").serialize(),
+            success: function (data) {
+                alert("修改完成");
+            },
+            error: function (xhr, text, error) {
+                alert('系統錯誤: ' + error);
+            }
+        })
+    })
+</script>
