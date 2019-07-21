@@ -31,14 +31,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="">
-                <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
+            <a class="navbar-brand" href=""><i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"> </span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" id="nav-logout"></li>
-                    <li class="nav-item" id="nav-user"></li>
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item" id="nav-login">
+                    <li class="nav-item" id="nav-user">
                         <a class="nav-link" id="BtnUser"
                             onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
                             <i class="fas fa-user"></i>你好{{request.user}}</a>
@@ -61,21 +61,20 @@
     <!--main-->
     <div class="main" class="container-fluid vedioArea">
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-7 nopadding">
-                <iframe id="player" width="100%" height="576">
+            <div class="col-1"></div>
+            <div class="col-7 nopadding">
+                <iframe id="player" width="100%">
                 </iframe>
             </div>
-            <div class="col-md-3 nopadding playerlist_container">
+            <div class="col-3 nopadding playerlist_container">
                 <button class="connect_button">連接Youtube影片</button>
-                <ul class="playlist">
-                </ul>
+                <ul class="playlist"></ul>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-1"></div>
         </div>
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1">
+            <div class="col-1"></div>
+            <div class="col-4 col-sm-2 col-md-2">
                 <label>情緒反應:</label>
                 <form>
                     <select name="emotion">
@@ -89,7 +88,7 @@
                     </select>
                 </form>
             </div>
-            <div class="col-md-1">
+            <div class="col-4 col-sm-2 col-md-2">
                 <label>時間單位:</label>
                 <form>
                     <select name="timeline">
@@ -101,11 +100,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+            <div class="col-1"></div>
+            <div class="col-10 canvasRoom">
                 <canvas id="myChart"></canvas>
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-1"></div>
         </div>
     </div>
 
@@ -135,11 +134,11 @@
 </body>
 
 </html>
-
-<script src="{% static 'js/Chart.min.js' %}"></script>
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'></script>
 <script src="{% static 'js/kendo.all.min.js' %}"></script>
 <script src="{% static 'js/uikit.min.js' %}"></script>
 <script src="{% static 'js/loginForm.js' %}"></script>
 <script src="{% static 'js/chatChannel.js' %}"></script>
+<script src="{% static 'js/Chart.min.js' %}"></script>
 <script src="{% static 'js/statistics.js' %}"></script>
