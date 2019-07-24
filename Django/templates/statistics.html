@@ -1,139 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Realive</title>
+{% block title %}
+<title>Realive</title>
+{% endblock %}
 
-    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+{% block css %}
+<link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/statistics.css' %}">
+{% endblock %}
 
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-    <!-- ICON 連結 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!--Kendo Css-->
-    <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/statistics.css' %}">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href=""><i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
-            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                <span class="navbar-toggler-icon"> </span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    {% if request.user.is_authenticated %}
-                    <li class="nav-item" id="nav-user">
-                        <a class="nav-link" id="BtnUser"
-                            onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
-                            <i class="fas fa-user"></i>你好{{request.user}}</a>
-                    </li>
-                    <li class="nav-item" id="nav-logout">
-                        <a class="nav-link" id="Btnlogout" href="/accounts/logout/">
-                            <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item" id="nav-login">
-                        <a class="nav-link" id="btn-login" style="width:auto;" onclick=clickLoginBtn>
-                            <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+{% block content %}
+<div class="main" class="container-fluid vedioArea">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-7 nopadding">
+            <iframe id="player" width="100%">
+            </iframe>
         </div>
-    </nav>
-
-    <!--main-->
-    <div class="main" class="container-fluid vedioArea">
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-7 nopadding">
-                <iframe id="player" width="100%">
-                </iframe>
-            </div>
-            <div class="col-3 nopadding playerlist_container">
-                <button class="connect_button">連接Youtube影片</button>
-                <ul class="playlist"></ul>
-            </div>
-            <div class="col-1"></div>
+        <div class="col-3 nopadding playerlist_container">
+            <button class="connect_button">連接Youtube影片</button>
+            <ul class="playlist"></ul>
         </div>
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-4 col-sm-2 col-md-2">
-                <label>情緒反應:</label>
-                <form>
-                    <select name="emotion">
-                        <option value="Angry">生氣</option>
-                        <option value="Disgust">困惑</option>
-                        <option value="Fear">害怕</option>
-                        <option value="Happy">開心</option>
-                        <option value="Sad">難過</option>
-                        <option value="Surprise">驚訝</option>
-                        <option value="Neutral">其他</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-4 col-sm-2 col-md-2">
-                <label>時間單位:</label>
-                <form>
-                    <select name="timeline">
-                        <option value="second">秒</option>
-                        <option value="minute" selected>分</option>
-                        <option value="hour">小時</option>
-                    </select>
-                </form>
-            </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-4 col-sm-2 col-md-2">
+            <label>情緒反應:</label>
+            <form>
+                <select name="emotion">
+                    <option value="Angry">生氣</option>
+                    <option value="Disgust">困惑</option>
+                    <option value="Fear">害怕</option>
+                    <option value="Happy">開心</option>
+                    <option value="Sad">難過</option>
+                    <option value="Surprise">驚訝</option>
+                    <option value="Neutral">其他</option>
+                </select>
+            </form>
         </div>
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-10 canvasRoom">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div class="col-1"></div>
+        <div class="col-4 col-sm-2 col-md-2">
+            <label>時間單位:</label>
+            <form>
+                <select name="timeline">
+                    <option value="second">秒</option>
+                    <option value="minute" selected>分</option>
+                    <option value="hour">小時</option>
+                </select>
+            </form>
         </div>
     </div>
-
-    <!-- 登入頁面 -->
-    <div id="loginForm" style="display:none" class="container">
-
-        <form action="accounts/login/" method="POST">{% csrf_token %}
-
-            <div>
-                <label class="row" for="uname"><b>使用者名稱</b></label>
-                <input class="row" type="text" placeholder="Enter Username" name="uname" id="uname" required>
-
-                <label class="row" for="psw"><b>密碼</b></label>
-                <input class="row" type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                <div class="row">
-                    <button class="col btn-login-comfirm" type="submit" id="BtnloginSubmit" value="login">登入</button>
-                </div>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> 記住我
-                </label>
-            </div>
-            <div style="background-color:#f1f1f1">
-                <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 canvasRoom">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="col-1"></div>
     </div>
-</body>
+</div>
+{% endblock %}
 
-</html>
+{% block js %}
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'></script>
 <script src="{% static 'js/kendo.all.min.js' %}"></script>
@@ -142,3 +75,4 @@
 <script src="{% static 'js/chatChannel.js' %}"></script>
 <script src="{% static 'js/Chart.min.js' %}"></script>
 <script src="{% static 'js/statistics.js' %}"></script>
+{% endblock %}
