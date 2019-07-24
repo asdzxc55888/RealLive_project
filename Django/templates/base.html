@@ -19,6 +19,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
             integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
         {% block css %}
         {% endblock %}
     </head>
@@ -60,5 +66,10 @@
     </body>
 </html>
 
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'></script>
+<script src="{% static 'js/kendo.all.min.js' %}"></script>
+<script src="{% static 'js/uikit.min.js' %}"></script>
+<script src="{% static 'js/loginForm.js' %}"></script>
 {% block js %}
 {% endblock %}
