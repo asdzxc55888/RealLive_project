@@ -10,7 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         {% block title %}
-        <title>Realive</title>
+        <!-- replace tiitle here -->
         {% endblock %}
 
         <!-- ICON 連結 -->
@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="{% static 'css/login.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         {% block css %}
+        <!-- replace others css here -->
         {% endblock %}
     </head>
 
@@ -60,6 +61,7 @@
         </nav>
 
         {% block content %}
+        <!-- replace main content here -->
         {% endblock %}
 
         {% include "login.html" %}
@@ -72,4 +74,5 @@
 <script src="{% static 'js/uikit.min.js' %}"></script>
 <script src="{% static 'js/loginForm.js' %}"></script>
 {% block js %}
+<!-- replace others js here -->
 {% endblock %}
