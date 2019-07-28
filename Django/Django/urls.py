@@ -24,8 +24,8 @@ urlpatterns = [
     path('accounts/login/',login),
     path('accounts/logout/',logout),
     path('accounts/register/',register),
-    path('live/<username>', livePage_view),
     path('', indexPage_view),
     path('setting/', streamerSetting_view),
+    path('live/<username>', livePage_view),
     path('statistics/', statisticsPage_view)
 ]
