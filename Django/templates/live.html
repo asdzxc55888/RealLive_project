@@ -1,83 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Realive</title>
+{% block title %}
+<title>Realive</title>
+{% endblock %}
 
-    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+{% block css %}
+<!-- None others css -->
+{% endblock %}
 
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-    <!-- ICON 連結 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!--Kendo Css-->
-    <link rel="stylesheet" href="{% static 'css/kendo.common-material.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/kendo.material.min.css' %}">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="">
-                <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" id="nav-logout"></li>
-                    <li class="nav-item" id="nav-user"></li>
-                    {% if request.user.is_authenticated %}
-                    <li class="nav-item" id="nav-login">
-                        <a class="nav-link" id="BtnUser"
-                            onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
-                            <i class="fas fa-user"></i>你好{{request.user}}</a>
-                    </li>
-                    <li class="nav-item" id="nav-logout">
-                        <a class="nav-link" id="Btnlogout" href="/accounts/logout/">
-                            <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item" id="nav-login">
-                        <a class="nav-link" id="btn-login" style="width:auto;" onclick=clickLoginBtn>
-                            <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+{% block content %}
+<div class="container-fluid mainArea">
+    <div class="row">
+        <div class="col-md-7">
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/{{ youtubeUrl }}">
+            </iframe>
         </div>
-    </nav>
-    <div class="container-fluid mainArea">
-        <div class="row">
-            <div class="col-md-7">
-                <iframe width="854" height="480" src="https://www.youtube.com/embed/ddjIHxdepmA">
-                </iframe>
-            </div>
-            <div class="col-md-5">
-                <textarea readonly class="form-control" rows="16" id="comment"></textarea>
-                <input id="chat-message-input" type="text" size="25" /><br />
-                <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-                <input class="btn btn-primary" id="chat-message-submit" type="button" value="開啟情緒分享" />
-            </div>
+        <div class="col-md-5">
+            <textarea readonly class="form-control" rows="16" id="comment"></textarea>
+            <input id="chat-message-input" type="text" size="25" /><br />
+            <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
+            <input class="btn btn-primary" id="chat-message-submit" type="button" value="開啟情緒分享" />
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <!-- 登入頁面 -->
-    <div id="loginPage"></div>  <!---->
-</body>
-
-</html>
-
-<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
-<script src="{% static 'js/kendo.all.min.js' %}"></script>
-<script src="{% static 'js/uikit.min.js' %}"></script>
-<script src="{% static 'js/loginForm.js' %}"></script>
+{% block js %}
 <script src="{% static 'js/chatChannel.js' %}"></script>
+{% endblock %}

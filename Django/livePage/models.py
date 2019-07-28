@@ -12,3 +12,15 @@ class UserSetting(models.Model):
     #每一筆資料在管理介面顯示的內容以下列程式定義
     def __str__(self):
         return self.nickName #表示顯示cName欄位
+
+
+class EmotionData(models.Model):
+    vid = models.CharField(max_length = 20, null = False)
+    time = models.TimeField(null = False)
+    Angry = models.PositiveIntegerField(default = 0)
+    Disgust = models.PositiveIntegerField(default = 0)
+    Fear = models.PositiveIntegerField(default = 0)
+    Happy = models.PositiveIntegerField(default = 0)
+    Sad = models.PositiveIntegerField(default = 0)
+    Surprise = models.PositiveIntegerField(default = 0)
+    Neutral = models.PositiveIntegerField(default = 0)

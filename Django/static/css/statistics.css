@@ -1,14 +1,7 @@
-.main {
-    margin-top: 70px;
-}
-
-.playerlist_container {
-    height: 576px;
-}
-
 .connect_button {
     margin: 0px 0px 0px 3px;
     background-color: #17a2b8;
+    height: 10%;
 }
 
 ul.playlist {
@@ -50,4 +43,27 @@ ul.playlist li p {
 
 .nopadding {
     padding: 0;
+}
+
+.navbar-toggler {
+    width: auto;
+    margin: 0;
+}
+
+@media screen {
+    #player, .playerlist_container {
+         height: 189px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #player, .playerlist_container {
+         height: 405px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #player, .playerlist_container {
+         height: 576px;
+    }
 }
