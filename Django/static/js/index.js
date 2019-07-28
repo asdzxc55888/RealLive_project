@@ -1,26 +1,21 @@
-testData = [{
-    "StreamerName":"老大",
-    "Introduction":"老大屁股大",
-    "ViewerNumber":"100"
-},{
-    "StreamerName":"Bang大便",
-    "Introduction":"Bang拉",
-    "ViewerNumber":"1000"
-}]
-
-var testDataLocalStorage = [];
-
-$(document).ready(function() {
+$(document).ready(function () {
     loadBookData();
     $("#streamer_grid").kendoGrid({
-        dataSource: {
-            data: testData,
+        dataSource: { 
+            transport: {
+                read: {
+                    type:"post",
+                    url: "/getStreamer",
+                    dataType: "json"
+                }
+            },
             schema: {
                 model: {
                     fields: {
                         StreamerName: { type: "string" },
                         Introduction: { type: "string" },
-                        ViewerNumber: { type: "int" }
+                        ViewerNumber: { type: "int" },
+                        StreamerUserName: { type: "string" }
                     }
                 }
             },
@@ -37,7 +32,8 @@ $(document).ready(function() {
             { field: "StreamerName", title: "實況主名稱", width: "10%" },
             { field: "Introduction", title: "簡介", width: "70%" },
             { field: "ViewerNumber", title: "觀看次數", width: "10%" },
-            { command: { text: "前往頻道", click: toChannel }, title: " ", width: "180px" }
+            { field: "StreamerUserName", width: "0%" },
+            { command: { text: "前往頻道", click: gotoChannel }, title: " ", width: "180px" }
         ]
     });
 });
@@ -50,7 +46,9 @@ function loadBookData() {
     }
 }
 
-function toChannel() {
-
+function gotoChannel(e) {
+    var grid = $("#streamer_grid").data("kendoGrid");
+    var dataItem = grid.dataItem($(e.currentTarget).closest("tr"));
+    window.location.href = "/live/" + dataItem.StreamerUserName;
 }
 

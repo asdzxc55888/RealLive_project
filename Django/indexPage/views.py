@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from livePage.models import UserSetting
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Create your views here.
@@ -9,6 +11,20 @@ import json
 def indexPage_view(request):
     return render(request, 'index.html')
 
+@csrf_exempt
+def getStreamer(request):
+    streamerList = User.objects.filter(groups__name='Streamer')
+    data=[]
+    for streamer in streamerList:
+        settingData = UserSetting.objects.get(userId=streamer)
+        data.append({
+            'StreamerName' : settingData.nickName,
+            'Introduction' : settingData.introduction,
+            'ViewerNumber' : 0,
+            'StreamerUserName' : streamer.username
+        })
+    print(data)
+    return JsonResponse(data, safe=False)
 
 def streamerSetting_view(request):
     current_user = request.user

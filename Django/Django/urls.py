@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from livePage.views import livePage_view, login, logout, register
-from indexPage.views import indexPage_view, streamerSetting_view, updata
+from indexPage.views import indexPage_view, streamerSetting_view, updata, getStreamer
 from statisticsPage.views import statisticsPage_view
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     path('', indexPage_view),
     path('setting/', streamerSetting_view),
     path('statistics/', statisticsPage_view),
-    path('setting/updata', updata)
+    path('setting/updata', updata),
+    path('getStreamer', getStreamer)
 ]
