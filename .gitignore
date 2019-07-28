@@ -4,3 +4,5 @@ Django/venv
 Django/.idea
 Django/.vscode
 Django/db.sqlite3
+Django/*/migrations
+Django/*/__pycache__
