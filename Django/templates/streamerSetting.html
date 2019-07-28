@@ -32,7 +32,7 @@
         </div>
     </nav>
     <div class="container mainArea">
-        <form>
+        <form>{% csrf_token %}
             <label for="basic-url">填入youtube嵌入網址</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -53,7 +53,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">實況簡介</span>
                 </div>
-                <textarea class="form-control" aria-label="With textarea">{{ introduction }}</textarea>
+                <textarea class="form-control" aria-label="With textarea" id="introduction">{{ introduction }}</textarea>
             </div>
             <button class="btn btn-primary" id="updataBtn">修改</button>
         </form>
@@ -68,10 +68,17 @@
 <script src="{% static 'js/uikit.min.js' %}"></script>
 <script>
     $("#updataBtn").click(function () {
+        formData = $('form').serializeArray();
+        csrfmiddlewaretoken = $("form").find("input[name='csrfmiddlewaretoken']" ).val();
         $.ajax({
             type: "POST",
-            url: "/updata",
-            data: $("form").serialize(),
+            url: "/setting/updata",
+            data: {
+                "csrfmiddlewaretoken" : csrfmiddlewaretoken,
+                "youtubeUrl" : $("#youtubeUrl").val(),
+                "nickName" : $("#nickName").val(),
+                "introduction" : $("#introduction").html()
+            },
             success: function (data) {
                 alert("修改完成");
             },
