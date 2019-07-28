@@ -1,7 +1,7 @@
 <!-- 登入頁面 -->
 <div id="loginForm" style="display:none" class="container">
 
-    <form action="accounts/login/" method="POST">{% csrf_token %}
+    <form action="/accounts/login/" method="POST">{% csrf_token %}
 
         <div>
             <label class="row" for="uname"><b>使用者名稱</b></label>
@@ -17,7 +17,7 @@
             </label>
         </div>
         <div style="background-color:#f1f1f1">
-            <span class="psw">沒有帳號? <a href="accounts/register/">點我註冊</a></span>
+            <span class="psw">沒有帳號? <a href="/accounts/register/">點我註冊</a></span>
         </div>
     </form>
 </div>

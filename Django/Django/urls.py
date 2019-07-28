@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from livePage.views import livePage_view, login, logout, register
-from indexPage.views import indexPage_view, streamerSetting_view, updata, getStreamer
+from livePage.views import livePage_view
+from indexPage.views import indexPage_view, streamerSetting_view, updata, getStreamer, login, logout,register
 from statisticsPage.views import statisticsPage_view
 
 urlpatterns = [
