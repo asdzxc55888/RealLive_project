@@ -1,0 +1,6 @@
+.idea
+.vscode
+Django/venv
+Django/.idea
+Django/.vscode
+Django/db.sqlite3
