@@ -11,7 +11,7 @@ from livePage.models import UserSetting
 
 # Create your views here.
 def livePage_view(request, streamerName):
-    streamer = get_object_or_404(User, username=streamerName)
+    streamer = get_object_or_404(User, username = streamerName)
     streamerSettingData = UserSetting.objects.get(userId=streamer.id)
     context = {
         "youtubeUrl": streamerSettingData.youtubeUrl,

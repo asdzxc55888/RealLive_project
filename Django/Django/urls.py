@@ -14,20 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
-from livePage.views import livePage_view
-from indexPage.views import indexPage_view, streamerSetting_view, updata, getStreamer, login, logout,register
-from statisticsPage.views import statisticsPage_view
+from django.urls import path, include
+from indexPage.views import streamerSetting_view, updata, getStreamer, login, logout, register
 
 urlpatterns = [
+    path('', include('indexPage.urls')),
+    path('live/', include('livePage.urls')),
+    path('statistics/', include('statisticsPage.urls')),
     path('admin/', admin.site.urls),
     path('accounts/login/',login),
     path('accounts/logout/',logout),
     path('accounts/register/',register),
-    path('live/<streamerName>', livePage_view),
-    path('', indexPage_view),
     path('setting/', streamerSetting_view),
-    path('statistics/', statisticsPage_view),
     path('setting/updata', updata),
     path('getStreamer', getStreamer)
 ]
