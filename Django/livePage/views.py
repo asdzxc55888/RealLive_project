@@ -1,20 +1,17 @@
-from django.shortcuts import render
-from django.contrib import auth
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
+from django.views import View
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from livePage.models import UserSetting
+from .models import UserSetting
 
 # Create your views here.
-def livePage_view(request, streamerName):
-    streamer = get_object_or_404(User, username = streamerName)
-    streamerSettingData = UserSetting.objects.get(userId=streamer.id)
-    context = {
-        "youtubeUrl": streamerSettingData.youtubeUrl,
-    }
-    print(streamer)
-    return render(request, 'live.html', context)
+class liveView(View):
+    template_name = 'live.html'
+
+    def get(self, request, streamerName, *args, **kwargs):
+        streamer = get_object_or_404(User, username = streamerName)
+        streamerSettingData = UserSetting.objects.get(userId = streamer.id)
+        context = {
+            "youtubeUrl": streamerSettingData.youtubeUrl,
+        }
+        print(streamer)
+        return render(request, self.template_name, context)

@@ -1,19 +1,19 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
-from django.contrib import auth
-from livePage.models import UserSetting
-from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect
+from livePage.models import UserSetting
 import json
 
 # Create your views here.
+class indexView(View):
+    template_name = 'index.html'
 
-
-def indexPage_view(request):
-    return render(request, 'index.html')
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 @csrf_exempt
 def getStreamer(request):
@@ -54,7 +54,7 @@ def updata(request):
 ########################### 登入註冊 #########################################
 def login(request):
 
-    if request.user.is_authenticated: 
+    if request.user.is_authenticated:
         return HttpResponseRedirect('/')
 
     username = request.POST.get('uname', '') #取得參數
