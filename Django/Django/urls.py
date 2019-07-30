@@ -22,9 +22,9 @@ urlpatterns = [
     path('live/', include('livePage.urls')),
     path('statistics/', include('statisticsPage.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/login/',login),
-    path('accounts/logout/',logout),
-    path('accounts/register/',register),
+    path('accounts/login/', login),
+    path('accounts/logout/', logout),
+    path('accounts/register/', register),
     path('setting/', streamerSetting_view),
     path('setting/updata', updata),
     path('getStreamer', getStreamer)

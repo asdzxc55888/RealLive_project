@@ -4,8 +4,6 @@
             <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" id="nav-logout"></li>
-                <li class="nav-item" id="nav-user"></li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item" id="nav-login">
                     <a class="nav-link" id="BtnUser"
@@ -13,7 +11,7 @@
                         <i class="fas fa-user"></i>你好{{request.user}}</a>
                 </li>
                 <li class="nav-item" id="nav-logout">
-                    <a class="nav-link" id="Btnlogout" href="/accounts/logout/">
+                    <a class="nav-link" id="Btnlogout" href="/accounts/logout">
                         <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
                 </li>
                 {% else %}
