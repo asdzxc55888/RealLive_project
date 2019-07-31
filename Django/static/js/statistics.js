@@ -1,43 +1,48 @@
-// 製作圖表
-var emotion = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral'];
+function playVideo(vid) {
+	$('#player').attr('src', 'https://www.youtube.com/embed/' + vid);
+}
 
-var ctx = document.getElementById('myChart');
-var myChart = new Chart(ctx, {
-	type: 'bar',
-	data: {
-		labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-		datasets: [{
-			label: '# of Votes',
-			data: [12, 19, 3, 5, 2, 3],
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(255, 206, 86, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(153, 102, 255, 0.2)',
-				'rgba(255, 159, 64, 0.2)'
-			],
-			borderColor: [
-				'rgba(255, 99, 132, 1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(153, 102, 255, 1)',
-				'rgba(255, 159, 64, 1)'
-			],
-			borderWidth: 1
-		}]
-	},
-	options: {
-		scales: {
-			yAxes: [{
-				ticks: {
-					beginAtZero: true
-				}
+function createChart(time, data) {
+	var emotion = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral'];
+
+	var ctx = document.getElementById('myChart');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			datasets: [{
+				label: '# of Votes',
+				data: [12, 19, 3, 5, 2, 3],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
 			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			}
 		}
-	}
-});
+	});
+}
 
 function htmlToElement(html) {
     var template = document.createElement('template');
@@ -82,9 +87,10 @@ function uploadVideo(vid) {
 
 		var option = htmlToElement(html);
 		$(option).children('a').click(function() {
-			// 當點擊到圖片時就轉換成 YouTube 影片
-			$('#player').attr('src', 'https://www.youtube.com/embed/' + vid + '?rel=0&autoplay=1');
-
+			var form = document.getElementById("vidForm");
+			var input = document.getElementById("vidInput");
+		    input.setAttribute("value", vid);
+		    form.submit();
 			return false;
 		});
 
