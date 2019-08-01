@@ -22,27 +22,14 @@
             <ul class="playlist"></ul>
             <form id="vidForm" method="post" action="">
                 {% csrf_token %}
-                <input id="vidInput" type="hidden" name="vid">
+                <input id="vidInput" type="hidden" name="vid" value="">
             </form>
         </div>
         <div class="col-1"></div>
     </div>
+    <!--
     <div class="row">
         <div class="col-1"></div>
-        <div class="col-4 col-sm-2 col-md-2">
-            <label id="emotionLabel" style="visibility: hidden;">情緒反應:</label>
-            <form>
-                <select id="emotionSelect" name="emotion" style="visibility: hidden;">
-                    <option value="Angry">生氣</option>
-                    <option value="Disgust">困惑</option>
-                    <option value="Fear">害怕</option>
-                    <option value="Happy">開心</option>
-                    <option value="Sad">難過</option>
-                    <option value="Surprise">驚訝</option>
-                    <option value="Neutral">其他</option>
-                </select>
-            </form>
-        </div>
         <div class="col-4 col-sm-2 col-md-2">
             <label id="timeLabel" style="visibility: hidden;">時間單位:</label>
             <form>
@@ -54,6 +41,7 @@
             </form>
         </div>
     </div>
+    -->
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10 canvasRoom">
@@ -69,21 +57,19 @@
 <script src="{% static 'js/statistics.js' %}"></script>
 
 <script type="text/javascript">
-    {% if not request.user.is_authenticated %}
+{% if not request.user.is_authenticated %}
     alert("請先登錄");
-    {% endif %}
-
+{% else %}
     {% for video in videos %}
-    uploadVideo("{{ video.vid }}");
+        uploadVideo("{{ video.vid }}");
     {% endfor %}
-
     {% if vid != None %}
-    document.getElementById('emotionLabel').style.visibility = 'visible';
-    document.getElementById('emotionSelect').style.visibility = 'visible';
-    document.getElementById('timeLabel').style.visibility = 'visible';
-    document.getElementById('timeSelect').style.visibility = 'visible';
-    playVideo("{{ vid }}");
-    createChart([], []);
+        //document.getElementById('timeLabel').style.visibility = 'visible';
+        //document.getElementById('timeSelect').style.visibility = 'visible';
+        playVideo("{{ vid }}");
+        var t = {{ time|safe }};
+        createChart(t, {{ angryData }}, {{ disgustData }}, {{ fearData }}, {{ happyData }}, {{ sadData }}, {{ surpriseData }}, {{ neutralData }});
     {% endif %}
+{% endif %}
 </script>
 {% endblock %}

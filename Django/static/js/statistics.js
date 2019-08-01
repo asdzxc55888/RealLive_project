@@ -2,33 +2,53 @@ function playVideo(vid) {
 	$('#player').attr('src', 'https://www.youtube.com/embed/' + vid);
 }
 
-function createChart(time, data) {
-	var emotion = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral'];
-
+function createChart(time, angryData, disgustData, fearData, happyData, sadData, surpriseData, neutralData) {
 	var ctx = document.getElementById('myChart');
 	var myChart = new Chart(ctx, {
 		type: 'bar',
 		data: {
-			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			labels: time,
 			datasets: [{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
+				label: 'Angry',
+				data: angryData,
+				backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				borderColor: 'rgba(255, 99, 132, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Disgust',
+				data: disgustData,
+				backgroundColor: 'rgba(75, 192, 192, 0.5)',
+				borderColor: 'rgba(75, 192, 192, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Fear',
+				data: fearData,
+				backgroundColor: 'rgba(153, 102, 255, 0.5)',
+				borderColor: 'rgba(153, 102, 255, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Happy',
+				data: happyData,
+				backgroundColor: 'rgba(255, 159, 64, 0.7)',
+				borderColor: 'rgba(255, 159, 64, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Sad',
+				data: sadData,
+				backgroundColor: 'rgba(54, 162, 235, 0.5)',
+				borderColor: 'rgba(54, 162, 235, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Surprise',
+				data: surpriseData,
+				backgroundColor: 'rgba(255, 205, 86, 0.5)',
+				borderColor: 'rgba(255, 205, 86, 1)',
+				borderWidth: 1
+			}, {
+				label: 'Neutral',
+				data: neutralData,
+				backgroundColor: 'rgba(201, 203, 207, 0.8)',
+				borderColor: 'rgba(201, 203, 207, 1)',
 				borderWidth: 1
 			}]
 		},
