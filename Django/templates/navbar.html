@@ -7,7 +7,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="nav-item" id="nav-login">
                     <a class="nav-link" id="BtnUser"
-                        onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
+                        onclick="window.location.href = '/setting'" style="width:auto;">
                         <i class="fas fa-user"></i>你好{{request.user}}</a>
                         <span id="username" style="display: none;">{{request.user}}</span>
                 </li>

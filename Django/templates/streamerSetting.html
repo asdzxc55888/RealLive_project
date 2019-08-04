@@ -24,12 +24,7 @@
 </head>
 {% block content %}
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="">
-                <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
-        </div>
-    </nav>
+    {% include "navbar.html" %}
     <div class="container mainArea">
         <form>{% csrf_token %}
             <label for="basic-url">填入youtube嵌入網址</label>
@@ -54,7 +49,11 @@
                 </div>
                 <textarea class="form-control" aria-label="With textarea" id="introduction">{{ introduction }}</textarea>
             </div>
+            {% if isStreamer == 'True' %}
             <button class="btn btn-primary" id="updataBtn">修改</button>
+            {% else %}
+            <button class="btn btn-primary" id="updataBtn">創建</button>
+            {% endif %}
         </form>
     </div>
 </body>

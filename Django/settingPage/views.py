@@ -4,12 +4,21 @@ from livePage.models import UserSetting
 # Create your views here.
 def streamerSetting_view(request):
     current_user = request.user
-    settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
-    context = {
-        "youtubeUrl": settingData.youtubeUrl,
-        "nickName": settingData.nickName,
-        "introduction": settingData.introduction
-    }
+    if current_user.groups.filter(name='Streamer').exists():
+        settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
+        context = {
+            "youtubeUrl": settingData.youtubeUrl,
+            "nickName": settingData.nickName,
+            "introduction": settingData.introduction,
+            "isStreamer": 'True'
+        }
+    else:
+        context = {
+            "youtubeUrl": '',
+            "nickName": '',
+            "introduction": '',
+            "isStreamer": 'False'
+        }
     return render(request, 'streamerSetting.html', context)
 
 def update(request):
