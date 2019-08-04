@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     # own
     'indexPage',
     'livePage',
-    'statisticsPage',
-    'chat.apps.ChatConfig',
+    'statisticsPage'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +129,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static/'),
         ]
+
+# Channels
+ASGI_APPLICATION = 'Django.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

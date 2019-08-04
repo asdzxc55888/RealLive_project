@@ -9,6 +9,7 @@
                     <a class="nav-link" id="BtnUser"
                         onclick="document.getElementById('userForm').style.display='block'" style="width:auto;">
                         <i class="fas fa-user"></i>你好{{request.user}}</a>
+                        <span id="username" style="display: none;">{{request.user}}</span>
                 </li>
                 <li class="nav-item" id="nav-logout">
                     <a class="nav-link" id="Btnlogout" href="/accounts/logout">

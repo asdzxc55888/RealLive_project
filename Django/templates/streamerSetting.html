@@ -71,12 +71,12 @@
         csrfmiddlewaretoken = $("form").find("input[name='csrfmiddlewaretoken']" ).val();
         $.ajax({
             type: "POST",
-            url: "/setting/updata",
+            url: "/setting/update",
             data: {
                 "csrfmiddlewaretoken" : csrfmiddlewaretoken,
                 "youtubeUrl" : $("#youtubeUrl").val(),
                 "nickName" : $("#nickName").val(),
-                "introduction" : $("#introduction").html()
+                "introduction" : $("#introduction").val()
             },
             success: function (data) {
                 alert("修改完成");

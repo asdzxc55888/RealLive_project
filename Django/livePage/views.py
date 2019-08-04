@@ -13,5 +13,4 @@ class liveView(View):
         context = {
             "youtubeUrl": streamerSettingData.youtubeUrl,
         }
-        print(streamer)
         return render(request, self.template_name, context)
