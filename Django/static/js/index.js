@@ -7,7 +7,6 @@ $(document).ready(function () {
         sorting: true,
         paging: true,
         autoload: true,
-        data:[{'StreamerName': '腦皮', 'Introduction': 'test', 'ViewerNumber': 0, 'StreamerUserName': '105590027'}],
         controller: {
             loadData: function(){
                 return $.ajax({
@@ -23,7 +22,7 @@ $(document).ready(function () {
             { name: "Introduction", title: "簡介", type: "text", width: "70%" },
             { name: "ViewerNumber", title: "觀看次數", type: "text", width: "10%" },
             { name: "StreamerUserName", width: 0, visible: false },
-            { 
+            {
                 itemTemplate: function(_, item) {
                     return $("<button>").text("前往頻道")
                     	.on("click", function() {
