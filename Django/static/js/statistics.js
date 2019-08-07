@@ -75,7 +75,6 @@ function uploadVideo(vid) {
 	var thumbSize = 'large',		// 設定要取得的縮圖是大圖還是小圖
 		imgWidth = '200',			// 限制圖片的寬
 		imgHeight = '150',			// 限制圖片的高
-		apiKey = 'AIzaSyBmta_M-BHZ6UixGn7HsI5owf--BBS-6-0',
 		address = 'https://www.youtube.com/watch?v=' + vid;
 	var _type = (thumbSize == 'large') ? 0 : 2;
 
@@ -86,7 +85,7 @@ function uploadVideo(vid) {
 		// 取得 title
 		var title = 'None';
 		$.ajax({
-			url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + apiKey,
+			url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + youtubeApiKey,
 			async: false,
 			dataType: 'json',
 			success: function(data) {

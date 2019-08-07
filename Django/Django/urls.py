@@ -16,17 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from indexPage.views import getStreamer, login, logout, register
-from settingPage.views import streamerSetting_view, update
 
 urlpatterns = [
     path('', include('indexPage.urls')),
     path('live/', include('livePage.urls')),
     path('statistics/', include('statisticsPage.urls')),
+    path('setting/', include('settingPage.urls')),
     path('admin/', admin.site.urls),
     path('accounts/login/', login),
     path('accounts/logout/', logout),
     path('accounts/register/', register),
-    path('setting/', streamerSetting_view),
-    path('setting/update', update),
     path('getStreamer', getStreamer)
 ]

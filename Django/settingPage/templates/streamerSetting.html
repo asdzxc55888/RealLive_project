@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Realive</title>
+{% endblock %}
+
+{% block css %}
+<!-- None others css -->
+{% endblock %}
+
+{% block content %}
+<div class="container mainArea">
+    <form id="dataForm" method="post" action="">
+        {% csrf_token %}
+        <label for="basic-url">填入youtube嵌入網址</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+            </div>
+            <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl"  aria-describedby="basic-addon3"
+                value={{ youtubeUrl }}>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">暱稱</span>
+            </div>
+            <input type="text" class="form-control" id="nickName" name="nickName" aria-describedby="basic-addon3"
+                value={{ nickName }}>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">實況簡介</span>
+            </div>
+            <textarea class="form-control" aria-label="With textarea" id="introduction">{{ introduction }}</textarea>
+            <input id="introductionInput" type="hidden" name="introduction" value="">
+        </div>
+
+        {% if isStreamer == 'True' %}
+        <button class="btn btn-primary" id="updataBtn">修改</button>
+        {% else %}
+        <button class="btn btn-primary" id="updataBtn">創建</button>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $("#updataBtn").click(function () {
+        var form = document.getElementById("dataForm");
+        var introduction = document.getElementById("introductionInput");
+        introduction.setAttribute("value", $("#introduction").val());
+        form.submit();
+    });
+</script>
+{% endblock %}

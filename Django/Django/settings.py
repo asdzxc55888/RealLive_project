@@ -40,10 +40,12 @@ INSTALLED_APPS = [
 
     # 套件
     'channels',
+
     # own
     'indexPage',
     'livePage',
-    'statisticsPage'
+    'settingPage',
+    'statisticsPage',
 ]
 
 MIDDLEWARE = [
