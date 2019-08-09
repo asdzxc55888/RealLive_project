@@ -26,8 +26,8 @@ class statisticsView(View):
         _happyData = []
         _sadData = []
         _surpriseData = []
-        _neutralData = []
         if request.user.is_authenticated:
+            # get videos
             _videos = VideoRecord.objects.filter(userId = request.user)
 
             # get emotional data
@@ -41,8 +41,6 @@ class statisticsView(View):
                 _happyData.append(data.Happy)
                 _sadData.append(data.Sad)
                 _surpriseData.append(data.Surprise)
-                _neutralData.append(data.Neutral)
-
 
         context = {
             'videos': _videos,
@@ -54,6 +52,5 @@ class statisticsView(View):
             'happyData': _happyData,
             'sadData': _sadData,
             'surpriseData': _surpriseData,
-            'neutralData': _neutralData,
         }
         return render(request, self.template_name, context)
