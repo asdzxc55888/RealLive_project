@@ -33,7 +33,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">實況簡介</span>
             </div>
-            <textarea class="form-control" aria-label="With textarea" id="introduction">{{ introduction }}</textarea>
+            <textarea class="form-control" aria-label="With textarea" id="introduction" value={{ introduction }}>{{ introduction }}</textarea>
             <input id="introductionInput" type="hidden" name="introduction" value="">
         </div>
 
@@ -49,12 +49,13 @@
 {% block js %}
 <script>
     $("#updataBtn").click(function () {
+
         var form = document.getElementById("dataForm");
         var introduction = document.getElementById("introductionInput");
         introduction.setAttribute("value", $("#introduction").val());
-        form.submit();
-        // another post way
-        /*formData = $('form').serializeArray();
+        console.log(form.submit());
+        /*
+        formData = $('form').serializeArray();
         csrfmiddlewaretoken = $("form").find("input[name='csrfmiddlewaretoken']" ).val();
         $.ajax({
             type: "POST",
@@ -70,8 +71,9 @@
             },
             error: function (xhr, text, error) {
                 alert('系統錯誤: ' + error);
-            }*/
+            }
         })
+        */
     });
 </script>
 {% endblock %}
