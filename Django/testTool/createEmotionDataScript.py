@@ -2,14 +2,14 @@ from livePage.models import EmotionData, VideoRecord
 from random import randrange
 
 # declare time data, unit is seconds
-start = 61
-end = 61
+start = 1
+end = 3600
 
 # declare emotion data randrange
 range = 10
 
 # declare vid
-vid = VideoRecord.objects.get(vid="F5mRW0jo-U4")
+vid = VideoRecord.objects.get(vid="-oQvMHpKkms")
 
 while start <= end:
 	hour = int(start / 3600)

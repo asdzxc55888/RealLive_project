@@ -33,14 +33,48 @@ class statisticsView(View):
             # get emotional data
             video = VideoRecord.objects.get(vid = _vid)
             emotionData = EmotionData.objects.filter(vid = video)
+
+            # calculate interval
+            interval = 1
+            quantityLimit = [600, 1800, 3600, 7200] # 20 minutes, 1 hours, 2 hours
+            intervalList = [3, 6, 12, 24]
+            for i in range(len(quantityLimit)):
+                if len(emotionData) > quantityLimit[i]:
+                    interval = intervalList[i]
+                else:
+                    break
+
+            # downsize data
+            count = 0
+            angryDataSum = 0
+            disgustDataSum = 0
+            fearDataSum = 0
+            happyDataSum = 0
+            sadDataSum = 0
+            surpriseDataSum = 0
             for data in emotionData:
-                _time.append(data.time.strftime("%H:%M:%S"))
-                _angryData.append(data.Angry)
-                _disgustData.append(data.Disgust)
-                _fearData.append(data.Fear)
-                _happyData.append(data.Happy)
-                _sadData.append(data.Sad)
-                _surpriseData.append(data.Surprise)
+                count += 1
+                angryDataSum += data.Angry
+                disgustDataSum += data.Disgust
+                fearDataSum += data.Fear
+                happyDataSum += data.Happy
+                sadDataSum += data.Sad
+                surpriseDataSum += data.Surprise
+                if count == interval:
+                    _time.append(data.time.strftime("%H:%M:%S"))
+                    _angryData.append(int(angryDataSum / interval))
+                    _disgustData.append(int(disgustDataSum / interval))
+                    _fearData.append(int(fearDataSum / interval))
+                    _happyData.append(int(happyDataSum / interval))
+                    _sadData.append(int(sadDataSum / interval))
+                    _surpriseData.append(int(surpriseDataSum / interval))
+                    count = 0
+                    angryDataSum = 0
+                    disgustDataSum = 0
+                    fearDataSum = 0
+                    happyDataSum = 0
+                    sadDataSum = 0
+                    surpriseDataSum = 0
 
         context = {
             'videos': _videos,
