@@ -23,10 +23,13 @@ class EmotionData(models.Model):
     Happy = models.PositiveIntegerField(default = 0)
     Sad = models.PositiveIntegerField(default = 0)
     Surprise = models.PositiveIntegerField(default = 0)
-    Neutral = models.PositiveIntegerField(default = 0)
 
     def __str__(self):
         return '%s %s' % (self.vid, self.time)
+
+    # restrict that there does not exist two data with same vid and time
+    class Meta:
+        unique_together = ['vid', 'time']
 
 class VideoRecord(models.Model):
     userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, default = "")

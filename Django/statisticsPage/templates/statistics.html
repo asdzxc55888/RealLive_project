@@ -44,8 +44,10 @@
     -->
     <div class="row">
         <div class="col-1"></div>
-        <div class="col-10 canvasRoom">
-            <canvas id="myChart"></canvas>
+        <div class="col-10 chartWrapper">
+            <div class="chartAreaWrapper">
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
         <div class="col-1"></div>
     </div>
@@ -68,6 +70,15 @@
         //document.getElementById('timeLabel').style.visibility = 'visible';
         //document.getElementById('timeSelect').style.visibility = 'visible';
         playVideo("{{ vid }}");
+
+        // calculate chart width
+        var n = {{ angryData|length }};
+        var w = $('.chartWrapper').width();
+        if (n * 25 > w)
+            w = n * 25;
+        $('.chartAreaWrapper').css("width", w);
+
+        // create chart
         var t = {{ time|safe }};
         createChart(t, {{ angryData }}, {{ disgustData }}, {{ fearData }}, {{ happyData }}, {{ sadData }}, {{ surpriseData }}, {{ neutralData }});
     {% endif %}

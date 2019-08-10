@@ -45,6 +45,22 @@ ul.playlist li p {
 	margin: auto;
 }
 
+.chartWrapper {
+  	position: relative;
+  	overflow-x: scroll;
+}
+
+.chartWrapper > canvas {
+  	position: absolute;
+  	left: 0;
+  	top: 0;
+  	pointer-events: none;
+}
+
+.chartAreaWrapper {
+	height: 600px;
+}
+
 .nopadding {
     padding: 0;
 }
