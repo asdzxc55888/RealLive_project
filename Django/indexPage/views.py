@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
@@ -60,5 +60,7 @@ def register(request):
             return HttpResponseRedirect('/')
     else:
         form = UserCreationForm()
+
+    #return render_to_response('index.html', {'form': form})
     return render(request, 'register.html',locals())
 ########################### !登入註冊 ######################################
