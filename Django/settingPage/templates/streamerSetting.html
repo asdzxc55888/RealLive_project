@@ -13,19 +13,20 @@
 <div class="container mainArea">
     <form id="dataForm" method="post">
         {% csrf_token %}
-        <label for="basic-url">填入youtube嵌入網址</label>
+        <label>填入youtube嵌入網址</label>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">https://www.youtube.com/embed/</span>
+                <span class="input-group-text">https://www.youtube.com/embed/</span>
             </div>
-            <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl"  aria-describedby="basic-addon3"
+            <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl"
                 value={{ youtubeUrl }}>
         </div>
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">暱稱</span>
             </div>
-            <input type="text" class="form-control" id="nickName" name="nickName" aria-describedby="basic-addon3"
+            <input type="text" class="form-control" id="nickName" name="nickName"
                 value={{ nickName }}>
         </div>
 
