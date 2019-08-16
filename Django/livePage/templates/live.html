@@ -20,7 +20,10 @@
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
             <input id="chat-message-input" type="text" size="25" /><br />
             <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-            <input class="btn btn-primary" type="button" value="開啟情緒分享" />
+            <form method="post" action="detect">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="開啟情緒分享" />
+            </form>
         </div>
     </div>
 </div>

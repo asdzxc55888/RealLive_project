@@ -17,8 +17,8 @@ import time
 #
 
 # parameters for loading data and images
-detection_model_path = '../trained_models/detection_models/haarcascade_frontalface_default.xml'
-emotion_model_path = '../trained_models/emotion_models/fer2013_mini_XCEPTION.102-0.66.hdf5'
+detection_model_path = '../../Django/trainedModel/detectionModels/haarcascade_frontalface_default.xml'
+emotion_model_path = '../../Django/trainedModel/emotionModels/fer2013_mini_XCEPTION.102-0.66.hdf5'
 emotion_labels = get_labels('fer2013') #返回情緒種類的dic
 
 # hyper-parameters for bounding boxes shape
@@ -68,7 +68,7 @@ while True:
         emotion_label_arg = np.argmax(emotion_prediction) #取出emotion_prediction陣列中最大值的索引值
         emotion_text = emotion_labels[emotion_label_arg] #輸出權值最大所對應的情緒分析
         emotion_window.append(emotion_text) #在陣列最後加入一個情緒字串 ex:sad,happy
-
+        print(emotion_prediction)
         if len(emotion_window) > frame_window: #陣列中長度大於10，pop出index(0)的值
             emotion_window.pop(0)
         try:
