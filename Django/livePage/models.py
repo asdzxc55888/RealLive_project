@@ -23,7 +23,7 @@ class EmotionData(models.Model):
     Happy = models.PositiveIntegerField(default = 0)
     Sad = models.PositiveIntegerField(default = 0)
     Surprise = models.PositiveIntegerField(default = 0)
-
+    
     def __str__(self):
         return '%s %s' % (self.vid, self.time)
 

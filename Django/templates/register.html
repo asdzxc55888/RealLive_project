@@ -1,10 +1,46 @@
-<html>
+{% extends 'base.html' %}
+{% load static %}
 
-<body>
-    <form action="" method="POST">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="註冊">
+{% block title %}
+<title>Realive</title>
+{% endblock %}
+
+{% block css %}
+<!-- None others css -->
+{% endblock %}
+
+{% block content %}
+<style>
+    #registerForm {
+      margin-top:96px
+    }
+</style>
+
+<div id="registerForm" class="container">
+    <form method="POST" action="/accounts/register/">{% csrf_token %}
+      <div>
+          <label class="row"><b> 使用者名稱</b></label>
+          <input type="text" name="username" required="" maxlength="150" id="id_username" autofocus="">
+          <span class="error">{{ form.username.errors }}</span>
+          <label class="row"><b> 密碼</b></label>
+          <input type="password" name="password1" required="" id="id_password1">
+          <span class="error">{{ form.password1.errors }}</span>
+
+          <label class="row"><b> 確認密碼</b></label>
+          <input type="password" name="password2" required="" id="id_password2">
+          <span class="error">{{ form.password2.errors }}</span>
+
+          <div class="row">
+            <button class="col btn btn-primary" type="submit" id="registerBtnSubmit">註冊</button>
+          </div>
+          <p class="row">
+            <label>輸入規則:</lable>
+          </p>
+          <p class="row">你的密碼不能與其他個人資訊太相近。</p>
+          <p class="row">你得密碼必須包含至少8個字元。</p>
+          <p class="row">你不能使用常見的密碼。</p>
+          <p class="row">你的密碼不能完全是數字。</p>
+      </div>
     </form>
-</body>
-
-</html>
+</div>
+{% endblock %}
