@@ -20,7 +20,7 @@
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
             <input id="chat-message-input" type="text" size="25" /><br />
             <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-            <form method="post" action="detect">
+            <form id="openRecognition">
                 {% csrf_token %}
                 <input class="btn btn-primary" type="submit" value="開啟情緒分享" />
             </form>
@@ -31,4 +31,11 @@
 
 {% block js %}
 <script src="{% static 'js/chatChannel.js' %}"></script>
+
+<script type="text/javascript">
+    $('form#openRecognition').submit(function(e) {
+        e.preventDefault();
+        $.post('detect', $(this).serialize());
+    });
+</script>
 {% endblock %}

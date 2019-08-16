@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from .models import UserSetting
 from Django.settings import BASE_DIR
@@ -63,7 +64,7 @@ def detect(request, streamerName):
             # detecting faces location
             faces = faceDetection.detectMultiScale(gray_image, 1.3, 5)
 
-            for(x,y,w,h) in faces:
+            for (x,y,w,h) in faces:
                 # show rectangle for test
                 cv2.rectangle(bgr_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
@@ -97,11 +98,11 @@ def detect(request, streamerName):
                 records[emotionText] += 1
 
             # show windows for test
-            cv2.imshow("Face",bgr_image)
+            cv2.imshow("Face", bgr_image)
 
-        if(cv2.waitKey(1) == ord('q')):
+        if (cv2.waitKey(1) == ord('q')):
             cam.release()
             cv2.destroyAllWindows()
             break
 
-    return redirect('/')
+    return JsonResponse({'status': 'ok'})
