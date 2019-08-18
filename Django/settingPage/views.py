@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import JsonResponse, HttpResponseRedirect
 from livePage.models import UserSetting
+from django.contrib.auth.models import User
+import json
 
 # Create your views here.
 class settingView(View):
@@ -33,3 +36,29 @@ class settingView(View):
         settingData.introduction = request.POST.get("introduction")
         settingData.save() #更新進資料庫
         return render(request, 'index.html')
+
+class modifyPasswordView(View):
+        template_name = 'modifyPassword.html'
+
+        def get(self, request, *args, **kwargs):
+            return render(request, self.template_name)
+
+        def post(self, request, *args, **kwargs):
+            user = User.objects.get(id=request.user)
+            print(user)
+            if user.check_password(request.POST.get("newPassword1")):
+
+                if request.POST.get("newPassword1")==request.POST.get("newPassword2"):
+                    user.set_password(request.POST.get("newPassword1"))
+                    message = "修改成功"
+                else:
+                    message = "請確認密碼是否輸入相同"
+
+            else:
+                message = "密碼錯誤"
+
+            context = {
+                "message":message,
+            }
+            print(message)
+            return render(request, self.template_name, context)

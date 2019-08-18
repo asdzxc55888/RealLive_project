@@ -10,13 +10,11 @@
 {% endblock %}
 
 {% block content %}
-<style>
-    #registerForm {
-      margin-top:96px
-    }
-</style>
 
-<div id="registerForm" class="container">
+{% if request.user.is_authenticated %}
+<h1 class="mainArea">已經登入 !</h1>
+{% else %}
+<div id="registerForm" class="container mainArea">
     <form method="POST" action="/accounts/register/">{% csrf_token %}
       <div>
           <label class="row"><b> 使用者名稱</b></label>
@@ -43,4 +41,5 @@
       </div>
     </form>
 </div>
+{% endif %}
 {% endblock %}
