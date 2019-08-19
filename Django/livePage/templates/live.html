@@ -20,12 +20,11 @@
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
             <input id="chat-message-input" type="text" size="25" /><br />
             <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-            <form id="openRecognition">
-                {% csrf_token %}
-                <input class="btn btn-primary" type="submit" value="開啟情緒分享" />
-            </form>
+            <input id="openDetection" class="btn btn-primary" type="submit" value="開啟情緒分享" />
+            <input id="closeDetection" class="btn btn-primary" type="submit" value="關閉情緒分享" />
         </div>
     </div>
+    <video id="player" controls autoplay></video>
 </div>
 {% endblock %}
 
@@ -33,9 +32,31 @@
 <script src="{% static 'js/chatChannel.js' %}"></script>
 
 <script type="text/javascript">
-    $('form#openRecognition').submit(function(e) {
-        e.preventDefault();
-        $.post('detect', $(this).serialize());
-    });
+    document.querySelector('#openDetection').addEventListener('click', onOpenDetectionButtonClick);
+	document.querySelector('#closeDetection').addEventListener('click', onCloseDetectionButtonClick);
+
+    var track;
+
+    function onOpenDetectionButtonClick() {
+        // labeload user's picture
+        navigator.mediaDevices.getUserMedia({video: true})
+        .then(mediaStream => {
+            document.querySelector('video').srcObject = mediaStream;
+			track = mediaStream.getVideoTracks()[0];
+            // run storePicture every seconds
+            timer = setInterval(storePicture, 1000);
+		})
+		.catch(function(err) { console.log(err.name + ": " + err.message); });
+	}
+
+    function onCloseDetectionButtonClick() {
+        track.stop();
+        // stop running storePicture
+        clearInterval(timer);
+	}
+
+    function storePicture() {
+        console.log("test");
+    }
 </script>
 {% endblock %}
