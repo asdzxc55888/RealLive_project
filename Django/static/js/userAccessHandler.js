@@ -35,29 +35,22 @@ $(function() {
         $("#loginForm").data("kendoWindow").open();
     })
 
-  /*  $("#registerForm").submit(function(e) {
-      e.preventDefault();
-      csrfmiddlewaretoken = $("registerForm").find("input[name='csrfmiddlewaretoken']" ).val();
-        $.ajax({
-               type: "POST",
-               url: "/accounts/register/",
+    $('#login-form-link').click(function(e) {
+    		$("#login-form").delay(100).fadeIn(100);
+     		$("#register-form").fadeOut(100);
+    		$('#register-form-link').removeClass('active');
+    		$(this).addClass('active');
+    		e.preventDefault();
+  	});
+    
+  	$('#register-form-link').click(function(e) {
+  		$("#register-form").delay(100).fadeIn(100);
+   		$("#login-form").fadeOut(100);
+  		$('#login-form-link').removeClass('active');
+  		$(this).addClass('active');
+  		e.preventDefault();
+  	});
 
-               data: {
-                 "form" : $("#registerForm").serialize(),
-                 "csrfmiddlewaretoken" : csrfmiddlewaretoken
-               },
-               success: function(data)
-               {
-                   alert("註冊成功");
-               },
-               error:function()
-               {
-                  alert("註冊失敗！請確認資料是否符合要求");
-               }
-             });
-
-        return false;
-    });*/
 });
 
 function clickLoginBtn() {

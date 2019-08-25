@@ -1,21 +1,63 @@
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
 <!-- 登入頁面 -->
 <div id="loginForm" style="display:none" class="container">
-
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="login-tab" data-toggle="tab" href="#loginTab" role="tab" aria-controls="loginTab" aria-selected="true">登入</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="siginup" aria-selected="false">註冊</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="loginTab" role="tabpanel" aria-labelledby="login-tab">
     <form action="/accounts/login/" method="POST">
-        {% csrf_token %}
-        <div>
-            <label class="row" for="uname"><b>使用者名稱</b></label>
-            <input class="row" type="text" placeholder="Enter Username" name="uname" id="uname" required>
+      {% csrf_token %}
+      <div>
+        <label class="row" for="uname"><b>使用者名稱</b></label>
+        <input class="row form-control" type="text" placeholder="Enter Username" name="uname" id="uname" required>
 
-            <label class="row" for="psw"><b>密碼</b></label>
-            <input class="row" type="password" placeholder="Enter Password" name="psw" id="psw" required>
-            <div class="row">
-                <button class="col btn btn-primary" type="submit" id="loginSubmitBtn" value="login">登入</button>
-                <button class="col btn btn-primary" type="button" id="registerBtn" value="register" onclick="location.href='/accounts/register'">註冊</button>
-            </div>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> 記住我
-            </label>
+        <label class="row" for="psw"><b>密碼</b></label>
+        <input class="row form-control" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <div class="row">
+          <button class="col btn btn-primary" type="submit" id="loginSubmitBtn" value="login">登入</button>
         </div>
+        <label>
+          <a>忘記密碼</a>
+        </label>
+      </div>
     </form>
+    </div>
+    <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+      <form method="POST" action="/accounts/register/">{% csrf_token %}
+        <div>
+            <label class="row"><b> 使用者名稱</b></label>
+            <input class="form-control" type="text" name="username" required="" maxlength="150" id="id_username" autofocus="">
+            <span class="error">{{ form.username.errors }}</span>
+            <label class="row"><b> 密碼</b></label>
+            <input class="form-control" type="password" name="password1" required="" id="id_password1">
+            <span class="error">{{ form.password1.errors }}</span>
+
+            <label class="row"><b> 確認密碼</b></label>
+            <input class="form-control" type="password" name="password2" required="" id="id_password2">
+            <span class="error">{{ form.password2.errors }}</span>
+
+            <div class="row">
+              <button class="col btn btn-primary" type="submit" id="registerBtnSubmit">註冊</button>
+            </div>
+            <p class="row">
+              <label>輸入規則:</lable>
+            </p>
+            <p class="row">你的密碼不能與其他個人資訊太相近。</p>
+            <p class="row">你得密碼必須包含至少8個字元。</p>
+            <p class="row">你不能使用常見的密碼。</p>
+            <p class="row">你的密碼不能完全是數字。</p>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

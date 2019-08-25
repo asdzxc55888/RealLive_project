@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Realive</title>
+{% endblock %}
+
+{% block css %}
+<style>
+  .input-group {
+    margin: 16px;
+  }
+
+  .input-group input {
+    width: 50%;
+  }
+
+  .btn {
+    margin: 16px;
+  }
+
+  #streamForm label{
+    margin-top:8px;
+    margin-left:16px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mainArea">
+  <!-- tab導覽列 設定 -->
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">設定</a>
+      <a class="nav-item nav-link" id="nav-stream-tab" data-toggle="tab" href="#nav-stream" role="tab" aria-controls="nav-stream" aria-selected="false">實況設定</a>
+      <a class="nav-item nav-link" id="nav-modifyPassword-tab" data-toggle="tab" href="#nav-modifyPassword" role="tab" aria-controls="nav-modifyPassword" aria-selected="false">更換密碼</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <!-- 個人資料修改 -->
+    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <form id="profileForm" method="post">{% csrf_token %}
+        <div class="input-group">
+          <label class="input-group-text">電子郵件</label>
+          <input type="text" class="form-control" id="email" name="email" value={{ email }}>
+        </div>
+        <div class="input-group">
+          <label class="input-group-text">暱稱</label>
+          <input type="text" class="form-control" id="nickName" name="nickName" value={{ nickName }}>
+        </div>
+        <button class="btn btn-primary" id="updataBtn">修改</button>
+      </form>
+    </div>
+
+    <div class="tab-pane fade" id="nav-stream" role="tabpanel" aria-labelledby="nav-stream-tab">
+      <!-- 實況主設定 -->
+      <form id="streamForm" action="/setting/stream" method="post">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">填入youtube嵌入網址  https://www.youtube.com/embed/</span>
+              </div>
+              <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl"
+                  value={{ youtubeUrl }}>
+          </div>
+
+          <div class="input-group" style="height:250px;">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">實況簡介</span>
+              </div>
+              <textarea class="form-control" aria-label="With textarea" id="introduction"  name="introduction" value={{ introduction }}>{{ introduction }}</textarea>
+          </div>
+
+          <button class="btn btn-primary" id="updataSteamBtn">修改</button>
+      </form>
+    </div>
+
+    <div class="tab-pane fade" id="nav-modifyPassword" role="tabpanel" aria-labelledby="nav-modifyPassword-tab">
+      <!-- 更改密碼 -->
+      <form id="modifyPasswordForm" method="POST">{% csrf_token %}
+        <div id="inputArea">
+          <div class="input-group">
+          <p class="input-group-text"> 舊密碼</p>
+          <input class="form-control" type="password" name="oldPassword" required="required" maxlength="150" id="oldPassword">
+          </div>
+
+          <div class="input-group">
+          <p class="input-group-text"> 密碼</p>
+          <input class="form-control" type="password" name="newPassword1" required="required" id="newPassword1">
+          </div>
+
+          <div class="input-group">
+          <p class="input-group-text"> 確認密碼</p>
+          <input class="form-control" type="password" name="newPassword2" required="required" id="newPassword2">
+          </div>
+          <button class="btn btn-primary" type="submit" id="modifyBtnSubmit">確認修改</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+  $(function(){
+
+    $("#modifyPasswordForm").submit(function(e){
+      e.preventDefault();
+      csrfmiddlewaretoken = $("form").find("input[name='csrfmiddlewaretoken']" ).val();
+      $.ajax({
+        url:"/setting/modifyPassword",
+        type:"POST",
+        data:{
+          "csrfmiddlewaretoken" : csrfmiddlewaretoken,
+          "oldPassword" : $("#oldPassword").val(),
+          "newPassword1" : $("#newPassword1").val(),
+          "newPassword2" : $("#newPassword2").val()
+        },
+        success: function(response){
+          response = $.parseJSON(response)
+
+          if(response.status == true){
+            alert("修改密碼成功");
+            window.location.href = "/";
+          }else{
+            alert("修改密碼失敗：" + response.passwordValidate)
+          }
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock %}

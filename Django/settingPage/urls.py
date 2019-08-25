@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import settingView, modifyPasswordView
+from .views import settingView, modifyPasswordView, streamSettingView
 
 app_name = 'setting'
 
 urlpatterns = [
     path('', settingView.as_view()),
+    path('stream', streamSettingView.as_view()),
     path('modifyPassword', modifyPasswordView.as_view()),
 ]

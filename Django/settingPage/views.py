@@ -1,41 +1,56 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from livePage.models import UserSetting
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password, password_changed
+from django.core.exceptions import ValidationError
 import json
 
 # Create your views here.
 class settingView(View):
-    template_name = 'streamerSetting.html'
+    template_name = 'setting.html'
 
     def get(self, request, *args, **kwargs):
         current_user = request.user
+        settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
         if request.user.is_authenticated:
-            settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
             context = {
-                "youtubeUrl": settingData.youtubeUrl,
-                "nickName": settingData.nickName,
-                "introduction": settingData.introduction,
-                "isStreamer": 'True'
+            "email": current_user.email,
+            "nickName": settingData.nickName,
+            "youtubeUrl": settingData.youtubeUrl,
+            "introduction": settingData.introduction,
+            "isStreamer": 'True',
             }
         else:
             context = {
-                "youtubeUrl": '',
-                "nickName": '',
-                "introduction": '',
-                "isStreamer": 'False'
+            "email": current_user.email,
+            "nickName": settingData.nickName,
+            "youtubeUrl": '',
+            "introduction": '',
+            "isStreamer": 'False',
             }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         current_user = request.user
         settingData = UserSetting.objects.get(userId=current_user.id)
-        settingData.youtubeUrl = request.POST.get("youtubeUrl")
+        current_user.email = request.POST.get("email")
         settingData.nickName = request.POST.get("nickName")
+        settingData.save() #更新進資料庫
+        return render(request, 'setting.html')
+
+class streamSettingView(View):
+    template_name = 'setting.html'
+
+    def post(self, request, *args, **kwargs):
+        current_user = request.user
+        print( request.POST.get("introduction"))
+        settingData = UserSetting.objects.get(userId=current_user.id)
+        settingData.youtubeUrl = request.POST.get("youtubeUrl")
         settingData.introduction = request.POST.get("introduction")
         settingData.save() #更新進資料庫
-        return render(request, 'index.html')
+        return render(request, 'setting.html')
 
 class modifyPasswordView(View):
         template_name = 'modifyPassword.html'
@@ -44,21 +59,28 @@ class modifyPasswordView(View):
             return render(request, self.template_name)
 
         def post(self, request, *args, **kwargs):
-            user = User.objects.get(id=request.user)
+            user = User.objects.get(id=request.user.id)
             print(user)
-            if user.check_password(request.POST.get("newPassword1")):
+            status = False
+            if user.check_password(request.POST.get("oldPassword")):
 
                 if request.POST.get("newPassword1")==request.POST.get("newPassword2"):
-                    user.set_password(request.POST.get("newPassword1"))
-                    message = "修改成功"
+                    try:
+                        validate_password(request.POST.get("newPassword1"), user)
+                        user.set_password(request.POST.get("newPassword1"))
+                        user.save()
+                        passwordValidate = "修改成功"
+                        status = True
+                    except ValidationError as err:
+                        passwordValidate = err.messages
                 else:
-                    message = "請確認密碼是否輸入相同"
+                    passwordValidate = "請確認密碼是否輸入相同"
 
             else:
-                message = "密碼錯誤"
-
+                passwordValidate = "密碼錯誤"
             context = {
-                "message":message,
+                "status":status,
+                "passwordValidate":passwordValidate[0], #get array first
             }
-            print(message)
-            return render(request, self.template_name, context)
+            j_context = json.dumps(context)
+            return HttpResponse(j_context)
