@@ -27,21 +27,9 @@
         </div>
         <div class="col-1"></div>
     </div>
-    <!--
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-4 col-sm-2 col-md-2">
-            <label id="timeLabel" style="visibility: hidden;">時間單位:</label>
-            <form>
-                <select id="timeSelect" name="timeline" style="visibility: hidden;">
-                    <option value="second">秒</option>
-                    <option value="minute" selected>分</option>
-                    <option value="hour">小時</option>
-                </select>
-            </form>
-        </div>
-    </div>
-    -->
+
+    <div id="selecter" class="row"></div>
+
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10 chartWrapper">
@@ -57,8 +45,21 @@
 {% block js %}
 <script src="{% static 'js/keys.js' %}"></script>
 <script src="{% static 'js/Chart.min.js' %}"></script>
-<script src="{% static 'js/statistics.js' %}"></script>
 
+<!-- initial data -->
+<script type="text/javascript">
+var t = {{ time|safe }};
+var angey = {{ angryData }};
+var disgust = {{ disgustData }};
+var fear = {{ fearData }};
+var happy = {{ happyData }};
+var sad = {{ sadData }};
+var surprise = {{ surpriseData }};
+var n = t.length;
+var myChart;
+</script>
+
+<script src="{% static 'js/statistics.js' %}"></script>
 <script type="text/javascript">
 {% if not request.user.is_authenticated %}
     alert("請先登錄");
@@ -67,20 +68,19 @@
         uploadVideo("{{ video.vid }}");
     {% endfor %}
     {% if vid != None %}
-        //document.getElementById('timeLabel').style.visibility = 'visible';
-        //document.getElementById('timeSelect').style.visibility = 'visible';
         playVideo("{{ vid }}");
+        updateSelecter({{ hours }});
+        setChartWidth(n);
 
-        // calculate chart width
-        var n = {{ angryData|length }};
-        var w = $('.chartWrapper').width();
-        if (n * 25 > w)
-            w = n * 25;
-        $('.chartAreaWrapper').css("width", w);
-
-        // create chart
-        var t = {{ time|safe }};
-        createChart(t, {{ angryData }}, {{ disgustData }}, {{ fearData }}, {{ happyData }}, {{ sadData }}, {{ surpriseData }}, {{ neutralData }});
+        // create first chart
+        if (n > 3600) {
+            createChart(t.slice(0, 3600), angey.slice(0, 3600), disgust.slice(0, 3600),
+                        fear.slice(0, 3600), happy.slice(0, 3600), sad.slice(0, 3600),
+                        surprise.slice(0, 3600));
+        }
+        else {
+            createChart(t, angey, disgust, fear, happy, sad, surprise);
+        }
     {% endif %}
 {% endif %}
 </script>

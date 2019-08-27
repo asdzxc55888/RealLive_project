@@ -34,47 +34,19 @@ class statisticsView(View):
             video = VideoRecord.objects.get(vid = _vid)
             emotionData = EmotionData.objects.filter(vid = video)
 
-            # calculate interval
-            interval = 1
-            quantityLimit = [600, 1800, 3600, 7200] # 20 minutes, 1 hours, 2 hours
-            intervalList = [3, 6, 12, 24]
-            for i in range(len(quantityLimit)):
-                if len(emotionData) > quantityLimit[i]:
-                    interval = intervalList[i]
-                else:
-                    break
+            # calculate hours
+            hours = int(len(emotionData) / 3600);
+            if len(emotionData) % 3600 > 0:
+                hours += 1
 
-            # downsize data
-            count = 0
-            angryDataSum = 0
-            disgustDataSum = 0
-            fearDataSum = 0
-            happyDataSum = 0
-            sadDataSum = 0
-            surpriseDataSum = 0
             for data in emotionData:
-                count += 1
-                angryDataSum += data.Angry
-                disgustDataSum += data.Disgust
-                fearDataSum += data.Fear
-                happyDataSum += data.Happy
-                sadDataSum += data.Sad
-                surpriseDataSum += data.Surprise
-                if count == interval:
-                    _time.append(data.time.strftime("%H:%M:%S"))
-                    _angryData.append(int(angryDataSum / interval))
-                    _disgustData.append(int(disgustDataSum / interval))
-                    _fearData.append(int(fearDataSum / interval))
-                    _happyData.append(int(happyDataSum / interval))
-                    _sadData.append(int(sadDataSum / interval))
-                    _surpriseData.append(int(surpriseDataSum / interval))
-                    count = 0
-                    angryDataSum = 0
-                    disgustDataSum = 0
-                    fearDataSum = 0
-                    happyDataSum = 0
-                    sadDataSum = 0
-                    surpriseDataSum = 0
+                _time.append(data.time.strftime("%H:%M:%S"))
+                _angryData.append(int(data.Angry))
+                _disgustData.append(int(data.Disgust))
+                _fearData.append(int(data.Fear))
+                _happyData.append(int(data.Happy))
+                _sadData.append(int(data.Sad))
+                _surpriseData.append(int(data.Surprise))
 
         context = {
             'videos': _videos,
@@ -86,5 +58,6 @@ class statisticsView(View):
             'happyData': _happyData,
             'sadData': _sadData,
             'surpriseData': _surpriseData,
+            'hours': hours,
         }
         return render(request, self.template_name, context)

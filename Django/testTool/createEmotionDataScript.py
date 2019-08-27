@@ -2,8 +2,8 @@ from livePage.models import EmotionData, VideoRecord
 from random import randrange
 
 # declare time data, unit is seconds
-start = 1
-end = 3600
+start = 3601
+end = 3601
 
 # declare emotion data randrange
 range = 10

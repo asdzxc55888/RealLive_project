@@ -1,10 +1,95 @@
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim();
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+function uploadVideo(vid) {
+	var thumbSize = 'large',		// 設定要取得的縮圖是大圖還是小圖
+		imgWidth = '200',			// 限制圖片的寬
+		imgHeight = '150',			// 限制圖片的高
+		address = 'https://www.youtube.com/watch?v=' + vid;
+	var _type = (thumbSize == 'large') ? 0 : 2;
+
+	try {
+		// 透過youtube網址取得vid
+		// var vid = address.match('[\\?&]v=([^&#]*)')[1];
+
+		// 取得 title
+		var title = 'None';
+		$.ajax({
+			url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + youtubeApiKey,
+			async: false,
+			dataType: 'json',
+			success: function(data) {
+				console.log("Successfully obtained information.");
+				title = (data['items'][0]['snippet']['title']);
+			},
+			error: function() {
+				console.log("Failed to get the data, see network tab for response details.");
+			}
+		});
+
+		// 取得縮圖
+		var thumbUrl = "http://img.youtube.com/vi/" + vid + "/" + _type + ".jpg";
+
+		var html = '<li class="row"><a class="col-md-6" href="' + address + '">';
+		html += '<img src="' + thumbUrl + '" alt="' + title + '" title="' + title + '" width="' + imgWidth + '" height="' + imgHeight + '" />';
+		html += '</a><p class="col-md-6 videoTitle">' + title + '</p></li>';
+
+		var option = htmlToElement(html);
+		$(option).children('a').click(function() {
+			var form = document.getElementById("vidForm");
+			var input = document.getElementById("vidInput");
+		    input.setAttribute("value", vid);
+		    form.submit();
+			return false;
+		});
+
+		$('.playlist').append(option);
+	}
+	catch {
+		alert('很抱歉無法連接vid=' + vid + '的直播紀錄');
+	};
+}
+
 function playVideo(vid) {
 	$('#player').attr('src', 'https://www.youtube.com/embed/' + vid);
 }
 
+function updateSelecter(hours) {
+	if (hours > 1) {
+		var content = '<select id="section" style="margin: 0 auto" onchange="changeSection()">';
+		for (i = 1; i <= hours; i++) {
+			content += '<option value="' + String(i) + '">' + String(i - 1) + ' ~ ' + String(i) + ' hours</option>';
+		}
+		content += '</select>';
+		document.getElementById('selecter').innerHTML = content;
+	}
+}
+
+function changeSection() {
+    var s = $('#section').children("option:selected").val();
+    myChart.destroy();
+    createChart(t.slice((s - 1) * 3600, s * 3600), angey.slice((s - 1) * 3600, s * 3600), disgust.slice((s - 1) * 3600, s * 3600),
+                fear.slice((s - 1) * 3600, s * 3600), happy.slice((s - 1) * 3600, s * 3600), sad.slice((s - 1) * 3600, s * 3600),
+                surprise.slice((s - 1) * 3600, s * 3600));
+}
+
+function setChartWidth(n) {
+	var w = $('.chartWrapper').width();
+	if (n * 10 > w && n * 10 < 16000)
+		w = n * 10;
+	else if (n * 10 > w) {
+		w = 16000;
+	}
+	$('.chartAreaWrapper').css("width", w);
+}
+
 function createChart(time, angryData, disgustData, fearData, happyData, sadData, surpriseData) {
 	var ctx = document.getElementById('myChart');
-	var myChart = new Chart(ctx, {
+	myChart = new Chart(ctx, {
 		type: 'line',
 		data: {
 			labels: time,
@@ -63,7 +148,7 @@ function createChart(time, angryData, disgustData, fearData, happyData, sadData,
 			scales: {
 				xAxes: [{
 					ticks: {
-						maxTicksLimit: 61
+						maxTicksLimit: 60
 					}
 				}],
 				yAxes: [{
@@ -87,60 +172,4 @@ function createChart(time, angryData, disgustData, fearData, happyData, sadData,
             }
 		},
 	});
-}
-
-function htmlToElement(html) {
-    var template = document.createElement('template');
-    html = html.trim();
-    template.innerHTML = html;
-    return template.content.firstChild;
-}
-
-function uploadVideo(vid) {
-	var thumbSize = 'large',		// 設定要取得的縮圖是大圖還是小圖
-		imgWidth = '200',			// 限制圖片的寬
-		imgHeight = '150',			// 限制圖片的高
-		address = 'https://www.youtube.com/watch?v=' + vid;
-	var _type = (thumbSize == 'large') ? 0 : 2;
-
-	try {
-		// 透過youtube網址取得vid
-		// var vid = address.match('[\\?&]v=([^&#]*)')[1];
-
-		// 取得 title
-		var title = 'None';
-		$.ajax({
-			url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + youtubeApiKey,
-			async: false,
-			dataType: 'json',
-			success: function(data) {
-				console.log("Successfully obtained information.");
-				title = (data['items'][0]['snippet']['title']);
-			},
-			error: function() {
-				console.log("Failed to get the data, see network tab for response details.");
-			}
-		});
-
-		// 取得縮圖
-		var thumbUrl = "http://img.youtube.com/vi/" + vid + "/" + _type + ".jpg";
-
-		var html = '<li class="row"><a class="col-md-6" href="' + address + '">';
-		html += '<img src="' + thumbUrl + '" alt="' + title + '" title="' + title + '" width="' + imgWidth + '" height="' + imgHeight + '" />';
-		html += '</a><p class="col-md-6" >' + title + '</p></li>';
-
-		var option = htmlToElement(html);
-		$(option).children('a').click(function() {
-			var form = document.getElementById("vidForm");
-			var input = document.getElementById("vidInput");
-		    input.setAttribute("value", vid);
-		    form.submit();
-			return false;
-		});
-
-		$('.playlist').append(option);
-	}
-	catch {
-		alert('很抱歉無法連接vid=' + vid + '的直播紀錄');
-	};
 }

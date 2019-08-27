@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block css %}
-<!-- None others css -->
+<style type="text/css">
+    #player, #snapshot {
+        display: none;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -25,38 +29,11 @@
         </div>
     </div>
     <video id="player" controls autoplay></video>
+    <canvas id="snapshot" width=320 height=240></canvas>
 </div>
 {% endblock %}
 
 {% block js %}
+<script src="{% static 'js/live.js' %}"></script>
 <script src="{% static 'js/chatChannel.js' %}"></script>
-
-<script type="text/javascript">
-    document.querySelector('#openDetection').addEventListener('click', onOpenDetectionButtonClick);
-	document.querySelector('#closeDetection').addEventListener('click', onCloseDetectionButtonClick);
-
-    var track;
-
-    function onOpenDetectionButtonClick() {
-        // labeload user's picture
-        navigator.mediaDevices.getUserMedia({video: true})
-        .then(mediaStream => {
-            document.querySelector('video').srcObject = mediaStream;
-			track = mediaStream.getVideoTracks()[0];
-            // run storePicture every seconds
-            timer = setInterval(storePicture, 1000);
-		})
-		.catch(function(err) { console.log(err.name + ": " + err.message); });
-	}
-
-    function onCloseDetectionButtonClick() {
-        track.stop();
-        // stop running storePicture
-        clearInterval(timer);
-	}
-
-    function storePicture() {
-        console.log("test");
-    }
-</script>
 {% endblock %}
