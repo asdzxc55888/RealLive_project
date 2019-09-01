@@ -1,10 +1,18 @@
-document.querySelector('#openDetection').addEventListener('click', onOpenDetectionButtonClick);
-document.querySelector('#closeDetection').addEventListener('click', onCloseDetectionButtonClick);
-player = document.getElementById('player')
-canvas = document.getElementById('snapshot')
-context = canvas.getContext('2d');
-
+var player = document.getElementById('player')
+var canvas = document.getElementById('snapshot')
+var context = canvas.getContext('2d');
 var track;
+
+// connect image socket
+var imageSocket = new WebSocket('ws://' + window.location.host + '/ws' + window.location.pathname + 'image');
+
+imageSocket.onopen = function(e) {
+    console.log('Image socket connected.');
+};
+
+imageSocket.onclose = function(e) {
+    console.error('Image socket closed unexpectedly.');
+};
 
 function onOpenDetectionButtonClick() {
     // labeload user's picture
@@ -26,6 +34,7 @@ function onCloseDetectionButtonClick() {
 
 function storePicture() {
     context.drawImage(player, 0, 0, 320, 240);
-    var data = canvas.toDataURL('image/jpeg', 1.0);
-    var blob = new Blob([data.buffer]);
+    canvas.toBlob(function(blob){
+        imageSocket.send(blob);
+    }, "image/jpeg", 1.0);
 }

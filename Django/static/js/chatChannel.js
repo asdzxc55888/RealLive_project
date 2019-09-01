@@ -8,12 +8,15 @@ chatSocket.onmessage = function (e) {
     document.querySelector('#chat-log').value += (message + '\n');
     var textarea = document.getElementById('chat-log');
     textarea.scrollTop = textarea.scrollHeight;
-    console.log('message:' + message)
+    //console.log('message:' + message)
+};
+
+chatSocket.onopen = function (e) {
+    console.log('Chat socket connected.');
 };
 
 chatSocket.onclose = function (e) {
-    console.error('Chat socket closed unexpectedly');
-    console.log('close:')
+    console.error('Chat socket closed unexpectedly.');
 };
 
 document.querySelector('#chat-message-input').focus();

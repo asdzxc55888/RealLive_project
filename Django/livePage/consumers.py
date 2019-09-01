@@ -1,6 +1,9 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from .recognition import detect
 import json
+import cv2
+import numpy as np
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -44,3 +47,17 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'message': message
         }))
+
+class ImageConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+
+    def disconnect(self, close_code):
+        pass
+
+    def receive(self, bytes_data):
+        # convert blob to numpy byte array
+        data = np.asarray(bytearray(bytes_data), dtype="uint8")
+        # get grayscale image by decoding numpy byte array
+        grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
+        detect(grayImage)

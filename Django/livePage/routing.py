@@ -4,4 +4,5 @@ from . import consumers
 
 websocket_urlpatterns = [
     url(r'^ws/live/(?P<streamerName>[^/]+)/$', consumers.ChatConsumer),
+    url(r'^ws/live/(?P<streamerName>[^/]+)/image$', consumers.ImageConsumer),
 ]

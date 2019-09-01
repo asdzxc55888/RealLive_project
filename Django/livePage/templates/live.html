@@ -24,12 +24,13 @@
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
             <input id="chat-message-input" type="text" size="25" /><br />
             <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-            <input id="openDetection" class="btn btn-primary" type="submit" value="開啟情緒分享" />
-            <input id="closeDetection" class="btn btn-primary" type="submit" value="關閉情緒分享" />
+            <input id="openDetection" class="btn btn-primary" onclick="onOpenDetectionButtonClick()" value="開啟情緒分享" />
+            <input id="closeDetection" class="btn btn-primary" onclick="onCloseDetectionButtonClick()" value="關閉情緒分享" />
         </div>
     </div>
     <video id="player" controls autoplay></video>
     <canvas id="snapshot" width=320 height=240></canvas>
+    <img id="test">
 </div>
 {% endblock %}
 
