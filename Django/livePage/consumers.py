@@ -1,6 +1,6 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .recognition import detect
+from .recognition import emotionRecognition
 import json
 import cv2
 import numpy as np
@@ -49,6 +49,8 @@ class ChatConsumer(WebsocketConsumer):
         }))
 
 class ImageConsumer(WebsocketConsumer):
+    er = emotionRecognition()
+
     def connect(self):
         self.accept()
 
@@ -60,4 +62,4 @@ class ImageConsumer(WebsocketConsumer):
         data = np.asarray(bytearray(bytes_data), dtype="uint8")
         # get grayscale image by decoding numpy byte array
         grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
-        detect(grayImage)
+        self.er.detect(grayImage)

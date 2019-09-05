@@ -10,6 +10,12 @@
     #player, #snapshot {
         display: none;
     }
+
+    {% if not request.user.is_authenticated %}
+    #openDetection, #closeDetection {
+        display: none;
+    }
+    {% endif %}
 </style>
 {% endblock %}
 
