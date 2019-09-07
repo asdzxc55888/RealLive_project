@@ -62,4 +62,11 @@ class ImageConsumer(WebsocketConsumer):
         data = np.asarray(bytearray(bytes_data), dtype="uint8")
         # get grayscale image by decoding numpy byte array
         grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
-        self.er.detect(grayImage)
+
+        # whether server return marked picture
+        self.er.SetIsShow(True)
+
+        # base64 of marked picture
+        base64 = self.er.detect(grayImage)
+        if base64 != None:
+            self.send(bytes_data=base64)

@@ -4,6 +4,7 @@ from keras import backend
 import tensorflow as tf
 import cv2
 import numpy as np
+import base64
 
 class emotionRecognition:
     emotionLabels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'sad', 5: 'surprise', 6: 'neutral'}
@@ -23,6 +24,11 @@ class emotionRecognition:
 
     # getting input model shapes for inference, 64 * 64 array
     emotionTargetSize = emotionClassifier.input_shape[1:3]
+
+    isShow = False
+
+    def SetIsShow(self, flag):
+        self.isShow = flag
 
     def preprocess_input(self, x, v2=True):
         x = x.astype('float32') # int to float
@@ -69,3 +75,11 @@ class emotionRecognition:
                 print(emotionText)
 
                 records[emotionText] += 1
+
+                cv2.rectangle(grayImage, (x, y), (x + w, y + h), (255, 250, 205), 2)
+                cv2.putText(grayImage, emotionText, (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 205), 1, cv2.LINE_AA)
+
+        if self.isShow:
+            return cv2.imencode('.jpg', grayImage)[1].tostring()
+        else:
+            return None

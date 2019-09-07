@@ -1,6 +1,7 @@
-var player = document.getElementById('player')
-var canvas = document.getElementById('snapshot')
-var context = canvas.getContext('2d');
+var player = document.getElementById('player');
+var snapshot = document.getElementById('snapshot');
+var snapshotContext = snapshot.getContext('2d');
+var test = document.getElementById('test');
 var track;
 
 // connect image socket
@@ -12,6 +13,15 @@ imageSocket.onopen = function(e) {
 
 imageSocket.onclose = function(e) {
     console.error('Image socket closed unexpectedly.');
+};
+
+imageSocket.onmessage = function(e) {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.data);
+    reader.onloadend = function() {
+        var base64data = reader.result;
+        test.src = 'data:image/jpg;base64,' + base64data.split(",")[1];
+    }
 };
 
 function onOpenDetectionButtonClick() {
@@ -33,8 +43,8 @@ function onCloseDetectionButtonClick() {
 }
 
 function storePicture() {
-    context.drawImage(player, 0, 0, 320, 240);
-    canvas.toBlob(function(blob){
+    snapshotContext.drawImage(player, 0, 0, 320, 240);
+    snapshot.toBlob(function(blob){
         imageSocket.send(blob);
     }, "image/jpeg", 1.0);
 }
