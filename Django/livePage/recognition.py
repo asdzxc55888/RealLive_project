@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import base64
 
-class emotionRecognition:
+class Recognizer:
     emotionLabels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'sad', 5: 'surprise', 6: 'neutral'}
 
     # offset of emotional picture. enlarging picture in order to cover all face
@@ -30,7 +30,7 @@ class emotionRecognition:
     def SetIsShow(self, flag):
         self.isShow = flag
 
-    def preprocess_input(self, x, v2=True):
+    def preprocessInput(self, x, v2=True):
         x = x.astype('float32') # int to float
         x = x / 255.0
         if v2:
@@ -38,9 +38,12 @@ class emotionRecognition:
             x = x * 2.0
         return x
 
-    def detect(self, grayImage):
-        # recording emotion
+    def recognize(self, grayImage):
+        # counting emotion
         records = { 'angry': 0, 'disgust': 0, 'fear': 0, 'happy': 0, 'sad': 0, 'surprise': 0, 'neutral': 0 }
+
+        # storeing emotion type and corresponding location
+        emotions = []
 
         # detecting faces location
         faces = self.faceDetection.detectMultiScale(grayImage, 1.3, 5)
@@ -57,7 +60,7 @@ class emotionRecognition:
                 continue
 
             # changing grayFace to float32 and doing some calculation
-            grayFace = self.preprocess_input(grayFace, True)
+            grayFace = self.preprocessInput(grayFace, True)
             # inserting a dimension at head
             grayFace = np.expand_dims(grayFace, 0)
             # appending a dimension at tail
@@ -75,11 +78,12 @@ class emotionRecognition:
                 print(emotionText)
 
                 records[emotionText] += 1
-
-                cv2.rectangle(grayImage, (x, y), (x + w, y + h), (255, 250, 205), 2)
-                cv2.putText(grayImage, emotionText, (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 250, 205), 1, cv2.LINE_AA)
+                emotions.append((emotionText, x, y, w, h))
 
         if self.isShow:
+            for (emotionText, x, y, w, h) in emotions:
+                cv2.rectangle(grayImage, (x, y), (x + w, y + h), (255, 255, 255), 2)
+                cv2.putText(grayImage, emotionText, (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
             return cv2.imencode('.jpg', grayImage)[1].tostring()
         else:
             return None

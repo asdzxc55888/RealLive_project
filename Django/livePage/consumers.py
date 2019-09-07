@@ -1,6 +1,6 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .recognition import emotionRecognition
+from .recognition import Recognizer
 import json
 import cv2
 import numpy as np
@@ -49,7 +49,7 @@ class ChatConsumer(WebsocketConsumer):
         }))
 
 class ImageConsumer(WebsocketConsumer):
-    er = emotionRecognition()
+    recognizer = Recognizer()
 
     def connect(self):
         self.accept()
@@ -64,9 +64,9 @@ class ImageConsumer(WebsocketConsumer):
         grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
 
         # whether server return marked picture
-        self.er.SetIsShow(True)
+        self.recognizer.SetIsShow(True)
 
         # base64 of marked picture
-        base64 = self.er.detect(grayImage)
+        base64 = self.recognizer.recognize(grayImage)
         if base64 != None:
             self.send(bytes_data=base64)
