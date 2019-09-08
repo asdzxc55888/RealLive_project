@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from livePage.models import UserSetting
+from django.core.exceptions import ValidationError
 import json
 
 # Create your views here.
@@ -30,7 +31,7 @@ def getStreamer(request):
     print(data)
     return JsonResponse(data, safe=False)
 
-########################### 登入註冊 #########################################
+#登入
 def login(request):
 
     if request.user.is_authenticated:
@@ -48,19 +49,35 @@ def login(request):
         messages.warning(request, 'Your password has been changed successfully!', extra_tags='alert')
         return HttpResponseRedirect('/')
 
+#登出
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/')
 
+#註冊
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()   # 將user資料寫入資料庫
-            return HttpResponseRedirect('/')
-    else:
-        form = UserCreationForm()
+        try:
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                rtnMessage = {
+                    'success': True,
+                    'messages': "創建帳號成功！"
+                }
+            else:
+                rtnMessage = {
+                    'success': False,
+                    'messages': form.errors
+                }
+        except ValidationError as err:
+            rtnMessage = {
+                'success': False,
+                'messages': err.messages
+            }
 
-    #return render_to_response('index.html', {'form': form})
-    return render(request, 'register.html',locals())
-########################### !登入註冊 ######################################
+    return JsonResponse(rtnMessage, safe=False)
+#忘記密碼
+def forgetPassword(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.POST.get("userName"))

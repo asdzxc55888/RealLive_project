@@ -62,6 +62,8 @@ class modifyPasswordView(View):
             user = User.objects.get(id=request.user.id)
             print(user)
             status = False
+
+            #判斷是否成功 設定傳送訊息
             if user.check_password(request.POST.get("oldPassword")):
 
                 if request.POST.get("newPassword1")==request.POST.get("newPassword2"):
