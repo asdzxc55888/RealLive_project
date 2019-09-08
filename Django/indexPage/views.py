@@ -2,11 +2,12 @@ from django.shortcuts import render,render_to_response
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from indexPage.form import UserCreationForm
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from livePage.models import UserSetting
 from django.core.exceptions import ValidationError
+from random import randrange
 import json
 
 # Create your views here.
@@ -40,7 +41,7 @@ def login(request):
     username = request.POST.get('uname', '') #取得參數
     password = request.POST.get('psw', '')
 
-    user = auth.authenticate(username=username, password=password) #取得參數
+    user = auth.authenticate(username=username, password=password)
 
     if user is not None and user.is_active:
         auth.login(request, user)
@@ -65,6 +66,7 @@ def register(request):
                     'success': True,
                     'messages': "創建帳號成功！"
                 }
+                UserSetting.objects.create(userId = user) #建立使用者設定資料
             else:
                 rtnMessage = {
                     'success': False,
@@ -77,7 +79,9 @@ def register(request):
             }
 
     return JsonResponse(rtnMessage, safe=False)
+
 #忘記密碼
-def forgetPassword(request):
+def forgotPassword(request):
     if request.method == 'POST':
-        user = User.objects.get(id=request.POST.get("userName"))
+        user = User.objects.get(id=request.POST.get("username"))
+        newPassword = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(10))

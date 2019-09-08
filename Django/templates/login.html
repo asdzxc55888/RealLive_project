@@ -35,6 +35,9 @@
     <div class="tab-pane fade" id="signupTab" role="tabpanel" aria-labelledby="signup-tab">
       <form id="registerForm" method="POST">{% csrf_token %}
         <div>
+            <label class="row"><b> E-mail</b></label>
+            <input class="form-control" type="text" name="email" required="" maxlength="150" id="id_email" autofocus="" placeholder="Enter email">
+            <span class="error">{{ form.email.errors }}</span>
             <label class="row"><b> 使用者名稱</b></label>
             <input class="form-control" type="text" name="username" required="" maxlength="150" id="id_username" autofocus="" placeholder="Enter Username">
             <span class="error">{{ form.username.errors }}</span>
@@ -60,7 +63,7 @@
       </form>
     </div>
     <div class="tab-pane fade" id="forgotPasswordTab" role="tabpanel" aria-labelledby="forgotPassword-tab">
-      <form method="POST" action="/accounts/forgotPassword/">{% csrf_token %}
+      <form id="forgotPasswordForm" method="POST">{% csrf_token %}
         <div>
             <label class="row"><b> 請輸入使用者名稱</b></label>
             <input class="form-control" type="text" name="username_forgot" required="" maxlength="150" id="username_forgot" autofocus="" placeholder="Enter UserName">

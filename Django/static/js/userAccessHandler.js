@@ -64,11 +64,31 @@ $(function() {
         data: $("#registerForm").serialize(),
         type: "POST",
         success:function(response){
-          console.log(response);
           if(response.success){
+            alert(response.messages);
             location.reload(); //重整頁面
+          }else{
+            alertMessage(response.messages);
           }
-          alertMessage(response.messages);
+        }
+      })
+      return false;
+    });
+
+    $("#forgotPasswordForm").submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        headers: { "X-CSRFToken": window.CSRF_TOKEN },
+        url:"/accounts/forgotPassword/",
+        data: $("#forgotPasswordForm").serialize(),
+        type: "POST",
+        success:function(response){
+          if(response.success){
+            alert(response.messages);
+            location.reload(); //重整頁面
+          }else{
+            alertMessage(response.messages);
+          }
         }
       })
       return false;
