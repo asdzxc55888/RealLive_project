@@ -6,9 +6,9 @@ function htmlToElement(html) {
 }
 
 function uploadVideo(vid) {
-	var thumbSize = 'large',		// 設定要取得的縮圖是大圖還是小圖
-		imgWidth = '200',			// 限制圖片的寬
-		imgHeight = '150',			// 限制圖片的高
+	var thumbSize = 'large',
+		imgWidth = '200',
+		imgHeight = '150',
 		address = 'https://www.youtube.com/watch?v=' + vid;
 	var _type = (thumbSize == 'large') ? 0 : 2;
 
@@ -54,10 +54,6 @@ function uploadVideo(vid) {
 	};
 }
 
-function playVideo(vid) {
-	$('#player').attr('src', 'https://www.youtube.com/embed/' + vid);
-}
-
 function updateSelecter(hours) {
 	if (hours > 1) {
 		var content = '<select id="section" style="margin: 0 auto" onchange="changeSection()">';
@@ -85,6 +81,11 @@ function setChartWidth(n) {
 		w = 16000;
 	}
 	$('.chartAreaWrapper').css("width", w);
+}
+
+function toSecond(time) {
+    var t = time.split(':');
+    return Number(t[0]) * 3600 + Number(t[1]) * 60 + Number(t[2]);
 }
 
 function createChart(time, angryData, disgustData, fearData, happyData, sadData, surpriseData) {
@@ -172,4 +173,14 @@ function createChart(time, angryData, disgustData, fearData, happyData, sadData,
             }
 		},
 	});
+
+    // seek youtube video to click point
+    ctx.onclick = function(evt) {
+        var activePoint = myChart.getElementsAtEvent(evt)[0];
+
+        if (activePoint !== undefined) {
+            var time = myChart.data.labels[activePoint._index];
+            player.seekTo(toSecond(time));
+        }
+    };
 }

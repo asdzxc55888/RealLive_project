@@ -1,8 +1,8 @@
-var player = document.getElementById('player');
-var snapshot = document.getElementById('snapshot');
-var snapshotContext = snapshot.getContext('2d');
-var test = document.getElementById('test');
-var track;
+var stream = document.getElementById('stream'),
+    snapshot = document.getElementById('snapshot'),
+    snapshotContext = snapshot.getContext('2d'),
+    test = document.getElementById('test'),
+    track;
 
 // connect image socket
 var imageSocket = new WebSocket('ws://' + window.location.host + '/ws' + window.location.pathname + 'image');
@@ -43,8 +43,10 @@ function onCloseDetectionButtonClick() {
 }
 
 function storePicture() {
-    snapshotContext.drawImage(player, 0, 0, 320, 240);
-    snapshot.toBlob(function(blob){
-        imageSocket.send(blob);
+    snapshotContext.drawImage(stream, 0, 0, 320, 240);
+    snapshot.toBlob(function(image){
+        var time = Math.floor(player.getCurrentTime()).toString();
+        imageSocket.send(new Blob([vid + ' ' + time], {type : 'text/plain'}));
+        imageSocket.send(image);
     }, "image/jpeg", 1.0);
 }

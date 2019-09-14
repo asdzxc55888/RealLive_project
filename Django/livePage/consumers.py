@@ -58,15 +58,27 @@ class ImageConsumer(WebsocketConsumer):
         pass
 
     def receive(self, bytes_data):
-        # convert blob to numpy byte array
-        data = np.asarray(bytearray(bytes_data), dtype="uint8")
-        # get grayscale image by decoding numpy byte array
-        grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
+        # receive information
+        if len(bytes_data) < 30:
+            information = bytes_data.decode("utf-8")
+            self.vid = information.split(' ')[0]
+            t = int(information.split(' ')[1])
+            hour = int(t / 3600)
+            minute = int((t - hour * 3600) / 60)
+            second = int(t - hour * 3600 - minute * 60)
+            self.time = str(hour) + ":" + str(minute) + ":" + str(second)
 
-        # whether server return marked picture
-        self.recognizer.SetIsShow(True)
+        # receive image
+        else:
+            # convert blob to numpy byte array
+            data = np.asarray(bytearray(bytes_data), dtype="uint8")
+            # get grayscale image by decoding numpy byte array
+            grayImage = cv2.imdecode(data, cv2.IMREAD_GRAYSCALE)
 
-        # base64 of marked picture
-        base64 = self.recognizer.recognize(grayImage)
-        if base64 != None:
-            self.send(bytes_data=base64)
+            # whether server return marked picture
+            self.recognizer.SetIsShow(True)
+
+            # base64 of marked picture
+            base64 = self.recognizer.recognize(grayImage, self.vid, self.time)
+            if base64 != None:
+                self.send(bytes_data=base64)

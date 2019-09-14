@@ -1,3 +1,4 @@
+from .models import EmotionData, VideoRecord
 from Django.settings import BASE_DIR
 from keras.models import load_model
 from keras import backend
@@ -38,9 +39,13 @@ class Recognizer:
             x = x * 2.0
         return x
 
-    def recognize(self, grayImage):
-        # counting emotion
-        records = { 'angry': 0, 'disgust': 0, 'fear': 0, 'happy': 0, 'sad': 0, 'surprise': 0, 'neutral': 0 }
+    def recognize(self, grayImage, _vid, _time):
+        # get records
+        v = VideoRecord.objects.get(vid = _vid)
+        try:
+            records = EmotionData.objects.get(vid = v, time = _time)
+        except:
+            records = EmotionData.objects.create(vid = v, Angry = 0, Disgust = 0, Fear = 0, Happy = 0, Sad = 0, Surprise = 0, time = _time)
 
         # storeing emotion type and corresponding location
         emotions = []
@@ -75,9 +80,21 @@ class Recognizer:
                 emotionLabelArg = np.argmax(emotionPrediction)
                 # get corresponding emotion
                 emotionText = self.emotionLabels[emotionLabelArg]
-                print(emotionText)
 
-                records[emotionText] += 1
+                if emotionText == 'angry':
+                    records.Angry += 1
+                elif emotionText == 'disgust':
+                    records.Disgust += 1
+                elif emotionText == 'fear':
+                    records.Fear += 1
+                elif emotionText == 'happy':
+                    records.Happy += 1
+                elif emotionText == 'sad':
+                    records.Sad += 1
+                elif emotionText == 'surprise':
+                    records.Surprise += 1
+                records.save()
+
                 emotions.append((emotionText, x, y, w, h))
 
         if self.isShow:
