@@ -77,20 +77,14 @@ $(function() {
 
     $("#forgotPasswordForm").submit(function(e){
       e.preventDefault();
-      $.ajax({
-        headers: { "X-CSRFToken": window.CSRF_TOKEN },
-        url:"/accounts/forgotPassword/",
-        data: $("#forgotPasswordForm").serialize(),
-        type: "POST",
-        success:function(response){
-          if(response.success){
-            alert(response.messages);
-            location.reload(); //重整頁面
-          }else{
-            alertMessage(response.messages);
-          }
+      PostAjaxJsonRequest($("#forgotPasswordForm").serialize(), "/accounts/forgotPassword/", function(){
+        if(response.success){
+          alert(response.messages);
+          location.reload(); //重整頁面
+        }else{
+          alertMessage(response.messages);
         }
-      })
+      });
       return false;
     });
 });
