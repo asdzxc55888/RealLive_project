@@ -144,5 +144,13 @@ CHANNEL_LAYERS = {
     },
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'RealiveSystem@gmail.com'
+EMAIL_HOST_PASSWORD = 'csie1234'
+DEFAULT_FROM_EMAIL = 'RealiveSystem <RealiveSystem@gmail.com>'
+EMAIL_TEST = True
+TEST_EMAIL_TO = 'asdzxc55888@gmail.com'

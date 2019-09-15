@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from indexPage.views import getStreamer, login, logout, register
+from indexPage.views import getStreamer, login, logout, register, forgotPassword
 
 urlpatterns = [
     path('', include('indexPage.urls')),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('accounts/logout/', logout),
     path('accounts/register/', register),
     path('accounts/password_reset/', include('passwordResetPage.urls')),
+    path('accounts/forgotPassword/', forgotPassword),
     path('getStreamer', getStreamer)
 ]

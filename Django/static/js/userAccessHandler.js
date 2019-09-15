@@ -26,6 +26,7 @@ $(function() {
         $("#loginForm").data("kendoWindow").open();
     })
 
+///////////////////////// Tab Setting ///////////////////////////////////////////
     $('#login-form-link').click(function(e) {
     		$("#login-form").delay(100).fadeIn(100);
      		$("#register-form").fadeOut(100);
@@ -55,29 +56,26 @@ $(function() {
   		$(this).addClass('active');
   		e.preventDefault();
   	});
+/////////////////////////////////////////////////////////////////////////
 
+  //註冊請求
     $("#registerForm").submit(function(e){
       e.preventDefault();
-      $.ajax({
-        headers: { "X-CSRFToken": window.CSRF_TOKEN },
-        url:"/accounts/register/",
-        data: $("#registerForm").serialize(),
-        type: "POST",
-        success:function(response){
-          if(response.success){
-            alert(response.messages);
-            location.reload(); //重整頁面
-          }else{
-            alertMessage(response.messages);
-          }
+      PostAjaxJsonRequest($("#registerForm").serialize(), "/accounts/register/", function(response){
+        if(response.success){
+          alert(response.messages);
+          location.reload(); //重整頁面
+        }else{
+          alertMessage(response.messages);
         }
-      })
+      });
       return false;
     });
 
+    //發送忘記密碼請求
     $("#forgotPasswordForm").submit(function(e){
       e.preventDefault();
-      PostAjaxJsonRequest($("#forgotPasswordForm").serialize(), "/accounts/forgotPassword/", function(){
+      PostAjaxJsonRequest($("#forgotPasswordForm").serialize(), "/accounts/forgotPassword/", function(response){
         if(response.success){
           alert(response.messages);
           location.reload(); //重整頁面
@@ -89,15 +87,11 @@ $(function() {
     });
 });
 
+//點擊登入按鈕事件
 function clickLoginBtn() {
     $("#btn-login").click(function() {
         $("#loginForm").data("kendoWindow").open();
     })
-}
-
-function showForgotPasswordForm() {
-  $("#loginForm").data("kendoWindow").close();
-  $("#forgotPasswordForm").data("kendoWindow").open();
 }
 
 //跳出alert視窗 messages為Array of Object

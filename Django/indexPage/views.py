@@ -7,8 +7,11 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from livePage.models import UserSetting
 from django.core.exceptions import ValidationError
-from random import randrange
+from django.core.mail import send_mail
+from django.conf import settings
 import json
+import random
+import string
 
 # Create your views here.
 class indexView(View):
@@ -66,7 +69,7 @@ def register(request):
                     'success': True,
                     'messages': "創建帳號成功！"
                 }
-                UserSetting.objects.create(userId = user) #建立使用者設定資料
+                UserSetting.objects.create(userId = user, nickName = user.username) #建立使用者設定資料
             else:
                 rtnMessage = {
                     'success': False,
@@ -83,5 +86,34 @@ def register(request):
 #忘記密碼
 def forgotPassword(request):
     if request.method == 'POST':
-        user = User.objects.get(id=request.POST.get("username"))
+        try:
+            user = User.objects.get(username=request.POST.get("username_forgot"))
+        except ValidationError as err:
+            rtnMessage = {
+                'success': False,
+                'messages': "查無此使用者,請檢查輸入"
+            }
+
+        userSetting = UserSetting.objects.create(userId = user)
         newPassword = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(10))
+
+        #設定亂數新密碼
+        user.set_password(newPassword)
+        user.save()
+
+        #mail init setting
+        emailMessage = 'Your new password is ' + newPassword
+
+        if settings.EMAIL_TEST: #test mode
+            send_mail('Realive System forgot password', emailMessage, settings.DEFAULT_FROM_EMAIL,
+                [settings.TEST_EMAIL_TO], fail_silently=False)
+        else:
+            send_mail('Realive System forgot password', emailMessage, settings.DEFAULT_FROM_EMAIL,
+                [user.email], fail_silently=False)
+
+        rtnMessage = {
+            'success': True,
+            'messages': "成功寄發信件,請至郵箱中查閱！"
+        }
+
+        return JsonResponse(rtnMessage, safe=False)

@@ -54,6 +54,7 @@
     </div>
 
     <div class="tab-pane fade" id="nav-stream" role="tabpanel" aria-labelledby="nav-stream-tab">
+      {% if isStreamer %}
       <!-- 實況主設定 -->
       <form id="streamForm" action="/setting/stream" method="post">
           {% csrf_token %}
@@ -74,6 +75,9 @@
 
           <button class="btn btn-primary" id="updataSteamBtn">修改</button>
       </form>
+      {% else %}
+      <!-- 申請實況主 -->
+      {% endif %}
     </div>
 
     <div class="tab-pane fade" id="nav-modifyPassword" role="tabpanel" aria-labelledby="nav-modifyPassword-tab">

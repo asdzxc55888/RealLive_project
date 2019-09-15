@@ -37,3 +37,13 @@ class VideoRecord(models.Model):
 
     def __str__(self):
         return self.vid
+
+class ChatRecord(models.Model):
+    vid = models.ForeignKey('VideoRecord', on_delete = models.CASCADE, default = "") #連接影片
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, default = "") #發送訊息的使用者
+    message = models.CharField(max_length = 1200, null = True) #訊息
+    date = models.DateField(auto_now_add=True, blank=True) #auto_now_add 取得當前時間
+    time = models.TimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return '%s %s' % (self.userId, self.message)

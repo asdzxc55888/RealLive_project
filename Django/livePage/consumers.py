@@ -1,6 +1,8 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .recognition import Recognizer
+from django.contrib.auth.models import User
+from .models import UserSetting, ChatRecord, VideoRecord
 import json
 import cv2
 import numpy as np
@@ -29,13 +31,20 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
+        username = text_data_json['username']
+        user = User.objects.get(username=username)
+        userSetting = UserSetting.objects.get(userId = user)
+        #TODO:替換測試資料
+        videoRecord = VideoRecord.objects.get(vid = 'Mdg3VeD4MM4')
+        #TODO:替換測試資料
+        ChatRecord.objects.create(userId = user, message = message, vid = videoRecord)
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': userSetting.nickName + '：' + message
             }
         )
 
@@ -45,7 +54,7 @@ class ChatConsumer(WebsocketConsumer):
 
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': message
+            'message':  message
         }))
 
 class ImageConsumer(WebsocketConsumer):

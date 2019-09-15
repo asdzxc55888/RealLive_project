@@ -30,8 +30,9 @@ document.querySelector('#chat-message-submit').onclick = function (e) {
     var messageInputDom = document.querySelector('#chat-message-input');
     if(messageInputDom.value != ''){
       var username = $("#username").html();
-      var message = username + ' : ' + messageInputDom.value;
+      var message = messageInputDom.value;
       chatSocket.send(JSON.stringify({
+          'username' : username,
           'message': message
       }));
 
