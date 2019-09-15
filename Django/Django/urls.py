@@ -26,7 +26,6 @@ urlpatterns = [
     path('accounts/login/', login),
     path('accounts/logout/', logout),
     path('accounts/register/', register),
-    path('accounts/password_reset/', include('passwordResetPage.urls')),
     path('accounts/forgotPassword/', forgotPassword),
     path('getStreamer', getStreamer)
 ]

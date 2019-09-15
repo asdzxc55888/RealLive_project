@@ -12,12 +12,12 @@
                         <span id="username" style="display: none;">{{request.user}}</span>
                 </li>
                 <li class="nav-item" id="nav-logout">
-                    <a class="nav-link" id="Btnlogout" href="/accounts/logout">
+                    <a class="nav-link" id="Btnlogout">
                         <i class="fas fa-sign-in-alt icon_img"></i>登出</a>
                 </li>
                 {% else %}
                 <li class="nav-item" id="nav-login">
-                    <a class="nav-link" id="btn-login" style="width:auto;" onclick=clickLoginBtn>
+                    <a class="nav-link" id="btn-login" style="width:auto;">
                         <i class="fas fa-sign-in-alt icon_img"></i>會員登入</a>
                 </li>
                 {% endif %}

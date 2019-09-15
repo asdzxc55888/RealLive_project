@@ -48,15 +48,25 @@ def login(request):
 
     if user is not None and user.is_active:
         auth.login(request, user)
-        return HttpResponseRedirect('/')
+        rtnMessage = {
+            'success': True,
+            'messages': "登入成功！"
+        }
     else:
-        messages.warning(request, 'Your password has been changed successfully!', extra_tags='alert')
-        return HttpResponseRedirect('/')
+        rtnMessage = {
+            'success': False,
+            'messages': "登入失敗,請確認帳號密碼是否正確！"
+        }
+
+    return JsonResponse(rtnMessage, safe=False)
 
 #登出
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect('/')
+    rtnMessage = {
+        'success': True
+    }
+    return JsonResponse(rtnMessage, safe=False)
 
 #註冊
 def register(request):

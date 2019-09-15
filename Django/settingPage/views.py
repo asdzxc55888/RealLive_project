@@ -13,24 +13,30 @@ class settingView(View):
 
     def get(self, request, *args, **kwargs):
         current_user = request.user
-        settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
-        if request.user.is_authenticated:
-            context = {
-            "email": current_user.email,
-            "nickName": settingData.nickName,
-            "youtubeUrl": settingData.youtubeUrl,
-            "introduction": settingData.introduction,
-            "isStreamer": 'True',
-            }
+        print(current_user)
+        #判斷是否登入
+        if not current_user.is_anonymous:
+            settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
+            if request.user.is_authenticated:
+                context = {
+                "email": current_user.email,
+                "nickName": settingData.nickName,
+                "youtubeUrl": settingData.youtubeUrl,
+                "introduction": settingData.introduction,
+                "isStreamer": 'True',
+                }
+            else:
+                context = {
+                "email": current_user.email,
+                "nickName": settingData.nickName,
+                "youtubeUrl": '',
+                "introduction": '',
+                "isStreamer": 'False',
+                }
+
+            return render(request, self.template_name, context)
         else:
-            context = {
-            "email": current_user.email,
-            "nickName": settingData.nickName,
-            "youtubeUrl": '',
-            "introduction": '',
-            "isStreamer": 'False',
-            }
-        return render(request, self.template_name, context)
+            return render(request, 'index.html')
 
     def post(self, request, *args, **kwargs):
         current_user = request.user

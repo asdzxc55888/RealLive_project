@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'livePage',
     'settingPage',
     'statisticsPage',
-    'passwordResetPage',
 ]
 
 MIDDLEWARE = [

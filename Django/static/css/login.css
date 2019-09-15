@@ -1,4 +1,4 @@
-#loginForm input{
+#loginWindow input{
   width: 90%;
   margin-right: 16px;
   margin-left: 16px;
@@ -6,7 +6,7 @@
   margin-bottom: 16px;
 }
 
-#loginForm .btn{
+#loginWindow .btn{
   width: 20%;
   margin-right: 16px;
   margin-left: 24px;

@@ -6,7 +6,7 @@ $(function() {
     const $password = $('psw');
 
     // 登入視窗初始化
-    $("#loginForm").kendoWindow({
+    $("#loginWindow").kendoWindow({
         width: "600px",
         title: "登入",
         visible: false,
@@ -23,7 +23,7 @@ $(function() {
     });
 
     $("#btn-login").click(function() {
-        $("#loginForm").data("kendoWindow").open();
+        $("#loginWindow").data("kendoWindow").open();
     })
 
 ///////////////////////// Tab Setting ///////////////////////////////////////////
@@ -85,14 +85,29 @@ $(function() {
       });
       return false;
     });
-});
 
-//點擊登入按鈕事件
-function clickLoginBtn() {
-    $("#btn-login").click(function() {
-        $("#loginForm").data("kendoWindow").open();
+    //登入請求
+    $("#loginForm").submit(function(e){
+      e.preventDefault();
+      PostAjaxJsonRequest($("#loginForm").serialize(), "/accounts/login/", function(response){
+        if(response.success){
+          location.reload(); //重整頁面
+        }else{
+          alert(response.messages);
+        }
+      });
+      return false;
+    });
+
+    //登出請求
+    $("#Btnlogout").click(function(){
+      PostAjaxJsonRequest(null, "/accounts/logout/", function(response){
+        if(response.success){
+          location.reload(); //重整頁面
+        }
+      });
     })
-}
+});
 
 //跳出alert視窗 messages為Array of Object
 function alertMessage(messages){
