@@ -67,14 +67,6 @@ var t = {{ time|safe }},
         uploadVideo("{{ video.vid }}");
     {% endfor %}
     {% if vid != None %}
-        // This code loads the IFrame Player API code asynchronously
-        var tag = document.createElement('script');
-        tag.src = "http://www.youtube.com/iframe_api";
-
-        // Inserting this script
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
         // This function creates an <iframe> (and YouTube player) after the API code downloads
         var player;
         function onYouTubeIframeAPIReady() {
@@ -86,10 +78,7 @@ var t = {{ time|safe }},
                 }
             });
         }
-
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
+        
         updateSelecter({{ hours }});
         setChartWidth(n);
 

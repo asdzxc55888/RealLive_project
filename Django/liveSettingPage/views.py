@@ -1,7 +1,8 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from livePage.models import UserSetting, VideoRecord
+from django.http import JsonResponse
+from livePage.models import UserSetting, VideoRecord, EmotionData
 
 # Create your views here.
 class liveSettingView(View):
@@ -15,7 +16,7 @@ class liveSettingView(View):
             "youtubeUrl": settingData.youtubeUrl,
             "introduction": settingData.introduction,
             "isLive": settingData.isLive,
-            "message": '',
+            "message": ' ',
         }
         return render(request, self.template_name, context)
 
@@ -23,6 +24,8 @@ class liveSettingView(View):
         settingData = UserSetting.objects.get(userId = request.user.id)
         if request.POST.get("state") == '1' and VideoRecord.objects.filter(vid = request.POST.get("youtubeUrl")).exists():
             message = "The Youtube vid is duplicate."
+        elif request.POST.get("state") == '0' and not settingData.isLive:
+            message = "Live was already closed."
         else:
             settingData.youtubeUrl = request.POST.get("youtubeUrl")
             settingData.introduction = request.POST.get("introduction")
@@ -44,3 +47,17 @@ class liveSettingView(View):
             "message": message,
         }
         return render(request, self.template_name, context)
+
+def updateEmotionData(request, streamerName, *args, **kwargs):
+    video = VideoRecord.objects.get(userId = request.user, vid = request.POST.get("vid"))
+    happy = '0'
+    surprised = '0'
+    if EmotionData.objects.filter(vid = video).exists():
+        data = EmotionData.objects.filter(vid = video).latest('id')
+        happy = data.Happy
+        surprised = data.Surprise
+    return JsonResponse({
+        'status': 'ok',
+        'happy': happy,
+        'surprised': surprised,
+    })

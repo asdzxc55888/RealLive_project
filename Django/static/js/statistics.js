@@ -1,3 +1,15 @@
+// This code loads the IFrame Player API code asynchronously
+var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/iframe_api";
+
+// Inserting this script
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onPlayerReady(event) {
+    event.target.playVideo();
+}
+
 function htmlToElement(html) {
     var template = document.createElement('template');
     html = html.trim();
