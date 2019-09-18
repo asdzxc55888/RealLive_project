@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from livePage.models import UserSetting
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password, password_changed
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Group
 import json
 
 # Create your views here.
@@ -13,17 +14,17 @@ class settingView(View):
 
     def get(self, request, *args, **kwargs):
         current_user = request.user
-        print(current_user)
+
         #判斷是否登入
         if not current_user.is_anonymous:
             settingData = UserSetting.objects.get(userId=current_user.id)  # 取得 setting 物件
-            if request.user.is_authenticated:
+            if current_user.groups.filter(name = 'Streamer').exists():
                 context = {
                 "email": current_user.email,
                 "nickName": settingData.nickName,
                 "youtubeUrl": settingData.youtubeUrl,
                 "introduction": settingData.introduction,
-                "isStreamer": 'True',
+                "isStreamer": True,
                 }
             else:
                 context = {
@@ -31,7 +32,7 @@ class settingView(View):
                 "nickName": settingData.nickName,
                 "youtubeUrl": '',
                 "introduction": '',
-                "isStreamer": 'False',
+                "isStreamer": False,
                 }
 
             return render(request, self.template_name, context)
@@ -51,12 +52,28 @@ class streamSettingView(View):
 
     def post(self, request, *args, **kwargs):
         current_user = request.user
-        print( request.POST.get("introduction"))
         settingData = UserSetting.objects.get(userId=current_user.id)
         settingData.youtubeUrl = request.POST.get("youtubeUrl")
         settingData.introduction = request.POST.get("introduction")
         settingData.save() #更新進資料庫
         return render(request, 'setting.html')
+
+def BecomeStreamer(request):
+    if request.method == 'POST':
+        try:
+            streamerGroup = Group.objects.get(name='Streamer')
+            streamerGroup.user_set.add(request.user)
+            rtnMessage = {
+                'success': True,
+                'messages': '申請實況主成功！'
+            }
+        except ValidationError as err:
+            rtnMessage = {
+                'success': False,
+                'messages': err.message
+            }
+
+        return JsonResponse(rtnMessage, safe=False)
 
 class modifyPasswordView(View):
         template_name = 'modifyPassword.html'
@@ -66,7 +83,6 @@ class modifyPasswordView(View):
 
         def post(self, request, *args, **kwargs):
             user = User.objects.get(id=request.user.id)
-            print(user)
             status = False
 
             #判斷是否成功 設定傳送訊息

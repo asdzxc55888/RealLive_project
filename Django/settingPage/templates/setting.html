@@ -137,6 +137,16 @@
         }
       });
     });
+
+    $("#becomeStreamerBtn").click(function(){
+      PostAjaxJsonRequest(null, "/setting/BecomeStreamer", function(response){
+        if(response.success){
+          location.reload(); //重整頁面
+        }
+        alert(response.message)
+      });
+    });
+
   });
 </script>
 
