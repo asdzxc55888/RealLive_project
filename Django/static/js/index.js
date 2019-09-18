@@ -19,12 +19,11 @@ $(document).ready(function () {
 
         fields: [
             { name: "StreamerName", title: "實況主名稱", type: "text", width: "10%" },
+            { name: "Category", title: "實況類別", type: "text", width: "10%" },
             { name: "Introduction", title: "簡介", type: "text", width: "70%" },
-            { name: "ViewerNumber", title: "觀看次數", type: "text", width: "10%" },
-            { name: "StreamerUserName", width: 0, visible: false },
             {
                 itemTemplate: function(_, item) {
-                    return $("<button>").text("前往頻道")
+                    return $('<button class="goToBtn">').text("前往頻道")
                     	.on("click", function() {
                             window.location.href="/live/" + item.StreamerUserName;   //導向直播頁面
                     	});

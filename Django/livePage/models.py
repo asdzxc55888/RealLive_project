@@ -3,9 +3,10 @@ from django.conf import settings
 
 # Create your models here.
 class UserSetting(models.Model):
-    introduction = models.CharField(max_length = 1200, null = True) #建立字串型別的欄位，最大長度為1200字元，欄位可空白
-    youtubeUrl = models.CharField(max_length = 100, null = True)    #建立字串型別的欄位，最大長度為100字元，欄位可空白
-    nickName = models.CharField(max_length = 20, null = False)       #建立字串型別的欄位，最大長度為20字元，欄位可空白
+    introduction = models.CharField(max_length = 1200, null = True)
+    youtubeUrl = models.CharField(max_length = 100, null = True)
+    category = models.CharField(max_length = 20, default = 'Unknown', null = True)
+    nickName = models.CharField(max_length = 20, default = 'Newcomer',null = False)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = "", null = False)
     isLive = models.BooleanField(default = "False", null = True)
 

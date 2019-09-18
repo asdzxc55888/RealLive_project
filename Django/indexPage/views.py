@@ -29,9 +29,8 @@ def getStreamer(request):
         if settingData.isLive:
             data.append({
                 'StreamerName' : settingData.nickName + ' (' + streamer.username + ')',
+                'Category' : settingData.category,
                 'Introduction' : settingData.introduction,
-                'ViewerNumber' : 0,
-                'StreamerUserName' : streamer.username
             })
         #print(data)
     return JsonResponse(data, safe=False)

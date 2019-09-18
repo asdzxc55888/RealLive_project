@@ -12,27 +12,33 @@ function onPlayerReady(event) {
 }
 
 function onOpenLiveButtonClick() {
-    $.ajax({
-        url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + $('#youtubeUrl').val() + '&key=' + youtubeApiKey,
-        async: false,
-        dataType: 'json',
-        success: function(data) {
-            if (data['items'].length != 0) {
-                console.log("Successfully connected youtube.");
-                $("#streamForm").submit();
+    if ($("#category").val() == "") {
+        $('#message').text("Live category cannot be blank.");
+    }
+    else {
+        $.ajax({
+            url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + $('#youtubeUrl').val() + '&key=' + youtubeApiKey,
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+                if (data['items'].length != 0) {
+                    console.log("Successfully connected youtube.");
+                    $("#streamForm").submit();
+                }
+                else {
+                    $('#message').text("The Youtube vid does not exist.");
+                }
+            },
+            error: function() {
+                console.log("Failed to connect youtube.");
             }
-            else {
-                $('#message').text("The Youtube vid does not exist.");
-            }
-        },
-        error: function() {
-            console.log("Failed to connect youtube.");
-        }
-    });
+        });
+    }
 }
 
 function onCloseLiveButtonClick() {
     $('#youtubeUrl').val('');
+    $('#category').val('');
     $('#introduction').val('');
     $('#state').val('0');
     $("#streamForm").submit();
