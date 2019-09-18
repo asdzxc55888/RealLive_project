@@ -56,9 +56,9 @@ var loadData = function (e) {
         //===========================服務端分頁的話就沒必要取子集了=========================
         subdata = response.slice(pageSize * (pageIndex - 1), pageSize * pageIndex);
         pagingdata = { data: response, itemsCount: response.length };
-        console.log(response);
-        console.log(subdata);
-        console.log(pagingdata);
+        //console.log(response);
+        //console.log(subdata);
+        //console.log(pagingdata);
         //============服務端完成時發出完成通知==================
         d.resolve(pagingdata);
     }).fail(function (e) {

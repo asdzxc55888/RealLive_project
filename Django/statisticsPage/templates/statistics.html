@@ -48,15 +48,15 @@
 
 <!-- initial data -->
 <script type="text/javascript">
-var t = {{ time|safe }};
-var angey = {{ angryData }};
-var disgust = {{ disgustData }};
-var fear = {{ fearData }};
-var happy = {{ happyData }};
-var sad = {{ sadData }};
-var surprise = {{ surpriseData }};
-var n = t.length;
-var myChart;
+var t = {{ time|safe }},
+    angey = {{ angryData }},
+    disgust = {{ disgustData }},
+    fear = {{ fearData }},
+    happy = {{ happyData }},
+    sad = {{ sadData }},
+    surprise = {{ surpriseData }};
+    n = t.length,
+    myChart;
 </script>
 <script src="{% static 'js/statistics.js' %}"></script>
 <script type="text/javascript">

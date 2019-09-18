@@ -8,6 +8,14 @@
     padding-top: 75px;
 }
 
+#player {
+	background-color: black;
+}
+
+#chat-message-input {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .mainArea
     {

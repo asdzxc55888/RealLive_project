@@ -1,0 +1,66 @@
+.mainArea {
+    padding-top: 60px;
+}
+
+.input-group {
+  margin: 16px 0px 16px 0px;
+}
+
+.input-group input {
+  width: 50%;
+}
+
+#message {
+    display: inline;
+    color: red;
+}
+
+.icon {
+    width: 30px;
+
+}
+
+#happyPanel {
+    margin: 0px 20px 0px 15px;
+}
+
+#surprisedPanel {
+}
+
+@media screen and (min-width: 1025px) {
+    #player, .playerlist_container {
+         height: 480px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #player, .playerlist_container {
+         height: 360px;
+    }
+
+    #chat-log {
+        height: 286px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #player, .playerlist_container {
+         height: 240px;
+    }
+
+    #chat-log {
+        height: 160px;
+    }
+
+    #chat-message-submit {
+        margin-bottom: 10px;
+    }
+
+    #closeLive {
+        margin-top: 10px;
+    }
+
+    #message {
+        display: block;
+    }
+}

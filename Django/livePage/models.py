@@ -5,8 +5,9 @@ from django.conf import settings
 class UserSetting(models.Model):
     introduction = models.CharField(max_length = 1200, null = True) #建立字串型別的欄位，最大長度為1200字元，欄位可空白
     youtubeUrl = models.CharField(max_length = 100, null = True)    #建立字串型別的欄位，最大長度為100字元，欄位可空白
-    nickName = models.CharField(max_length = 20, null = True)       #建立字串型別的欄位，最大長度為20字元，欄位可空白
+    nickName = models.CharField(max_length = 20, null = False)       #建立字串型別的欄位，最大長度為20字元，欄位可空白
     userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = "", null = False)
+    isLive = models.BooleanField(default = "False", null = True)
 
 
     #每一筆資料在管理介面顯示的內容以下列程式定義

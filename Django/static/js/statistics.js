@@ -13,9 +13,6 @@ function uploadVideo(vid) {
 	var _type = (thumbSize == 'large') ? 0 : 2;
 
 	try {
-		// 透過youtube網址取得vid
-		// var vid = address.match('[\\?&]v=([^&#]*)')[1];
-
 		// 取得 title
 		var title = 'None';
 		$.ajax({
