@@ -40,7 +40,7 @@
   <div class="tab-content" id="nav-tabContent">
     <!-- 個人資料修改 -->
     <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-      <form id="profileForm" method="post">{% csrf_token %}
+      <form id="profileForm" method="post" onSubmit="return checkNickname()">{% csrf_token %}
         <div class="input-group">
           <label class="input-group-text">電子郵件</label>
           <input type="text" class="form-control" id="email" name="email" value={{ email }}>
@@ -148,6 +148,17 @@
     });
 
   });
+
+  function checkNickname() {
+      var data = $('#nickName').val();
+      if (data == "") {
+          alert("暱稱不能為空");
+          return false;
+      }
+      else {
+          return true;
+      }
+  }
 </script>
 
 {% endblock %}

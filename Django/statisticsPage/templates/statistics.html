@@ -48,15 +48,15 @@
 
 <!-- initial data -->
 <script type="text/javascript">
-var t = {{ time|safe }};
-var angey = {{ angryData }};
-var disgust = {{ disgustData }};
-var fear = {{ fearData }};
-var happy = {{ happyData }};
-var sad = {{ sadData }};
-var surprise = {{ surpriseData }};
-var n = t.length;
-var myChart;
+var t = {{ time|safe }},
+    angey = {{ angryData }},
+    disgust = {{ disgustData }},
+    fear = {{ fearData }},
+    happy = {{ happyData }},
+    sad = {{ sadData }},
+    surprise = {{ surpriseData }};
+    n = t.length,
+    myChart;
 </script>
 <script src="{% static 'js/statistics.js' %}"></script>
 <script type="text/javascript">
@@ -67,14 +67,6 @@ var myChart;
         uploadVideo("{{ video.vid }}");
     {% endfor %}
     {% if vid != None %}
-        // This code loads the IFrame Player API code asynchronously
-        var tag = document.createElement('script');
-        tag.src = "http://www.youtube.com/iframe_api";
-
-        // Inserting this script
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
         // This function creates an <iframe> (and YouTube player) after the API code downloads
         var player;
         function onYouTubeIframeAPIReady() {
@@ -86,10 +78,7 @@ var myChart;
                 }
             });
         }
-
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
+        
         updateSelecter({{ hours }});
         setChartWidth(n);
 

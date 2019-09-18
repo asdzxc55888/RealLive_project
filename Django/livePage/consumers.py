@@ -32,12 +32,12 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         username = text_data_json['username']
+        vid = text_data_json['vid']
         user = User.objects.get(username=username)
         userSetting = UserSetting.objects.get(userId = user)
-        #TODO:替換測試資料
-        videoRecord = VideoRecord.objects.get(vid = 'Mdg3VeD4MM4')
-        #TODO:替換測試資料
-        ChatRecord.objects.create(userId = user, message = message, vid = videoRecord)
+        if vid != "":
+            videoRecord = VideoRecord.objects.get(vid = vid)
+            ChatRecord.objects.create(userId = user, message = message, vid = videoRecord)
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

@@ -1,3 +1,4 @@
+{% load myTemplatetags %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
@@ -9,8 +10,14 @@
                     <a class="nav-link" id="BtnUser"
                         onclick="window.location.href = '/setting'" style="width:auto;">
                         <i class="fas fa-user"></i>你好{{request.user}}</a>
-                        <span id="username" style="display: none;">{{request.user}}</span>
+                        <span id="username" style="display: none;">{{ request.user }}</span>
                 </li>
+                    {% if request.user|is_in:"Streamer" %}
+                    <li class="nav-item" id="nav-openLive">
+                        <a class="nav-link" href="/liveSetting/{{ request.user }}">
+                            <i class="fas fa-play-circle icon_img"></i>開始實況</a>
+                    </li>
+                    {% endif %}
                 <li class="nav-item" id="nav-logout">
                     <a class="nav-link" id="Btnlogout">
                         <i class="fas fa-sign-in-alt icon_img"></i>登出</a>

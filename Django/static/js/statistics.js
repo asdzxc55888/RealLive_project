@@ -1,3 +1,15 @@
+// This code loads the IFrame Player API code asynchronously
+var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/iframe_api";
+
+// Inserting this script
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onPlayerReady(event) {
+    event.target.playVideo();
+}
+
 function htmlToElement(html) {
     var template = document.createElement('template');
     html = html.trim();
@@ -13,9 +25,6 @@ function uploadVideo(vid) {
 	var _type = (thumbSize == 'large') ? 0 : 2;
 
 	try {
-		// 透過youtube網址取得vid
-		// var vid = address.match('[\\?&]v=([^&#]*)')[1];
-
 		// 取得 title
 		var title = 'None';
 		$.ajax({

@@ -31,7 +31,7 @@ function onOpenDetectionButtonClick() {
         document.querySelector('video').srcObject = mediaStream;
         track = mediaStream.getVideoTracks()[0];
         // run storePicture every seconds
-        timer = setInterval(storePicture, 1000);
+        var timer = setInterval(storePicture, 1000);
     })
     .catch(function(err) { console.log(err.name + ": " + err.message); });
 }

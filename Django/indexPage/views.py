@@ -26,13 +26,14 @@ def getStreamer(request):
     data=[]
     for streamer in streamerList:
         settingData = UserSetting.objects.get(userId=streamer)
-        data.append({
-            'StreamerName' : settingData.nickName,
-            'Introduction' : settingData.introduction,
-            'ViewerNumber' : 0,
-            'StreamerUserName' : streamer.username
-        })
-    print(data)
+        if settingData.isLive:
+            data.append({
+                'StreamerUserName' : streamer.username, 
+                'StreamerName' : settingData.nickName + ' (' + streamer.username + ')',
+                'Category' : settingData.category,
+                'Introduction' : settingData.introduction,
+            })
+        #print(data)
     return JsonResponse(data, safe=False)
 
 #登入

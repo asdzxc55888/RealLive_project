@@ -20,6 +20,7 @@ from indexPage.views import getStreamer, login, logout, register, forgotPassword
 urlpatterns = [
     path('', include('indexPage.urls')),
     path('live/', include('livePage.urls')),
+    path('liveSetting/', include('liveSettingPage.urls')),
     path('statistics/', include('statisticsPage.urls')),
     path('setting/', include('settingPage.urls')),
     path('admin/', admin.site.urls),
