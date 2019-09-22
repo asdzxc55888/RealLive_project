@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from indexPage.form import UserCreationForm
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from livePage.models import UserSetting
+from livePage.models import UserSetting, VideoRecord
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
@@ -24,16 +24,19 @@ class indexView(View):
 def getStreamer(request):
     streamerList = User.objects.filter(groups__name='Streamer')
     data=[]
+    #取得當前直播的實況主
     for streamer in streamerList:
         settingData = UserSetting.objects.get(userId=streamer)
         if settingData.isLive:
+            videoRecord = VideoRecord.objects.get(userId=streamer)
             data.append({
-                'StreamerUserName' : streamer.username, 
+                'vid': videoRecord.vid,
+                'StreamerUserName' : streamer.username,
                 'StreamerName' : settingData.nickName + ' (' + streamer.username + ')',
                 'Category' : settingData.category,
                 'Introduction' : settingData.introduction,
             })
-        #print(data)
+
     return JsonResponse(data, safe=False)
 
 #登入

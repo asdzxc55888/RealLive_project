@@ -108,13 +108,3 @@ $(function() {
       });
     })
 });
-
-//跳出alert視窗 messages為Array of Object
-function alertMessage(messages){
-  var messageArray = Object.values(messages);
-  var resultMessage = "";
-  for (var i = 0; i < messageArray.length; i++) {
-    resultMessage += messageArray[i] + "\r\n";
-  }
-  alert(resultMessage);
-}
