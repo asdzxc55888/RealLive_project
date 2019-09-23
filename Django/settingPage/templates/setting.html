@@ -113,6 +113,20 @@
 <script>
   $(function(){
 
+    $("#profileForm").submit(function(e){
+      e.preventDefault();
+      PostAjaxJsonRequest($("#profileForm").serialize(), "/setting/", function(response){
+        alert(response.messages)
+      });
+    });
+
+    $("#streamForm").submit(function(e){
+      e.preventDefault();
+      PostAjaxJsonRequest($("#streamForm").serialize(), "/setting/stream", function(response){
+        alert(response.messages)
+      });
+    });
+
     $("#modifyPasswordForm").submit(function(e){
       e.preventDefault();
       csrfmiddlewaretoken = $("form").find("input[name='csrfmiddlewaretoken']" ).val();
@@ -136,6 +150,7 @@
           }
         }
       });
+
     });
 
     $("#becomeStreamerBtn").click(function(){

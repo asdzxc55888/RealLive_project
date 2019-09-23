@@ -8,14 +8,18 @@ $(document).ready(function () {
         paging: true,
         autoload: true,
         controller: {
-            loadData: function(){
+            loadData: function(filter){
                 return $.ajax({
                     url: '/getStreamer',
                     type: 'post',
-                    dataType: 'json'
+                    dataType: 'json',
+                    data: filter
                 });
             }
         },
+
+        pageSize: 3,
+        pageButtonCount: 5,
 
         fields: [
             { name: "StreamerUserName", css:"hide" }, // hide:custom pemater from style.css
@@ -36,6 +40,12 @@ $(document).ready(function () {
               	}
             }
         ]
+    });
+
+    $("#searchBtn").click(function(){
+      $("#streamer_grid").jsGrid("loadData",{ searchFilter:$("#searchText").val() }).done(function() {
+          console.log("data loaded");
+      });
     });
 });
 

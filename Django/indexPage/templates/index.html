@@ -6,11 +6,19 @@
 {% endblock %}
 
 {% block css %}
-<!-- None -->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid mainArea">
+  <div class="wrap">
+   <div class="search">
+      <input type="text" class="searchTerm" placeholder="Search..." id="searchText">
+      <button type="button" class="searchButton" id="searchBtn">
+        <i class="fa fa-search"></i>
+     </button>
+   </div>
+</div>
     <div id="streamer_grid">
     </div>
 </div>
@@ -19,4 +27,7 @@
 {% block js %}
 <script src="{% static 'js/index.js' %}"></script>
 <script src="/static/js/keys.js"></script>
+<script type="text/javascript">
+  window.CSRF_TOKEN = "{{ csrf_token }}"
+</script>
 {% endblock %}

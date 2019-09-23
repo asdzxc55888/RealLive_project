@@ -22,15 +22,28 @@ class indexView(View):
 
 @csrf_exempt
 def getStreamer(request):
-    streamerList = User.objects.filter(groups__name='Streamer')
+    searchFilter = request.POST.get("searchFilter")
+    #搜尋結果
+    if searchFilter is not None:
+        nickNameFilterList = UserSetting.objects.filter(nickName__contains = searchFilter)
+        userNameFilterList = User.objects.filter(username__contains = searchFilter)
+        searchResult = userNameFilterList
+        for nickNameFilter in nickNameFilterList:
+            instance = User.objects.get(username=nickNameFilter.userId)
+            searchResult |= User.objects.filter(pk=instance.pk)
+
+        streamerList = searchResult.filter(groups__name='Streamer')
+    else:
+        streamerList = User.objects.filter(groups__name='Streamer')
+
     data=[]
+
     #取得當前直播的實況主
     for streamer in streamerList:
         settingData = UserSetting.objects.get(userId=streamer)
         if settingData.isLive:
-            videoRecord = VideoRecord.objects.get(userId=streamer)
             data.append({
-                'vid': videoRecord.vid,
+                'vid': settingData.youtubeUrl,
                 'StreamerUserName' : streamer.username,
                 'StreamerName' : settingData.nickName + ' (' + streamer.username + ')',
                 'Category' : settingData.category,

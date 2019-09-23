@@ -45,7 +45,13 @@ class settingView(View):
         current_user.email = request.POST.get("email")
         settingData.nickName = request.POST.get("nickName")
         settingData.save() #更新進資料庫
-        return render(request, 'setting.html')
+        #return render(request, 'setting.html')
+
+        rtnMessage = {
+            'success': True,
+            'messages': "修改成功！"
+        }
+        return JsonResponse(rtnMessage, safe=False)
 
 class streamSettingView(View):
     template_name = 'setting.html'
@@ -56,7 +62,12 @@ class streamSettingView(View):
         settingData.youtubeUrl = request.POST.get("youtubeUrl")
         settingData.introduction = request.POST.get("introduction")
         settingData.save() #更新進資料庫
-        return render(request, 'setting.html')
+        #return render(request, 'setting.html')
+        rtnMessage = {
+            'success': True,
+            'messages': "修改成功！"
+        }
+        return JsonResponse(rtnMessage, safe=False)
 
 def BecomeStreamer(request):
     if request.method == 'POST':
@@ -84,7 +95,7 @@ class modifyPasswordView(View):
         def post(self, request, *args, **kwargs):
             user = User.objects.get(id=request.user.id)
             status = False
-
+            passwordValidate=[]
             #判斷是否成功 設定傳送訊息
             if user.check_password(request.POST.get("oldPassword")):
 
@@ -93,15 +104,15 @@ class modifyPasswordView(View):
                         validate_password(request.POST.get("newPassword1"), user)
                         user.set_password(request.POST.get("newPassword1"))
                         user.save()
-                        passwordValidate = "修改成功"
+                        passwordValidate.append("修改成功")
                         status = True
                     except ValidationError as err:
                         passwordValidate = err.messages
                 else:
-                    passwordValidate = "請確認密碼是否輸入相同"
+                    passwordValidate.append("請確認密碼是否輸入相同")
 
             else:
-                passwordValidate = "密碼錯誤"
+                passwordValidate.append("密碼錯誤")
             context = {
                 "status":status,
                 "passwordValidate":passwordValidate[0], #get array first
