@@ -1,10 +1,16 @@
 {% load myTemplatetags %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
     <div class="container">
+
         <a class="navbar-brand" href="/">
             <i class="fas fa-video"></i><span class="nav-item"></span>Realive</a>
+        <!-- .navbar-toggler 漢堡式選單按鈕 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- .navbar-toggler-icon 漢堡式選單Icon -->
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto ">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item" id="nav-login">
                     <a class="nav-link" id="BtnUser"
@@ -12,12 +18,14 @@
                         <i class="fas fa-user"></i>你好{{request.user}}</a>
                         <span id="username" style="display: none;">{{ request.user }}</span>
                 </li>
-                    {% if request.user|is_in:"Streamer" %}
-                    <li class="nav-item" id="nav-openLive">
-                        <a class="nav-link" href="/liveSetting/{{ request.user }}">
-                            <i class="fas fa-play-circle icon_img"></i>開始實況</a>
-                    </li>
-                    {% endif %}
+
+                {% if request.user|is_in:"Streamer" %}
+                <li class="nav-item" id="nav-openLive">
+                    <a class="nav-link" href="/liveSetting/{{ request.user }}">
+                        <i class="fas fa-play-circle icon_img"></i>開始實況</a>
+                </li>
+                {% endif %}
+
                 <li class="nav-item" id="nav-logout">
                     <a class="nav-link" id="Btnlogout">
                         <i class="fas fa-sign-in-alt icon_img"></i>登出</a>

@@ -25,9 +25,7 @@
    display:none;
 }
 
-@media (min-width: 768px) {
-    .mainArea
-    {
-        padding-top: 90px;
-    }
- }
+@media (max-width: 991px) {
+
+  
+}
