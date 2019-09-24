@@ -71,6 +71,7 @@
 var vid = '{{ youtubeUrl }}';
 
 if ('{{ isLive }}' == 'True') {
+    $('#youtubeUrl').prop('readonly', true);
     $('#openLive').val('修改實況資訊');
     $('#state').val('2');
     var timer = setInterval(updateEmotionData, 1000);
@@ -111,7 +112,6 @@ function updateEmotionData() {
         }
     });
 }
-window.CSRF_TOKEN = "{{ csrf_token }}
 </script>
 
 <script src="{% static 'js/liveSetting.js' %}"></script>
