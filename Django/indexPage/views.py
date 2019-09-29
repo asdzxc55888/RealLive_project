@@ -9,9 +9,13 @@ from livePage.models import UserSetting, VideoRecord
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.conf import settings
+from .cryptSet import prpcrypt
+from django.utils.html import strip_tags
 import json
 import random
 import string
+
+resetPasswordKey = 'abcdef'  # 金鑰 8位或16位,必須為bytes
 
 # Create your views here.
 class indexView(View):
@@ -111,7 +115,49 @@ def register(request):
     return JsonResponse(rtnMessage, safe=False)
 
 #忘記密碼
-def forgotPassword(request):
+def resetPassword(request, encodeUsername):
+    if request.method == 'GET':
+        try:
+            pc = prpcrypt(resetPasswordKey)  # 初始化金鑰
+            username = pc.decrypt(encodeUsername)
+            user = User.objects.get(username=username)
+            print(username)
+        except ValidationError as err:
+            context = {
+                "message" :"System error!"
+            }
+
+            return render(request, "resetPassword.html", context)
+
+        newPassword = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(10))
+
+        #設定亂數新密碼
+        user.set_password(newPassword)
+        user.save()
+
+        #mail init setting
+        serverHost = 'realive.online'
+
+        url = 'https://' + serverHost + '/'
+        html_message = 'This is your new password [' + newPassword + '] please enter the Realive web to change your password <br/> <a href=' + url + '>' + url + '</a>'
+        plain_message = strip_tags(html_message)
+
+        if settings.EMAIL_TEST: #test mode
+            to = settings.TEST_EMAIL_TO
+        else:
+            to = user.email
+
+        send_mail('Reset your password', plain_message, settings.DEFAULT_FROM_EMAIL,
+            [to], html_message=html_message)
+
+        context = {
+            "message" :"Success Change new Password! Please check your email to get the new password."
+        }
+
+        return render(request, "resetPassword.html", context)
+
+
+def SendVerificationCode(request):
     if request.method == 'POST':
         try:
             user = User.objects.get(username=request.POST.get("username_forgot"))
@@ -121,26 +167,38 @@ def forgotPassword(request):
                 'messages': "查無此使用者,請檢查輸入"
             }
 
-        userSetting = UserSetting.objects.create(userId = user)
-        newPassword = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(10))
-
-        #設定亂數新密碼
-        user.set_password(newPassword)
-        user.save()
+        #encode
+        pc = prpcrypt(resetPasswordKey)  # 初始化金鑰
+        encodeUsername = pc.encrypt(user.username)
 
         #mail init setting
-        emailMessage = 'Your new password is ' + newPassword
+        serverHost = '127.0.0.1:8000'
+
+        url = 'https://' + serverHost + '/accounts/resetPassword/' + encodeUsername.decode('utf-8')
+        html_message = 'click this <a href=' + url + '>link</a> to reset your password <br/> ' + '<a href=' + url + '>' + url + '</a>'
+        plain_message = strip_tags(html_message)
 
         if settings.EMAIL_TEST: #test mode
-            send_mail('Realive System forgot password', emailMessage, settings.DEFAULT_FROM_EMAIL,
-                [settings.TEST_EMAIL_TO], fail_silently=False)
+            to = settings.TEST_EMAIL_TO
         else:
-            send_mail('Realive System forgot password', emailMessage, settings.DEFAULT_FROM_EMAIL,
-                [user.email], fail_silently=False)
+            to = user.email
+
+        send_mail('Reset your password', plain_message, settings.DEFAULT_FROM_EMAIL,
+            [to], html_message=html_message)
 
         rtnMessage = {
             'success': True,
-            'messages': "成功寄發信件,請至郵箱中查閱！"
+            'messages': "成功寄發驗證信,請至郵箱中查閱！"
         }
 
         return JsonResponse(rtnMessage, safe=False)
+
+def pad(text):
+    """
+    # 加密函式，如果text不是8的倍數【加密文字text必須為8的倍數！】，那就補足為8的倍數
+    :param text:
+    :return:
+    """
+    while len(text) % 8 != 0:
+        text += ' '
+    return text

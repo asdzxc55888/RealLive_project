@@ -75,7 +75,7 @@ $(function() {
     //發送忘記密碼請求
     $("#forgotPasswordForm").submit(function(e){
       e.preventDefault();
-      PostAjaxJsonRequest($("#forgotPasswordForm").serialize(), "/accounts/forgotPassword/", function(response){
+      PostAjaxJsonRequest($("#forgotPasswordForm").serialize(), "/accounts/SendVerificationCode/", function(response){
         if(response.success){
           alert(response.messages);
           location.reload(); //重整頁面
