@@ -63,6 +63,20 @@ function uploadVideo(vid) {
 	};
 }
 
+function loadChatRecord(vid){
+  var data = { "vid":vid };
+  var url = "/statistics/getChatRecord"
+  console.log(vid);
+  PostAjaxJsonRequest(data, url, function(response){
+    var chatMessage = "";
+    for (var message in response) {
+      chatMessage += response[message] + "\n";
+    }
+    console.log(chatMessage)
+    $("#chat-log").val(chatMessage);
+  });
+}
+
 function updateSelecter(hours) {
 	if (hours > 1) {
 		var content = '<select id="section" style="margin: 0 auto" onchange="changeSection()">';

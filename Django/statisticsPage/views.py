@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.views import View
-from livePage.models import EmotionData, VideoRecord
+from livePage.models import EmotionData, VideoRecord, ChatRecord
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from livePage.models import UserSetting
 import json
 
 # Create your views here.
@@ -61,3 +64,17 @@ class statisticsView(View):
             'hours': hours,
         }
         return render(request, self.template_name, context)
+
+
+def getChatRecord(request):
+    _vid = request.POST.get("vid", "")
+    _videoRecord = VideoRecord.objects.get(vid = _vid)
+    _chatRecord = ChatRecord.objects.filter(vid = _videoRecord).order_by('nDate', 'nTime')
+    rtnMessage = []
+
+    for chatRecord in _chatRecord.all():
+        user = User.objects.get(username = chatRecord.userId)
+        userSetting = UserSetting.objects.get(userId = user)
+        rtnMessage.append(userSetting.nickName + ":" + chatRecord.message)
+
+    return JsonResponse(rtnMessage, safe=False)

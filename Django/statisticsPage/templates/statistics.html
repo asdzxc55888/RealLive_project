@@ -12,19 +12,23 @@
 {% block content %}
 <div class="container-fluid mainArea">
     <div class="row">
-        <div class="col-1"></div>
-        <div class="col-7 nopadding">
+        <div class="col-md-1"></div>
+        <div class="col-md-7 nopadding">
             <div id="player"></div>
         </div>
-        <div class="col-3 nopadding playerlist_container">
+        <!--<div class="col-3 nopadding playerlist_container">
             <p class="listHeader">直播影片紀錄</p>
             <ul class="playlist"></ul>
             <form id="vidForm" method="post" action="">
                 {% csrf_token %}
                 <input id="vidInput" type="hidden" name="vid" value="">
             </form>
+        </div>-->
+        <div class="col-md-3 nopadding playerlist_container">
+          <p class="listHeader">直播聊天紀錄</p>
+          <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
         </div>
-        <div class="col-1"></div>
+        <div class="col-md-1"></div>
     </div>
 
     <hr width="85%">
@@ -65,6 +69,7 @@ var t = {{ time|safe }},
 {% else %}
     {% for video in videos %}
         uploadVideo("{{ video.vid }}");
+        loadChatRecord("{{ video.vid }}");
     {% endfor %}
     {% if vid != None %}
         // This function creates an <iframe> (and YouTube player) after the API code downloads
@@ -78,7 +83,7 @@ var t = {{ time|safe }},
                 }
             });
         }
-        
+
         updateSelecter({{ hours }});
         setChartWidth(n);
 

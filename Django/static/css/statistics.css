@@ -1,5 +1,5 @@
 p.listHeader {
-	margin: 0px 0px 0px 3px;
+	margin: 0px 0px 0px 0px;
     background-color: #17a2b8;
 	color: white;
 	width: 100%;
@@ -69,6 +69,10 @@ ul.playlist li p {
 .navbar-toggler {
     width: auto;
     margin: 0;
+}
+
+#chat-log {
+		height: 95%;
 }
 
 @media screen and (min-width: 1025px) {
