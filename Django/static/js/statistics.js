@@ -65,7 +65,7 @@ function uploadVideo(vid) {
 
 function loadChatRecord(vid){
   var data = { "vid":vid };
-  var url = "/statistics/getChatRecord"
+  var url = "/statistics/get/getChatRecord"
   console.log(vid);
   PostAjaxJsonRequest(data, url, function(response){
     var chatMessage = "";

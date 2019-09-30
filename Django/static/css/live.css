@@ -1,3 +1,6 @@
+.btn{
+  margin-top: 10px;
+}
 @media screen and (min-width: 1025px) {
     #player, .playerlist_container {
          height: 480px;
@@ -11,10 +14,6 @@
 
     #chat-log {
         height: 286px;
-    }
-
-    #chat-message-submit {
-        margin-bottom: 10px;
     }
 }
 

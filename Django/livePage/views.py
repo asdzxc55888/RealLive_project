@@ -12,5 +12,6 @@ class liveView(View):
         streamerSettingData = UserSetting.objects.get(userId = streamer.id)
         context = {
             "youtubeUrl": streamerSettingData.youtubeUrl,
+            "streamerName": streamerName,
         }
         return render(request, self.template_name, context)

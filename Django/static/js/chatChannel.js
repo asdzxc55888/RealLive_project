@@ -30,13 +30,16 @@ document.querySelector('#chat-message-submit').onclick = function (e) {
     var messageInputDom = document.querySelector('#chat-message-input');
     if(messageInputDom.value != ''){
       var username = $("#username").html();
-      var message = messageInputDom.value;
-      chatSocket.send(JSON.stringify({
-          'username' : username,
-          'message': message,
-          'vid': vid
-      }));
-
+      if(username !== undefined){
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'username' : username,
+            'message': message,
+            'vid': vid
+        }));
+      }else{
+        alert("請先登入後才能進行發言！");
+      }
       messageInputDom.value = '';
     }
 };

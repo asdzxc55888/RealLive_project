@@ -35,7 +35,7 @@ $(document).ready(function () {
             { name: "Introduction", title: "簡介", type: "text", width: "40%", css:"hide-md" },
             {
                 itemTemplate: function(_, item) {
-                    return $('<button class="goToBtn">').text("前往頻道")
+                    return $('<button class="goToBtn btn btn-info">').text("前往頻道")
                     	.on("click", function() {
                             window.location.href="/live/" + item.StreamerUserName;   //導向直播頁面
                     	});
@@ -50,16 +50,21 @@ $(document).ready(function () {
             searchStreamer();
         }
     });
+
+    $("#searchOption").on("change",function search(e) {
+      $("#searchText").attr("placeholder", "Search " + $("#searchOption").val() + "...");
+    })
+
+    searchStreamer();
 });
 //查詢實況主
 function searchStreamer(){
-  $("#streamer_grid").jsGrid("loadData",{ searchFilter:$("#searchText").val() });
+  $("#streamer_grid").jsGrid("loadData",{ searchFilter:$("#searchText").val(), option:$("#searchOption").val() });
 }
 
 //取得yt縮圖 return： html img tag
 function getYoutubeImage(vid){
-  var imgWidth = '250',
-      imgHeight = '175';
+  var imgHeight = '175';
   var title = 'None';
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + youtubeApiKey,

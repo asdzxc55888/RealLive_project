@@ -13,12 +13,17 @@
 <div class="container-fluid mainArea">
   <div class="wrap">
    <div class="search">
-      <input type="text" class="searchTerm" placeholder="Search..." id="searchText">
+      <input type="text" class="searchTerm" placeholder="Search online..." id="searchText">
       <button type="button" class="searchButton" id="searchBtn" onclick="searchStreamer()">
         <i class="fa fa-search"></i>
      </button>
+     <select class="form-control" id="searchOption">
+      <option value="online">直播中</option>
+      <option value="offline">離線</option>
+      <option value="all">全部</option>
+     </select>
    </div>
-</div>
+  </div>
     <div id="streamer_grid">
     </div>
 </div>

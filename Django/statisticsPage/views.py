@@ -10,16 +10,17 @@ import json
 class statisticsView(View):
     template_name = 'statistics.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, username, *args, **kwargs):
         _videos = None
         if request.user.is_authenticated:
-            _videos = VideoRecord.objects.filter(userId = request.user)
+            _user = User.objects.get(username = username)
+            _videos = VideoRecord.objects.filter(userId = _user)
         context = {
             'videos': _videos,
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, username, *args, **kwargs):
         _videos = None
         _vid = request.POST.get("vid", "")
         _time = []
@@ -31,7 +32,8 @@ class statisticsView(View):
         _surpriseData = []
         if request.user.is_authenticated:
             # get videos
-            _videos = VideoRecord.objects.filter(userId = request.user)
+            _user = User.objects.get(username = username)
+            _videos = VideoRecord.objects.filter(userId = _user)
 
             # get emotional data
             video = VideoRecord.objects.get(vid = _vid)

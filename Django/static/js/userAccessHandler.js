@@ -7,11 +7,12 @@ $(function() {
 
     // 登入視窗初始化
     $("#loginWindow").kendoWindow({
-        width: "600px",
+        width:"600px",
         title: "登入",
         visible: false,
         modal: true,
         actions: [
+            "Maximize",
             "Close"
         ]
     }).data("kendoWindow").center();
@@ -21,10 +22,6 @@ $(function() {
         const password = $password.val();
 
     });
-
-    $("#btn-login").click(function() {
-        $("#loginWindow").data("kendoWindow").open();
-    })
 
 ///////////////////////// Tab Setting ///////////////////////////////////////////
     $('#login-form-link').click(function(e) {
@@ -108,3 +105,14 @@ $(function() {
       });
     })
 });
+
+$("#btn-login").click(function() {
+  $("#loginWindow").data("kendoWindow").open().center();
+  console.log($( window ).width());
+  console.log($( window ).width() <= 600);
+  if($( window ).width() <= 600){
+    $("#loginWindow").data("kendoWindow").maximize();
+  }else{
+    $("#loginWindow").data("kendoWindow").restore();
+  }
+})

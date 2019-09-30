@@ -12,7 +12,7 @@
   border: 3px solid #00B4CC;
   border-right: none;
   padding: 5px;
-  height: 100%;
+  height: 36px;
   border-radius: 5px 0 0 5px;
   outline: none;
   color: #9DBFAF;
@@ -24,7 +24,7 @@
 
 .searchButton {
   width: 40px;
-  height: 34px;
+  height: 36px;
   border: 1px solid #00B4CC;
   background: #00B4CC;
   text-align: center;
@@ -40,6 +40,10 @@
 }
 .img-streamer{
   width: 90%;
+}
+#searchOption{
+  width: 168px;
+  height: 36px;
 }
 
 @media screen and (max-width: 1300px) {

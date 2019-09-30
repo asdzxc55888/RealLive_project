@@ -45,7 +45,17 @@ def getStreamer(request):
     #取得當前直播的實況主
     for streamer in streamerList:
         settingData = UserSetting.objects.get(userId=streamer)
-        if settingData.isLive:
+        searchOption = request.POST.get("option")
+        #判斷所塞選的實況主狀態
+        optionBool = False
+        if searchOption == "online":
+            optionBool = settingData.isLive
+        elif searchOption == "offline":
+            optionBool = not settingData.isLive
+        elif searchOption == "all":
+            optionBool = True
+
+        if optionBool:
             data.append({
                 'vid': settingData.youtubeUrl,
                 'StreamerUserName' : streamer.username,
