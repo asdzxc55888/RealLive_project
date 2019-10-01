@@ -1,34 +1,24 @@
 p.listHeader {
-	margin: 0px 0px 0px 0px;
+	margin: 0px;
     background-color: #17a2b8;
 	color: white;
 	width: 100%;
+	height: auto;
 	text-align: center;
 }
 
-p.videoTitle {
-	text-overflow : ellipsis;
-}
-
 ul.playlist {
-	margin: 0;
-	padding: 0;
-    margin-left: 3px;
-	list-style: none;
+	margin: 0px;
+	padding: 0px;
 	width: 100%;
-    height: 95%;
-	float: left;
     overflow: auto;
+	list-style: none;
+	white-space: nowrap;
 }
 
 ul.playlist li {
-    width: 100%;
-	margin: 0px 0px 3px 0px;
-	float: left;
-}
-
-ul.playlist li:hover {
-    background-color: gray;
+	margin: 0px 3px 0px 0px;
+	display: inline-block;
 }
 
 ul.playlist li a {
@@ -37,13 +27,8 @@ ul.playlist li a {
 
 ul.playlist li a img {
 	border: 0;
-    width: 100%;
-    height: 100%;
-	vertical-align: middle;
-}
-
-ul.playlist li p {
-	margin: auto;
+    width: 10;
+    height: 5;
 }
 
 .chartWrapper {
@@ -62,10 +47,6 @@ ul.playlist li p {
 	height: 600px;
 }
 
-.nopadding {
-    padding: 0;
-}
-
 .navbar-toggler {
     width: auto;
     margin: 0;
@@ -76,8 +57,8 @@ ul.playlist li p {
 }
 
 @media screen and (min-width: 1025px) {
-    #player, .playerlist_container {
-         height: 576px;
+    #player, .chat_container {
+         height: 480px;
     }
 
 	.listHeader {
@@ -87,13 +68,9 @@ ul.playlist li p {
 }
 
 @media screen and (max-width: 1024px) {
-    #player, .playerlist_container {
-         height: 405px;
+    #player, .chat_container {
+         height: 360px;
     }
-
-	.videoTitle {
-		font-size: 12px;
-	}
 
 	.listHeader {
 		font-size: 12px;
@@ -101,17 +78,24 @@ ul.playlist li p {
 	}
 }
 
-@media screen and (max-width: 480px) {
-    #player, .playerlist_container {
-         height: 189px;
+@media screen and (max-width: 767px) {
+	.chat_container {
+         height: 180px;
+		 margin-top: 3px;
     }
-
-	.videoTitle {
-		display: none;
-	}
 
 	.listHeader {
 		font-size: 12px;
 		height: 10%;
 	}
+}
+
+@media screen and (max-width: 480px) {
+    #player {
+         height: 240px;
+    }
+
+	.chat_container {
+         height: 100px;
+    }
 }

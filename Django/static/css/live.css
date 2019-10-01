@@ -1,36 +1,40 @@
 .btn{
-  margin-top: 10px;
+    margin: 0px;
 }
+
 @media screen and (min-width: 1025px) {
-    #player, .playerlist_container {
+    #player, #chat-log {
          height: 480px;
     }
 }
 
 @media screen and (max-width: 1024px) {
-    #player, .playerlist_container {
+    #player, #chat-log {
          height: 360px;
     }
+}
+
+@media screen and (max-width: 767px) {
+	.btn {
+		font-size: 12px;
+	}
 
     #chat-log {
-        height: 286px;
+         height: 180px;
+         margin-top: 8px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    #player, .playerlist_container {
+    .btn{
+        font-size: 10px;
+    }
+
+    #player {
          height: 240px;
     }
 
     #chat-log {
-        height: 160px;
-    }
-
-    #closeLive {
-        margin-top: 10px;
-    }
-
-    #message {
-        display: block;
+         height: 100px;
     }
 }

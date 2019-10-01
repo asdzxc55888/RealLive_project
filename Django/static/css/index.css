@@ -38,9 +38,11 @@
   background: #00B4CC;
   color: #f9f9f9;
 }
+
 .img-streamer{
-  width: 90%;
+  width: 100%;
 }
+
 #searchOption{
   width: 168px;
   height: 36px;

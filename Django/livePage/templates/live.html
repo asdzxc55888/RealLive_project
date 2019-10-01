@@ -25,14 +25,14 @@
     <div class="row">
         <div class="col-md-7">
             <div id="player"></div>
+            <input id="openDetection" class="btn btn-primary" type="button" onclick="onOpenDetectionButtonClick()" value="開啟情緒分享" />
+            <input id="closeDetection" class="btn btn-primary" type="button" onclick="onCloseDetectionButtonClick()" value="關閉情緒分享" />
+            <input class="btn btn-primary" type="button" onclick="location.href='/statistics/{{streamerName}}'" value="查看直播紀錄" />
         </div>
         <div class="col-md-5">
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
-            <input id="chat-message-input" type="text" size="25" /><br />
-            <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-            <input id="openDetection" class="btn btn-primary" onclick="onOpenDetectionButtonClick()" value="開啟情緒分享" />
-            <input id="closeDetection" class="btn btn-primary" onclick="onCloseDetectionButtonClick()" value="關閉情緒分享" />
-            <input class="btn btn-primary" type="button" onclick="location.href='/statistics/{{streamerName}}'" value="查看直播紀錄" />
+            <input id="chat-message-input" type="text" size="25" />
+            <input id="chat-message-submit"class="btn btn-primary" type="button" value="發送" />
         </div>
     </div>
     <video id="stream" controls autoplay></video>

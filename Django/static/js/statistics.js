@@ -45,7 +45,7 @@ function uploadVideo(vid) {
 
 		var html = '<li class="row"><a class="col-md-6" href="' + address + '">';
 		html += '<img src="' + thumbUrl + '" alt="' + title + '" title="' + title + '" width="' + imgWidth + '" height="' + imgHeight + '" />';
-		html += '</a><p class="col-md-6 videoTitle">' + title + '</p></li>';
+		html += '</a></li>';
 
 		var option = htmlToElement(html);
 		$(option).children('a').click(function() {

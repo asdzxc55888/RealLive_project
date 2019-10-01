@@ -32,14 +32,14 @@ $(document).ready(function () {
               	},width: "15%"
             },
             { name: "Category", title: "實況類別", type: "text", width: "10%", css:"hide-lg" },
-            { name: "Introduction", title: "簡介", type: "text", width: "40%", css:"hide-md" },
+            { name: "Introduction", title: "簡介", type: "text", css:"hide-md" },
             {
                 itemTemplate: function(_, item) {
                     return $('<button class="goToBtn btn btn-info">').text("前往頻道")
                     	.on("click", function() {
                             window.location.href="/live/" + item.StreamerUserName;   //導向直播頁面
                     	});
-              	}, css:"hide-sm"
+              	}, width: "10%", css:"hide-sm"
             }
         ]
     });
@@ -64,7 +64,6 @@ function searchStreamer(){
 
 //取得yt縮圖 return： html img tag
 function getYoutubeImage(vid){
-  var imgHeight = '175';
   var title = 'None';
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + vid + '&key=' + youtubeApiKey,
@@ -75,14 +74,14 @@ function getYoutubeImage(vid){
       title = (data['items'][0]['snippet']['title']);
     },
     error: function() {
-      //console.log("Failed to get the data, see network tab for response details.");
+      console.log("Failed to get the data, see network tab for response details.");
     }
   });
 
   // 取得縮圖
   var thumbUrl = "http://img.youtube.com/vi/" + vid + "/0.jpg";
 
-  var result = '<img src="' + thumbUrl + '" alt="' + title + '" title="' + title + '" height="' + imgHeight + '" class = "img-streamer"" />';
+  var result = '<img src="' + thumbUrl + '" alt="' + title + '" title="' + title + '" class = "img-streamer" />';
   return result;
 }
 

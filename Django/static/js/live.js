@@ -46,7 +46,10 @@ function storePicture() {
     snapshotContext.drawImage(stream, 0, 0, 320, 240);
     snapshot.toBlob(function(image){
         var time = Math.floor(player.getCurrentTime()).toString();
-        imageSocket.send(new Blob([vid + ' ' + time], {type : 'text/plain'}));
-        imageSocket.send(image);
+        if (player.getPlayerState() == 1)
+        {
+            imageSocket.send(new Blob([vid + ' ' + time], {type : 'text/plain'}));
+            imageSocket.send(image);
+        }
     }, "image/jpeg", 1.0);
 }

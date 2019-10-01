@@ -59,6 +59,8 @@ class ChatConsumer(WebsocketConsumer):
 
 class ImageConsumer(WebsocketConsumer):
     recognizer = Recognizer()
+    vid = ''
+    time = ''
 
     def connect(self):
         self.accept()

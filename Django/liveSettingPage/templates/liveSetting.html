@@ -16,7 +16,7 @@
         {% csrf_token %}
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">填入youtube嵌入網址  https://www.youtube.com/embed/</span>
+                <span class="input-group-text">Youtube vid</span>
             </div>
             <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl" value={{ youtubeUrl }}>
         </div>
@@ -36,8 +36,8 @@
     </form>
     <div class="row">
         <div class="col-md-7">
-            <input id="openLive" class="btn btn-primary" onclick="onOpenLiveButtonClick()" value="開始實況" />
-            <input id="closeLive" class="btn btn-primary" onclick="onCloseLiveButtonClick()" value="關閉實況" />
+            <input id="openLive" class="btn btn-primary" type="button" onclick="onOpenLiveButtonClick()" value="開始實況" />
+            <input id="closeLive" class="btn btn-primary" type="button" onclick="onCloseLiveButtonClick()" value="關閉實況" />
         </div>
         <div class="col-md-5"></div>
     </div>
@@ -45,21 +45,19 @@
     <div class="row">
         <div class="col-md-7">
             <div id="player"></div>
+            <div id="happyPanel">
+                <img class="icon" src="{% static 'icon/happy.png' %}" alt="Happy" title="Happy">
+                <p id=happyCount>0</p>
+            </div>
+            <div id="surprisedPanel">
+                <img class="icon" src="{% static 'icon/surprised.png' %}" alt="Surprised" title="Surprised">
+                <p id=surprisedCount>0</p>
+            </div>
         </div>
         <div class="col-md-5">
             <textarea readonly class="form-control" rows="16" id="chat-log"></textarea>
             <input id="chat-message-input" type="text" /><br />
             <input class="btn btn-primary" id="chat-message-submit" type="button" value="發送" />
-        </div>
-    </div>
-    <div class="row">
-        <div id="happyPanel">
-            <img class="icon" src="{% static 'icon/happy.png' %}" alt="Happy" title="Happy">
-            <p id=happyCount>0</p>
-        </div>
-        <div id="surprisedPanel">
-            <img class="icon" src="{% static 'icon/surprised.png' %}" alt="Surprised" title="Surprised">
-            <p id=surprisedCount>0</p>
         </div>
     </div>
 </div>
