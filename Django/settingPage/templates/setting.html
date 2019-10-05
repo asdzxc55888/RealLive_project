@@ -6,24 +6,7 @@
 {% endblock %}
 
 {% block css %}
-<style>
-  .input-group {
-    margin: 16px;
-  }
-
-  .input-group input {
-    width: 50%;
-  }
-
-  .btn {
-    margin: 16px;
-  }
-
-  #streamForm label{
-    margin-top:8px;
-    margin-left:16px;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'css/setting.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -32,9 +15,9 @@
   <!-- tab導覽列 設定 -->
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">設定</a>
-      <a class="nav-item nav-link" id="nav-stream-tab" data-toggle="tab" href="#nav-stream" role="tab" aria-controls="nav-stream" aria-selected="false">實況設定</a>
-      <a class="nav-item nav-link" id="nav-modifyPassword-tab" data-toggle="tab" href="#nav-modifyPassword" role="tab" aria-controls="nav-modifyPassword" aria-selected="false">更換密碼</a>
+      <a class="nav-item nav-link active tab" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">設定</a>
+      <a class="nav-item nav-link tab" id="nav-stream-tab" data-toggle="tab" href="#nav-stream" role="tab" aria-controls="nav-stream" aria-selected="false">實況設定</a>
+      <a class="nav-item nav-link tab" id="nav-modifyPassword-tab" data-toggle="tab" href="#nav-modifyPassword" role="tab" aria-controls="nav-modifyPassword" aria-selected="false">更換密碼</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -60,7 +43,7 @@
           {% csrf_token %}
           <div class="input-group mb-3">
               <div class="input-group-prepend">
-                  <span class="input-group-text">填入youtube嵌入網址  https://www.youtube.com/embed/</span>
+                  <span class="input-group-text">Youtube Vid</span>
               </div>
               <input type="text" class="form-control" id="youtubeUrl" name="youtubeUrl"
                   value={{ youtubeUrl }}>

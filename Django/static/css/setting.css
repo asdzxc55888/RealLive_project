@@ -1,0 +1,29 @@
+.input-group {
+  margin: 16px;
+}
+
+.input-group input {
+  width: 50%;
+}
+
+.btn {
+  margin: 16px;
+}
+
+.tab{
+  margin-right: 1%;
+}
+
+.nav-tabs{
+  min-width: 330px;
+}
+
+.tab-pane{
+  margin: 8px;
+  margin-right: 24px;
+}
+
+#streamForm label{
+  margin-top:8px;
+  margin-left:16px;
+}
