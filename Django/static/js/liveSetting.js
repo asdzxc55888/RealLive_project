@@ -15,7 +15,8 @@ function onOpenLiveButtonClick() {
     if ($("#category").val() == "") {
         $('#message').text("Live category cannot be blank.");
     }
-    else {
+      $("#streamForm").submit();
+    /*else {
         $.ajax({
             url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + $('#youtubeUrl').val() + '&key=' + youtubeApiKey,
             async: false,
@@ -33,7 +34,7 @@ function onOpenLiveButtonClick() {
                 console.log("Failed to connect youtube.");
             }
         });
-    }
+    }*/
 }
 
 function onCloseLiveButtonClick() {

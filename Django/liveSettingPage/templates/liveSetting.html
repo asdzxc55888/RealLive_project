@@ -38,6 +38,7 @@
         <div class="col-md-7">
             <input id="openLive" class="btn btn-primary" type="button" onclick="onOpenLiveButtonClick()" value="開始實況" />
             <input id="closeLive" class="btn btn-primary" type="button" onclick="onCloseLiveButtonClick()" value="關閉實況" />
+            <input class="btn btn-primary" type="button" onclick="location.href='/statistics/{{ request.user }}'" value="直播紀錄">
         </div>
         <div class="col-md-5"></div>
     </div>
