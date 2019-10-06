@@ -24,7 +24,7 @@ $(document).ready(function () {
         fields: [
             { name: "StreamerUserName", css:"hide" }, // hide:custom pemater from style.css
             { name: "StreamerName", title: "實況主名稱", type: "text", width: "10%" },
-            {
+            { title: "實況截圖",
                 itemTemplate: function(_, item) {
                     return $(getYoutubeImage(item.vid)).on("click", function() {
                           window.location.href="/live/" + item.StreamerUserName;   //導向直播頁面
@@ -33,7 +33,7 @@ $(document).ready(function () {
             },
             { name: "Category", title: "實況類別", type: "text", width: "10%", css:"hide-lg" },
             { name: "Introduction", title: "簡介", type: "text", css:"hide-md" },
-            {
+            { title: "前往頻道", 
                 itemTemplate: function(_, item) {
                     return $('<button class="goToBtn btn btn-info">').text("前往頻道")
                     	.on("click", function() {

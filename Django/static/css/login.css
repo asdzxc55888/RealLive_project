@@ -11,6 +11,20 @@
   margin-right: 16px;
   margin-left: 24px;
 }
+
+.tag {
+    margin: 0px;
+    padding: 0px;
+}
+
+.lawHead {
+    margin-bottom: 0px;
+}
+
+.law {
+    margin-left: 0px;
+}
+
 @media screen and (max-width: 610px) {
   .k-widget .k-window{
     width: 100%;
