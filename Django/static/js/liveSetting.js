@@ -16,6 +16,7 @@ function onOpenLiveButtonClick() {
         $('#message').text("Live category cannot be blank.");
     }
     $("#streamForm").submit();
+    console.log("test");
     /*else {
         $.ajax({
             url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + $('#youtubeUrl').val() + '&key=' + youtubeApiKey,
