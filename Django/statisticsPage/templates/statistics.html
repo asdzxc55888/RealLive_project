@@ -34,6 +34,7 @@
 
     <hr width="85%">
 
+    {% if request.user.is_authenticated %}
     <div id="selecter" class="row"></div>
     <div class="row">
         <div class="col-1"></div>
@@ -44,6 +45,9 @@
         </div>
         <div class="col-1"></div>
     </div>
+    {% else %}
+    <p>登錄後就能觀看情緒統計圖表囉！</p>
+    {% endif %}
 </div>
 {% endblock %}
 
@@ -65,10 +69,6 @@ var t = {{ time|safe }},
 </script>
 <script src="{% static 'js/statistics.js' %}"></script>
 <script type="text/javascript">
-{% if not request.user.is_authenticated %}
-    alert("登錄後就能觀看情緒統計圖表囉！");
-{% endif %}
-
 {% for video in videos %}
     uploadVideo("{{ video.vid }}");
 {% endfor %}
@@ -87,18 +87,20 @@ var t = {{ time|safe }},
 
     loadChatRecord("{{ vid }}");
 
-    updateSelecter({{ hours }});
-    setChartWidth(n);
+    {% if request.user.is_authenticated %}
+        updateSelecter({{ hours }});
+        setChartWidth(n);
 
-    // create first chart
-    if (n > 3600) {
-        createChart(t.slice(0, 3600), angey.slice(0, 3600), disgust.slice(0, 3600),
-                    fear.slice(0, 3600), happy.slice(0, 3600), sad.slice(0, 3600),
-                    surprise.slice(0, 3600));
-    }
-    else {
-        createChart(t, angey, disgust, fear, happy, sad, surprise);
-    }
+        // create first chart
+        if (n > 3600) {
+            createChart(t.slice(0, 3600), angey.slice(0, 3600), disgust.slice(0, 3600),
+                        fear.slice(0, 3600), happy.slice(0, 3600), sad.slice(0, 3600),
+                        surprise.slice(0, 3600));
+        }
+        else {
+            createChart(t, angey, disgust, fear, happy, sad, surprise);
+        }
+    {% endif %}
 {% endif %}
 </script>
 {% endblock %}

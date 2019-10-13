@@ -23,6 +23,7 @@ class settingView(View):
                 "email": current_user.email,
                 "nickName": settingData.nickName,
                 "youtubeUrl": settingData.youtubeUrl,
+                "category": settingData.category,
                 "introduction": settingData.introduction,
                 "isStreamer": True,
                 }
@@ -31,6 +32,7 @@ class settingView(View):
                 "email": current_user.email,
                 "nickName": settingData.nickName,
                 "youtubeUrl": '',
+                "category": '',
                 "introduction": '',
                 "isStreamer": False,
                 }
