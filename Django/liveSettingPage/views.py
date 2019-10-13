@@ -27,12 +27,11 @@ class liveSettingView(View):
             message = "The Youtube vid is duplicate."
         elif request.POST.get("state") == '0' and not settingData.isLive:
             message = "Live was already closed."
-        elif request.POST.get("state") != '0' and request.POST.get("category") == '':
-            message = "Live category cannot be blank."
         else:
             settingData.youtubeUrl = request.POST.get("youtubeUrl")
             settingData.introduction = request.POST.get("introduction")
             settingData.category = request.POST.get("category")
+            print(request.POST.get("category"))
             if request.POST.get("state") == '0':
                 settingData.isLive = False
                 message = "Successfully closed."

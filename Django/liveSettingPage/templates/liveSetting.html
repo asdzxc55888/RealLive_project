@@ -24,7 +24,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">實況類型</span>
             </div>
-            <input type="text" class="form-control" id="category" name="category" value={{ category }}>
+            <select class="form-control" id="category" name="category">
+                <option>遊戲</option>
+                <option>音樂</option>
+                <option>歌唱</option>
+                <option>拍賣</option>
+                <option>郊遊</option>
+                <option>聊天</option>
+            </select>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -68,6 +75,8 @@
 <script src="{% static 'js/keys.js' %}"></script>
 <script type="text/javascript">
 var vid = '{{ youtubeUrl }}';
+$('#category').val('{{ category }}');
+$('#category').change();
 
 if ('{{ isLive }}' == 'True') {
     $('#youtubeUrl').prop('readonly', true);

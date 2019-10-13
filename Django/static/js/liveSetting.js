@@ -12,18 +12,19 @@ function onPlayerReady(event) {
 }
 
 function onOpenLiveButtonClick() {
-    if ($("#category").val() == "") {
-        $('#message').text("Live category cannot be blank.");
+    reg = /[a-zA-Z0-9\-_]/;
+    if (!reg.test($('#youtubeUrl').val()) || $('#youtubeUrl').val().length != 11)
+    {
+        $('#message').text('Youtube vid error.');
     }
-    else {
-        $("#streamForm").submit();
-    }
+    else
+        $('#streamForm').submit();
 }
 
 function onCloseLiveButtonClick() {
     $('#youtubeUrl').val('');
-    $('#category').val('');
+    $('#category').val('聊天');
     $('#introduction').val('');
     $('#state').val('0');
-    $("#streamForm").submit();
+    $('#streamForm').submit();
 }

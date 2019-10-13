@@ -5,7 +5,7 @@ from django.conf import settings
 class UserSetting(models.Model):
     introduction = models.CharField(max_length = 1200, null = True)
     youtubeUrl = models.CharField(max_length = 100, null = True)
-    category = models.CharField(max_length = 20, default = 'Unknown', null = True)
+    category = models.CharField(max_length = 20, default = '聊天', null = True)
     nickName = models.CharField(max_length = 20, default = 'Newcomer',null = False)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = "", null = False)
     isLive = models.BooleanField(default = "False", null = True)
