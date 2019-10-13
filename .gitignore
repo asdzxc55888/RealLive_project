@@ -7,3 +7,4 @@ Django/db.sqlite3
 Django/*/migrations/__pycache__
 Django/*/__pycache__
 Django/static/js/keys.js
+Emotion_Recognition/datasets/fer2013/fer2013.csv
