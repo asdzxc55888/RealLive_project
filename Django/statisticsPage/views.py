@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from livePage.models import EmotionData, VideoRecord, ChatRecord
+from livePage.models import UserSetting, EmotionData, VideoRecord, ChatRecord
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from livePage.models import UserSetting
@@ -10,33 +10,40 @@ import json
 class statisticsView(View):
     template_name = 'statistics.html'
 
-    def get(self, request, username, *args, **kwargs):
-        _videos = None
-        if request.user.is_authenticated:
-            _user = User.objects.get(username = username)
-            _videos = VideoRecord.objects.filter(userId = _user)
+    def get(self, request, streamerName, *args, **kwargs):
+        _user = User.objects.get(username = streamerName)
+        _userSetting = UserSetting.objects.get(userId = _user, isLive = True)
+        _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+
         context = {
             'videos': _videos,
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, username, *args, **kwargs):
-        _videos = None
+    def post(self, request, streamerName, *args, **kwargs):
+        # get videos
+        _user = User.objects.get(username = streamerName)
+        _userSetting = UserSetting.objects.get(userId = _user, isLive = True)
+        _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+
         _vid = request.POST.get("vid", "")
-        _time = []
-        _angryData = []
-        _disgustData = []
-        _fearData =[]
-        _happyData = []
-        _sadData = []
-        _surpriseData = []
+        video = VideoRecord.objects.get(vid = _vid)
+
+        context = {
+            'videos': _videos,
+            'vid': _vid
+        }
+
         if request.user.is_authenticated:
-            # get videos
-            _user = User.objects.get(username = username)
-            _videos = VideoRecord.objects.filter(userId = _user)
+            _time = []
+            _angryData = []
+            _disgustData = []
+            _fearData =[]
+            _happyData = []
+            _sadData = []
+            _surpriseData = []
 
             # get emotional data
-            video = VideoRecord.objects.get(vid = _vid)
             emotionData = EmotionData.objects.filter(vid = video)
 
             # calculate hours
@@ -53,18 +60,15 @@ class statisticsView(View):
                 _sadData.append(int(data.Sad))
                 _surpriseData.append(int(data.Surprise))
 
-        context = {
-            'videos': _videos,
-            'vid': _vid,
-            'time': json.dumps(_time),
-            'angryData': _angryData,
-            'disgustData': _disgustData,
-            'fearData': _fearData,
-            'happyData': _happyData,
-            'sadData': _sadData,
-            'surpriseData': _surpriseData,
-            'hours': hours,
-        }
+            context['time'] = json.dumps(_time)
+            context['angryData'] = _angryData
+            context['disgustData'] = _disgustData
+            context['fearData'] = _fearData
+            context['happyData'] = _happyData
+            context['sadData'] = _sadData
+            context['surpriseData'] = _surpriseData
+            context['hours'] = hours
+
         return render(request, self.template_name, context)
 
 
