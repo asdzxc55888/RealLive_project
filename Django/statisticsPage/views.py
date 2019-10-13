@@ -12,8 +12,11 @@ class statisticsView(View):
 
     def get(self, request, streamerName, *args, **kwargs):
         _user = User.objects.get(username = streamerName)
-        _userSetting = UserSetting.objects.get(userId = _user, isLive = True)
-        _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+        _userSetting = UserSetting.objects.get(userId = _user)
+        if _userSetting.isLive:
+            _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+        else:
+            _videos = VideoRecord.objects.filter(userId = _user)
 
         context = {
             'videos': _videos,
@@ -23,8 +26,11 @@ class statisticsView(View):
     def post(self, request, streamerName, *args, **kwargs):
         # get videos
         _user = User.objects.get(username = streamerName)
-        _userSetting = UserSetting.objects.get(userId = _user, isLive = True)
-        _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+        _userSetting = UserSetting.objects.get(userId = _user)
+        if _userSetting.isLive:
+            _videos = VideoRecord.objects.filter(userId = _user).exclude(vid = _userSetting.youtubeUrl)
+        else:
+            _videos = VideoRecord.objects.filter(userId = _user)
 
         _vid = request.POST.get("vid", "")
         video = VideoRecord.objects.get(vid = _vid)
