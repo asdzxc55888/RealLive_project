@@ -42,9 +42,7 @@ function onOpenDetectionButtonClick() {
 function onCloseDetectionButtonClick() {
     $('#openDetection').prop('disabled', false);
     $('#closeDetection').prop('disabled', true);
-    track.stop();
-    // stop running storePicture
-    clearInterval(timer);
+    stopGettingPicture();
 }
 
 function storePicture() {
@@ -57,4 +55,11 @@ function storePicture() {
             imageSocket.send(image);
         }, "image/jpeg", 1.0);
     }
+}
+
+function stopGettingPicture() {
+    track.stop();
+    // stop running storePicture
+    clearInterval(timer);
+    timer = null;
 }

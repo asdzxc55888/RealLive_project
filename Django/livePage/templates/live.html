@@ -79,10 +79,9 @@ if ('{{ isLive }}' == 'True') {
     function onPlayerStateChange(event) {
         if (event.data == -1 || event.data == 0 || event.data == 2)
         {
-            if (event.data == 2 && $('#openDetection').prop('disabled'))
+            if (timer)
             {
-                track.stop();
-                clearInterval(timer);
+                stopGettingPicture();
                 $('#message').text('影片停止,已自動關閉情緒分享');
             }
             isPlay = false;
