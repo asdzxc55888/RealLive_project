@@ -58,7 +58,7 @@ class statisticsView(View):
                 hours += 1
 
             for data in emotionData:
-                _time.append(data.time.strftime("%H:%M:%S"))
+                _time.append(data.time)
                 _angryData.append(int(data.Angry))
                 _disgustData.append(int(data.Disgust))
                 _fearData.append(int(data.Fear))
@@ -66,7 +66,7 @@ class statisticsView(View):
                 _sadData.append(int(data.Sad))
                 _surpriseData.append(int(data.Surprise))
 
-            context['time'] = json.dumps(_time)
+            context['time'] = _time
             context['angryData'] = _angryData
             context['disgustData'] = _disgustData
             context['fearData'] = _fearData
@@ -74,7 +74,6 @@ class statisticsView(View):
             context['sadData'] = _sadData
             context['surpriseData'] = _surpriseData
             context['hours'] = hours
-
         return render(request, self.template_name, context)
 
 

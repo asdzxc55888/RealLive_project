@@ -66,13 +66,13 @@ function uploadVideo(vid) {
 function loadChatRecord(vid){
   var data = { "vid":vid };
   var url = "/statistics/get/getChatRecord"
-  console.log(vid);
+  //console.log(vid);
   PostAjaxJsonRequest(data, url, function(response){
     var chatMessage = "";
     for (var message in response) {
       chatMessage += response[message] + "\n";
     }
-    console.log(chatMessage)
+    //console.log(chatMessage)
     $("#chat-log").val(chatMessage);
   });
 }

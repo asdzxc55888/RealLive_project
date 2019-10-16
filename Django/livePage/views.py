@@ -13,5 +13,6 @@ class liveView(View):
         context = {
             "youtubeUrl": streamerSettingData.youtubeUrl,
             "streamerName": streamerName,
+            "isLive": streamerSettingData.isLive,
         }
         return render(request, self.template_name, context)

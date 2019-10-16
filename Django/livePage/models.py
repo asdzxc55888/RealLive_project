@@ -18,7 +18,7 @@ class UserSetting(models.Model):
 
 class EmotionData(models.Model):
     vid = models.ForeignKey('VideoRecord', on_delete = models.CASCADE, default = "")
-    time = models.TimeField(null = False)
+    time = models.CharField(max_length = 12, null = False)
     Angry = models.PositiveIntegerField(default = 0)
     Disgust = models.PositiveIntegerField(default = 0)
     Fear = models.PositiveIntegerField(default = 0)
