@@ -106,6 +106,10 @@
 {% block js %}
 
 <script>
+  if ('{{ isLive }}' == 'True') {
+      $('#youtubeUrl').prop('readonly', true);
+  }
+  
   $(function(){
     $('#category').val('{{ category }}');
     $('#category').change();

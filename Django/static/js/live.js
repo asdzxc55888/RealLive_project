@@ -2,7 +2,8 @@ var stream = document.getElementById('stream'),
     snapshot = document.getElementById('snapshot'),
     snapshotContext = snapshot.getContext('2d'),
     test = document.getElementById('test'),
-    track;
+    track,
+    timer;
 
 // connect image socket
 var imageSocket = new WebSocket('ws://' + window.location.host + '/ws' + window.location.pathname + 'image');
@@ -25,31 +26,35 @@ imageSocket.onmessage = function(e) {
 };
 
 function onOpenDetectionButtonClick() {
+    $('#openDetection').prop('disabled', true);
+    $('#closeDetection').prop('disabled', false);
     // labeload user's picture
     navigator.mediaDevices.getUserMedia({video: true})
     .then(mediaStream => {
         document.querySelector('video').srcObject = mediaStream;
         track = mediaStream.getVideoTracks()[0];
         // run storePicture every seconds
-        var timer = setInterval(storePicture, 1000);
+        timer = setInterval(storePicture, 1000);
     })
     .catch(function(err) { console.log(err.name + ": " + err.message); });
 }
 
 function onCloseDetectionButtonClick() {
+    $('#openDetection').prop('disabled', false);
+    $('#closeDetection').prop('disabled', true);
     track.stop();
     // stop running storePicture
     clearInterval(timer);
 }
 
 function storePicture() {
-    snapshotContext.drawImage(stream, 0, 0, 320, 240);
-    snapshot.toBlob(function(image){
-        var time = Math.floor(player.getCurrentTime()).toString();
-        if (player.getPlayerState() == 1)
-        {
+    if (isPlay)
+    {
+        snapshotContext.drawImage(stream, 0, 0, 320, 240);
+        snapshot.toBlob(function(image){
+            var time = Math.floor(player.getCurrentTime()).toString();
             imageSocket.send(new Blob([vid + ' ' + time], {type : 'text/plain'}));
             imageSocket.send(image);
-        }
-    }, "image/jpeg", 1.0);
+        }, "image/jpeg", 1.0);
+    }
 }

@@ -25,6 +25,7 @@ class settingView(View):
                 "youtubeUrl": settingData.youtubeUrl,
                 "category": settingData.category,
                 "introduction": settingData.introduction,
+                "isLive": settingData.isLive,
                 "isStreamer": True,
                 }
             else:
@@ -34,6 +35,7 @@ class settingView(View):
                 "youtubeUrl": '',
                 "category": '',
                 "introduction": '',
+                "isLive": False,
                 "isStreamer": False,
                 }
 
