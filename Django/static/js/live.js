@@ -2,8 +2,7 @@ var stream = document.getElementById('stream'),
     snapshot = document.getElementById('snapshot'),
     snapshotContext = snapshot.getContext('2d'),
     test = document.getElementById('test'),
-    track,
-    timer;
+    track, timer, videoWidth, videoHeight;
 
 // connect image socket
 var imageSocket = new WebSocket('ws://' + window.location.host + '/ws' + window.location.pathname + 'image');
@@ -32,6 +31,12 @@ function onOpenDetectionButtonClick() {
     navigator.mediaDevices.getUserMedia({video: true})
     .then(mediaStream => {
         document.querySelector('video').srcObject = mediaStream;
+        stream.onloadeddata = function() {
+            videoWidth = stream.videoWidth / 2;
+            videoHeight = stream.videoHeight / 2
+            $('#snapshot').prop('width', videoWidth);
+            $('#snapshot').prop('height', videoHeight);
+        };
         track = mediaStream.getVideoTracks()[0];
         // run storePicture every seconds
         timer = setInterval(storePicture, 1000);
@@ -48,7 +53,7 @@ function onCloseDetectionButtonClick() {
 function storePicture() {
     if (isPlay)
     {
-        snapshotContext.drawImage(stream, 0, 0, 320, 240);
+        snapshotContext.drawImage(stream, 0, 0, videoWidth, videoHeight);
         snapshot.toBlob(function(image){
             var time = Math.floor(player.getCurrentTime()).toString();
             imageSocket.send(new Blob([vid + ' ' + time], {type : 'text/plain'}));
