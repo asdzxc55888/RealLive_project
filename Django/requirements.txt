@@ -46,7 +46,7 @@ tensorflow==1.10.0
 tensorflow-estimator==1.14.0
 tensorflow-tensorboard==1.5.1
 termcolor==1.1.0
-Twisted==19.7.0
+Twisted==22.10.0
 txaio==18.8.1
 Werkzeug==0.15.5
 wrapt==1.11.2
